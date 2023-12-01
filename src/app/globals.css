@@ -1,27 +1,133 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ======================================== Tailwind CSS ======================================== */
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@media (prefers-color-scheme: dark) {
+/* ======================================== Debug ======================================== */
+
+/* * {
+  border: 1px solid red;
+} */
+
+/* ======================================== Root ======================================== */
+
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 240 20% 97%;
+    --foreground: 133 80% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+    --primary: 208 97% 75%;
+    --primary-foreground: 234 76% 69%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
+    --text: 231 15% 25%;
+    --text-foreground: 233 80% 96%;
+    --textVariant: ;
+    --textVariant-foreground: ;
+    --muted: 213 16% 56%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 4.8% 96%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 86% 97%;
+    --destructive-foreground: 0 74% 42%;
+    --success: 160 86% 60%;
+    --success-foreground: 160 86% 60%;
+    --warning: 36 100% 67%;
+    --warning-foreground: 36 100% 67%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 6% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 210 8% 5%;
+    --foreground: 200 6% 10%;
+    --card: 240 10% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 208 97% 75%;
+    --primary-foreground: 234 76% 69%;
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --text: 233 80% 96%;
+    --text-foreground: 231 15% 25%;
+    --textVariant: ;
+    --textVariant-foreground: ;
+    --muted: 213 16% 56%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 10% 5%;
+    --destructive-foreground: 0 74% 42%;
+    --success: 160 86% 60%;
+    --success-foreground: 160 86% 60%;
+    --warning: 36 100% 67%;
+    --warning-foreground: 36 100% 67%;
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 240 5% 84%;
+    --radius: 0.5rem;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ======================================== Scrollbar ======================================== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--foreground) var(--background);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 14px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Custom vars */
+.scrollbar-w-2::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+.scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+  --bg-opacity: 0.5;
+  background-color: #00000015;
+}
+
+.scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+  --bg-opacity: 0.5;
+  background-color: #13131374;
+}
+
+.scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+}
+
+/* fake text-balance until added to tailwind */
+.text-balance {
+  text-wrap: balance;
 }

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+A hobby web project using [Next.js](https://nextjs.org "Next JS") for friends and family.
 
-## Getting Started
+## 🔗 Links
 
-First, run the development server:
+#### Live Sites:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [www.famlam.ca](https://www.famlam.ca "www.famlam.ca Homepage")
+- [play.famlam.ca](https://play.famlam.ca "play.famlam.ca Homepage")
+- [old.famlam.ca](https://old.famlam.ca "old.famlam.ca Homepage")
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Repositories:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [famlam](https://github.com/SlickYeet/famlam.ca "famlam Github Repo")
+- [play](https://github.com/SlickYeet/play "play.famlam.ca Github Repo") -- merged with [famlam.ca](https://github.com/SlickYeet/famlam "famlam Github Repo")
+- [old](https://github.com/SlickYeet/old "old.famlam.ca Github Repo")
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Roadmap
 
-## Learn More
+- Page Transitions using [Framer Motion](https://www.framer.com/motion/ "Framer Motion")
+- Functioning emails
+  - send/receive
+  - via [SendGrid](https://login.sendgrid.com/ "SendGrid")
+- Proxmox API integration
+  - fetch guest system info
+- User functions
+  - can change name
+  - can change password
+  - can change avatar
+  - user specific settings
+- More to come...
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org "Next JS")
+- [React.js](https://react.dev "React JS")
+- [Node.js](https://nodejs.org/en/ "Node JS")
+- [TypeScript](https://www.typescriptlang.org/ "TypeScript")
+- [NextAuth.js](https://next-auth.js.org "NextAuth JS")
+- [Prisma](https://prisma.io "Prisma")
+- [MySQL](https://www.mysql.com/ "MySQL")
+- [Tailwind CSS](https://tailwindcss.com "Tailwind CSS")
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Support
 
-## Deploy on Vercel
+For support email at lasse@famlam.ca
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Authors:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [@SlicKYeet](https://www.github.com/SlickYeet)
+- [@famlam-ca](https://www.github.com/famlam-ca)
+
+## Notes
+
+**💡** TrueNAS integration may be added.
