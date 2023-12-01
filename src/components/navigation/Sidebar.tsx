@@ -1,6 +1,7 @@
 "use client";
 
-import { PropsWithChildren, useMemo } from "react";
+import { useMemo } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import {
@@ -20,7 +21,7 @@ import { Icons } from "../Icons";
 import SidebarItem from "./SidebarItem";
 import { SignIn, SignOut } from "../auth/Button";
 
-const Sidebar = ({ children }: PropsWithChildren) => {
+const Sidebar = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -80,7 +81,9 @@ const Sidebar = ({ children }: PropsWithChildren) => {
         <Box>
           <div className="flex min-h-screen flex-col bg-background text-muted">
             <div className="m-8 flex items-center justify-center text-center text-text">
-              <Icons.logo className="h-8 w-8 fill-text" />
+              <Link href="/">
+                <Icons.logo className="h-8 w-8 fill-text" />
+              </Link>
             </div>
             {routes.map((item) => (
               <SidebarItem key={item.label} {...item} />
