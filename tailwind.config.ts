@@ -68,8 +68,8 @@ module.exports = {
         },
       },
       backgroundImage: {
-        aboutBanner: "url('../public/aboutBanner.png')",
-        landingBanner: "url('../public/landingBanner.png')",
+        aboutBanner: "url('/about-banner.png')",
+        landingBanner: "url('/landing-banner.png')",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -79,6 +79,7 @@ module.exports = {
       height: {
         sigIn: "440px",
         register: "520px",
+        calcNavbar: "calc(100vh-3.5rem)",
       },
       keyframes: {
         "accordion-down": {

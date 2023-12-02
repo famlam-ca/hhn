@@ -8,6 +8,10 @@ import { SignIn } from "../auth/Button";
 import { buttonVariants } from "../ui/Button";
 import UserAccountNav from "./UserAccountNav";
 import { authOptions } from "@/lib/auth/authOptions";
+import MobileNav from "./MobileNav";
+
+const style =
+  "relative tracking-wide after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition after:content-[''] hover:after:origin-bottom-left hover:after:scale-100";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
@@ -21,50 +25,14 @@ const Navbar = async () => {
             <Icons.logo className="h-8 w-8 fill-text" />
           </Link>
 
-          {/* Mobile Nav */}
+          <MobileNav isAuth={!!user} />
 
           <div className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
-            <Link
-              href="/dashboard"
-              className="
-              relative
-              tracking-wide
-              after:absolute
-              after:-bottom-1
-              after:left-0
-              after:h-0.5
-              after:w-full
-              after:origin-bottom-right
-              after:scale-x-0
-              after:bg-primary
-              after:transition
-              after:content-['']
-              hover:after:origin-bottom-left
-              hover:after:scale-100
-              "
-            >
+            <Link href="/dashboard" className={`${style}`}>
               Dashboard
             </Link>
 
-            <Link
-              href="/games"
-              className="
-              relative
-              tracking-wide
-              after:absolute
-              after:-bottom-1
-              after:left-0
-              after:h-0.5
-              after:w-full
-              after:origin-bottom-right
-              after:scale-x-0
-              after:bg-primary
-              after:transition
-              after:content-['']
-              hover:after:origin-bottom-left
-              hover:after:scale-100
-              "
-            >
+            <Link href="/games" className={`${style}`}>
               Game Hub
             </Link>
 
@@ -73,48 +41,11 @@ const Navbar = async () => {
               target="_blank"
               className="flex items-center -space-x-2"
             >
-              <span
-                className="
-                relative
-                tracking-wide
-                after:absolute
-                after:-bottom-1
-                after:left-0
-                after:h-0.5
-                after:w-full
-                after:origin-bottom-right
-                after:scale-x-0
-                after:bg-primary
-                after:transition
-                after:content-['']
-                hover:after:origin-bottom-left
-                hover:after:scale-100
-                "
-              >
-                Server Manager
-              </span>
+              <span className={`${style}`}>Server Manager</span>
               <ArrowUpRight className="relative -right-2 -top-1 h-3 w-3" />
             </Link>
 
-            <Link
-              href="/about"
-              className="
-              relative
-              tracking-wide
-              after:absolute
-              after:-bottom-1
-              after:left-0
-              after:h-0.5
-              after:w-full
-              after:origin-bottom-right
-              after:scale-x-0
-              after:bg-primary
-              after:transition
-              after:content-['']
-              hover:after:origin-bottom-left
-              hover:after:scale-100
-              "
-            >
+            <Link href="/about" className={`${style}`}>
               About
             </Link>
 

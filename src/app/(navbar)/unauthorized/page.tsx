@@ -6,7 +6,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { buttonVariants } from "@/components/ui/Button";
 import { SignIn } from "@/components/auth/Button";
-import { LifeBuoy, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 
 const Unauthorized = async () => {
   const session = await getServerSession(authOptions);

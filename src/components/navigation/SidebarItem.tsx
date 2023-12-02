@@ -24,7 +24,7 @@ const SidebarItem = ({
     <Link
       href={href}
       className={cn(
-        "relative ml-12 flex h-14 items-center gap-4 whitespace-nowrap text-left font-medium text-muted transition-all duration-200 ease-in-out hover:ml-12 hover:text-primary md:ml-8",
+        "relative ml-12 flex h-14 items-center gap-4 whitespace-nowrap text-left font-medium text-muted transition-all duration-200 ease-in-out hover:ml-12 hover:text-primary sm:ml-8",
         className,
         active && "text-primary",
       )}

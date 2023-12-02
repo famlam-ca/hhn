@@ -20,6 +20,7 @@ import Box from "../Box";
 import { Icons } from "../Icons";
 import SidebarItem from "./SidebarItem";
 import { SignIn, SignOut } from "../auth/Button";
+import MobileNav from "./MobileNav";
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -76,8 +77,10 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="flex md:ml-24 lg:ml-72">
-      <div className="fixed left-0 top-0 hidden w-24 flex-shrink-0 flex-col gap-2 md:flex lg:w-52">
+    <div className="flex sm:ml-24 lg:ml-72">
+      <MobileNav isAuth={!!user} />
+
+      <div className="fixed left-0 top-0 hidden w-24 flex-shrink-0 flex-col gap-2 sm:flex lg:w-52">
         <Box>
           <div className="flex min-h-screen flex-col bg-background text-muted">
             <div className="m-8 flex items-center justify-center text-center text-text">
@@ -91,7 +94,7 @@ const Sidebar = () => {
 
             <div className="my-8 h-1 w-4/5 self-center rounded bg-primary" />
 
-            <div className="relative ml-12 flex h-14 items-center gap-4 whitespace-nowrap text-left font-medium text-muted transition-all duration-200 ease-in-out hover:ml-12 hover:text-primary md:ml-8">
+            <div className="relative ml-12 flex h-14 items-center gap-4 whitespace-nowrap text-left font-medium text-muted transition-all duration-200 ease-in-out hover:ml-12 hover:text-primary sm:ml-8">
               {!user ? (
                 <>
                   <SignIn>

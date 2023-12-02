@@ -4,13 +4,14 @@ import { ArrowRight, GraduationCap, Server } from "lucide-react";
 
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { buttonVariants } from "@/components/ui/Button";
+import Wrapper from "@/components/Wrapper";
 
 export default function Home() {
   return (
     <>
       {/* top */}
       <MaxWidthWrapper className="mb-12 mt-28 flex flex-col items-center justify-center text-center sm:mt-40">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-border bg-foreground px-7 py-2 shadow-md backdrop-blur transition-all hover:border-border/80 hover:bg-foreground/50">
+        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-border bg-foreground px-7 py-2 shadow-md backdrop-blur transition-all hover:border-border/80 hover:bg-text-foreground/50">
           <p className="text-sm font-semibold text-text">
             Welcome, Enjoy Your Stay!
           </p>
@@ -24,7 +25,7 @@ export default function Home() {
         <Link
           href="/about"
           className={buttonVariants({
-            variant: "outline",
+            variant: "secondary",
             size: "lg",
             className: "mt-5",
           })}
@@ -36,20 +37,15 @@ export default function Home() {
 
       {/* image */}
       <div>
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="mt-16 flow-root sm:mt-24">
-            <div className="-m-2 rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-ring/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <Image
-                src="/landing-banner.png"
-                alt="home banner"
-                width={1917}
-                height={931}
-                quality={100}
-                className="rounded-md bg-background/80 p-2 shadow-2xl ring-1 ring-ring/10 sm:p-8 md:p-20"
-              />
-            </div>
-          </div>
-        </div>
+        <Wrapper>
+          <Image
+            src="/landing-banner.png"
+            alt="home banner"
+            width={1917}
+            height={931}
+            quality={100}
+          />
+        </Wrapper>
       </div>
 
       {/* bottom */}
@@ -137,20 +133,15 @@ export default function Home() {
 
         {/* image */}
         <div>
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <div className="mt-16 flow-root sm:mt-24">
-              <div className="-m-2 rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-ring/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                <Image
-                  src="/project-list.png" // add picture of projects page
-                  alt="project list"
-                  width={938}
-                  height={718}
-                  quality={100}
-                  className="rounded-md bg-background/80 p-2 shadow-2xl ring-1 ring-ring/10 sm:p-8 md:p-20"
-                />
-              </div>
-            </div>
-          </div>
+          <Wrapper>
+            <Image
+              src="/project-list.png" // add picture of projects page
+              alt="project list"
+              width={938}
+              height={718}
+              quality={100}
+            />
+          </Wrapper>
         </div>
       </div>
     </>

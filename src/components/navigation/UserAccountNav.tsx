@@ -1,6 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Cloud, LifeBuoy, Mail, Phone, Settings, User } from "lucide-react";
+import {
+  Cloud,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  Newspaper,
+  Phone,
+  Settings,
+  User,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback } from "../ui/Avatar";
 import { Button } from "../ui/Button";
@@ -82,7 +91,7 @@ const UserAccountNav = ({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/account/inbox">
+            <Link href="/account/mail">
               <Mail className="mr-2 h-5 w-5" />
               Email
             </Link>
@@ -120,17 +129,37 @@ const UserAccountNav = ({
               Contact
             </Link>
           </DropdownMenuItem>
+        </DropdownMenuGroup>
 
-          <DropdownMenuItem disabled={role !== "admin"}>
-            <Cloud className="mr-2 h-5 w-5" />
-            API
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>
+            <p className="text-muted">Documentation</p>
+          </DropdownMenuLabel>
+
+          <DropdownMenuItem asChild>
+            <Link href="/docs">
+              <Newspaper className="mr-2 h-5 w-5" />
+              Docs
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem disabled={role !== "admin"} asChild>
+            <Link href="/docs/api">
+              <Cloud className="mr-2 h-5 w-5" />
+              API
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <SignOut className="w-full" />
+          <SignOut className="w-full">
+            <LogOut className="mr-1 h-5 w-5" />
+            Sign Out
+          </SignOut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
