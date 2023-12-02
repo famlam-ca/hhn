@@ -15,7 +15,7 @@ export default function Home() {
             Welcome, Enjoy Your Stay!
           </p>
         </div>
-        <h1 className="max-4-xl text-5xl font-bold md:text-6xl lg:text-7xl">
+        <h1 className="text-5xl font-bold md:text-6xl lg:text-7xl">
           Humble <span className="text-primary">Home Network</span>
         </h1>
         <p className="mt-5 max-w-prose sm:text-lg">
@@ -34,7 +34,7 @@ export default function Home() {
         </Link>
       </MaxWidthWrapper>
 
-      {/* image/deco */}
+      {/* image */}
       <div>
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="mt-16 flow-root sm:mt-24">
@@ -135,6 +135,7 @@ export default function Home() {
           </li>
         </ol>
 
+        {/* image */}
         <div>
           <div className="mx-auto max-w-6xl px-6 lg:px-8">
             <div className="mt-16 flow-root sm:mt-24">

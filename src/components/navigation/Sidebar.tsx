@@ -94,13 +94,17 @@ const Sidebar = () => {
             <div className="relative ml-12 flex h-14 items-center gap-4 whitespace-nowrap text-left font-medium text-muted transition-all duration-200 ease-in-out hover:ml-12 hover:text-primary md:ml-8">
               {!user ? (
                 <>
-                  <LogIn size={24} />
-                  <SignIn />
+                  <SignIn>
+                    <LogIn className="mr-3 h-6 w-6" />
+                    <span className="hidden lg:block">Sign In</span>
+                  </SignIn>
                 </>
               ) : (
                 <>
-                  <LogOut size={24} />
-                  <SignOut />
+                  <SignOut>
+                    <LogOut className="mr-3 h-6 w-6" />
+                    <span className="hidden lg:block">Sign Out</span>
+                  </SignOut>
                 </>
               )}
             </div>

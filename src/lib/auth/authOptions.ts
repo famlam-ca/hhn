@@ -9,6 +9,11 @@ const prisma = new PrismaClient();
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/auth/sign-in",
+    // signOut: "/auth/sign-out",
+    // error: "/auth/error",
+  },
   providers: [
     CredentialsProvider({
       name: "credentials",

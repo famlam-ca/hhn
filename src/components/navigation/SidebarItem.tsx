@@ -30,7 +30,7 @@ const SidebarItem = ({
       )}
     >
       <Icon {...props} size={24} />
-      <p className="hidden truncate md:block">{label}</p>
+      <p className="hidden truncate lg:block">{label}</p>
     </Link>
   );
 };
