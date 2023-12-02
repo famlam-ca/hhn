@@ -2,9 +2,9 @@
 
 import { FormEvent, useState } from "react";
 import Link from "next/link";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/Button";
@@ -14,7 +14,6 @@ const SignInForm = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const router = useRouter();
   const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -47,7 +46,7 @@ const SignInForm = () => {
           variant: "destructive",
         });
       } else {
-        router.push("/");
+        redirect("/");
       }
     } catch (error: any) {
       setIsLoading(false);

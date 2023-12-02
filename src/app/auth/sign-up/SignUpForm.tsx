@@ -27,6 +27,7 @@ const SignUpForm = () => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    setIsLoading(true);
     const res = await fetch(`/api/auth/register`, {
       method: "POST",
       body: JSON.stringify({
@@ -56,7 +57,9 @@ const SignUpForm = () => {
           </Link>
         ),
       });
+      setIsLoading(false);
     } else {
+      setIsLoading(false);
       router.push("/auth/sign-in");
     }
   };
