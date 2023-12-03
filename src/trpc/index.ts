@@ -6,23 +6,28 @@ import { privateProcedure, publicProcedure, router } from "./trpc";
 import { db } from "@/db";
 
 export const appRouter = router({
-  createUser: publicProcedure.query(async (req: any) => {
-    const body = await req.json();
-    const { first_name, last_name, email, password } = body.data;
+  createUser: publicProcedure
+    .input(
+      z.object({
+        first_name: z.string().min(2),
+        last_name: z.string().min(2),
+        email: z.string().email().min(3),
+        password: z.string().min(10),
+      }),
+    )
+    .mutation(async (opts) => {
+      const { first_name, last_name, email, password } = opts.input;
 
-    if (!first_name || !last_name || !email || !password)
-      throw new TRPCError({ code: "UNAUTHORIZED" });
+      const dbUser = await db.user.findFirst({
+        where: {
+          email: opts.input.email,
+        },
+      });
 
-    // check if the user is in the database
-    const dbUser = await db.user.findFirst({
-      where: {
-        email: email,
-      },
-    });
+      if (dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
 
-    const hashedPassword = await hash(password, 12);
+      const hashedPassword = await hash(password, 12);
 
-    if (!dbUser) {
       await db.user.create({
         data: {
           first_name,
@@ -31,10 +36,10 @@ export const appRouter = router({
           password: hashedPassword,
         },
       });
-    }
 
-    return { success: true };
-  }),
+      return { success: true };
+    }),
+
   updateUser: privateProcedure
     .input(
       z.object({

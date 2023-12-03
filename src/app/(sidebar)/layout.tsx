@@ -4,7 +4,7 @@ import Sidebar from "@/components/navigation/Sidebar";
 
 const SidebarLayout = ({ children }: PropsWithChildren) => {
   return (
-    <div>
+    <div className="min-h-screen">
       <Sidebar />
       {children}
     </div>

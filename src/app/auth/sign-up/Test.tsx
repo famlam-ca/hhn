@@ -9,64 +9,64 @@ import { Loader2, LogIn } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Icons } from "@/components/Icons";
+import { trpc } from "@/app/_trpc/client";
 
-const SignUpForm = () => {
+const Test = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
   const router = useRouter();
   const { toast } = useToast();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   if (user) {
     redirect("/");
   }
+
+  const { mutate: createUser, isLoading } = trpc.createUser.useMutation({
+    onSuccess: ({ success }) => {
+      if (success) {
+        router.push("/auth/sign-in");
+      }
+    },
+    onError: (err) => {
+      if (err.data?.code === "UNAUTHORIZED") {
+        toast({
+          title: "There was a problem creating your account.",
+          description:
+            "An account with this email already exists - Want to sign in instead?",
+          variant: "destructive",
+          action: (
+            <Link
+              href="/auth/sign-in"
+              className={buttonVariants({
+                variant: "outline",
+                className: "bg-transparent text-text",
+              })}
+            >
+              <LogIn className="mr-2 h-5 w-5" />
+              Sign In
+            </Link>
+          ),
+        });
+      }
+    },
+  });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    setIsLoading(true);
-    const res = await fetch(`/api/auth/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        first_name: formData.get("first_name"),
-        last_name: formData.get("last_name"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-      }),
+    const first_name = formData.get("first_name")?.toString()!;
+    const last_name = formData.get("last_name")?.toString()!;
+    const email = formData.get("email")?.toString()!;
+    const password = formData.get("password")?.toString()!;
+
+    return createUser({
+      first_name,
+      last_name,
+      email,
+      password,
     });
-
-    if (!res.ok) {
-      toast({
-        title: "There was a problem creating your account.",
-        description:
-          "An account with this email already exists - Want to sign in instead?",
-        variant: "destructive",
-        action: (
-          <Link
-            href="/auth/sign-in"
-            className={buttonVariants({
-              variant: "outline",
-              className: "bg-transparent text-text",
-            })}
-          >
-            Sign In
-          </Link>
-        ),
-      });
-      setIsLoading(false);
-    } else {
-      toast({
-        title: "Successfully created your account.",
-        description: "Welcome to our humble home network.",
-        duration: 500,
-      });
-
-      setIsLoading(false);
-      router.push("/auth/sign-in");
-    }
   };
 
   const input_style =
@@ -175,4 +175,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default Test;

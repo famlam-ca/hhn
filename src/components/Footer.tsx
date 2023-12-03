@@ -7,7 +7,7 @@ const style =
 const Footer = () => {
   return (
     <footer className="relative bottom-0 w-full border-t-2 border-border bg-background/80">
-      <MaxWidthWrapper className="py-8 sm:flex sm:items-center sm:justify-between">
+      <MaxWidthWrapper className="h-20 sm:flex sm:items-center sm:justify-between">
         <div className="flex items-center text-sm sm:text-center">
           <span>@ 2023&nbsp;</span>
           <Link
