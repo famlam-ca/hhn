@@ -15,7 +15,7 @@ const ServerTable = async () => {
   );
   myHeaders.append(
     "Cookie",
-    "PVEAuthCookie=PVE:API@pve:657692E3::ac4MbD4F3izMlWAC4c/XMdPCU7PAw2Wb/UV0SWKmqt9tRt6vou39345cX8hKrSTboHToBfm+tLwQoZsm3F4spCJlGJyYRqwu/Z9Drus8qC6ERzH6j6R88L5M/oOnqf/mXNg/5WAzwDOrkljBmq4dD9TSt7wdUTrDP0coIvAXXdaahyFBBnA+lF6Rg9YrG52J+RVINvixtH5Nia3y/rd4JcJ4WBGHn3pNppZfugoEECDdkg1+zdTWuiPzSCQuQK8pqsX9Ed1GVvU77pjvEZZQMPA3bTsvE8mhbNGEyKGFdlCqvpnUmbro9rJsVWcKXH0n0xxkMjiKu1So5WrvfqG6YA==",
+    "PVEAuthCookie=PVE:API@pve:6576B5FB::E/K++PolK2l6GlcjhTWga0Rj4kT0rm0jUivtAF++kAfu4Jn81rV2dr6qrHEz2fl0LaxPe71i2+Ld3HrgC3NV0m1DOuHZea5MLCIE5j7pgnPSGxR4I3am9viysuOscQlsPDeMHY0M5p78xsUwnguQgcYG8kQopAkWGcP8V8V4pfq8YLwQfKGIDyOwjgBHqFynXo6hjF7QT31vS5l0oRFFmK3k35QwGGk+hkIdqnprf6ME44UELHb3LSVoibyt9AOfUWbZIPZQlumSyRjlZGdJ5bg0eabt6879pbeM/D+7EK+HXqZGuZ1Kixq9b3p7nOp24zlZu8dkjeLWpNA/oUcdQQ==",
   );
 
   const requestOptions = {
@@ -24,12 +24,11 @@ const ServerTable = async () => {
     redirect: "follow" as RequestRedirect,
   };
 
-  const URL =
-    "https://pve.famlam.ca/api2/json/nodes/pve/lxc/110/status/current";
+  const URL = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
 
   try {
     const response = await fetch(URL, requestOptions);
-    const { data: serverData } = await response.json();
+    const { data: serverDataList } = await response.json();
 
     const formatUptime = (uptimeInSeconds: any) => {
       const hours = Math.floor(uptimeInSeconds / 3600);
@@ -41,14 +40,6 @@ const ServerTable = async () => {
       ${minutes}m
       ${seconds}s
       `;
-    };
-
-    const data = {
-      serverName: serverData.name,
-      status: serverData.status,
-      cpuUsage: `${(serverData.cpu * 100).toFixed(2)}%`,
-      memoryUsage: `${(serverData.mem / (1024 * 1024)).toFixed(2)}`,
-      uptime: formatUptime(serverData.uptime),
     };
 
     return (
@@ -64,349 +55,64 @@ const ServerTable = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* NPM */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
+            {serverDataList.map((serverData: any) => {
+              const data = {
+                serverName: serverData.name,
+                status: serverData.status,
+                cpuUsage: `${(serverData.cpu * 100).toFixed(2)}`,
+                memoryUsage: `${(serverData.mem / (1024 * 1024)).toFixed(2)}`,
+                uptime: formatUptime(serverData.uptime),
+              };
 
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
+              return (
+                <TableRow key={serverData.vmid}>
+                  <TableCell
+                    className={
+                      data.status === "running"
+                        ? "capitalize text-success max-sm:hidden"
+                        : "capitalize text-alert max-sm:hidden"
+                    }
+                  >
+                    {data.status}
+                  </TableCell>
 
-            {/* GS01 */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
+                  <TableCell className="capitalize">
+                    {data.serverName}
+                  </TableCell>
 
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
+                  <TableCell
+                    className={
+                      parseFloat(data.cpuUsage) <= 50
+                        ? "text-success"
+                        : parseFloat(data.cpuUsage) > 50
+                          ? "text-warning"
+                          : parseFloat(data.cpuUsage) >= 75
+                            ? "text-alert"
+                            : "text-text"
+                    }
+                  >
+                    {data.cpuUsage}
+                  </TableCell>
 
-            {/* GS02 */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
+                  <TableCell
+                    className={
+                      parseFloat(data.memoryUsage) <= 50 // 2048
+                        ? "text-success"
+                        : parseFloat(data.memoryUsage) > 50 // 4096
+                          ? "text-warning"
+                          : parseFloat(data.memoryUsage) >= 75 // 6144
+                            ? "text-alert"
+                            : "text-text"
+                    }
+                  >
+                    {data.memoryUsage} MB
+                  </TableCell>
 
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
-
-            {/* MailSrv */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
-
-            {/* WebSrv */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
-
-            {/* SQL-DB */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
-
-            {/* PrintSrv */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
-
-            {/* DNS */}
-            <TableRow key={data.serverName}>
-              <TableCell
-                className={
-                  data.status === "running"
-                    ? "capitalize text-success max-sm:hidden"
-                    : "capitalize text-alert max-sm:hidden"
-                }
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.cpuUsage) <= 50
-                    ? "text-success"
-                    : parseFloat(data.cpuUsage) > 50
-                      ? "text-warning"
-                      : parseFloat(data.cpuUsage) >= 75
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.cpuUsage}
-              </TableCell>
-              <TableCell
-                className={
-                  parseFloat(data.memoryUsage) <= 50 // 2048
-                    ? "text-success"
-                    : parseFloat(data.memoryUsage) > 50 // 4096
-                      ? "text-warning"
-                      : parseFloat(data.memoryUsage) >= 75 // 6144
-                        ? "text-alert"
-                        : "text-text"
-                }
-              >
-                {data.memoryUsage} MB
-              </TableCell>
-              <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-              <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-            </TableRow>
+                  <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
+                  <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </>
