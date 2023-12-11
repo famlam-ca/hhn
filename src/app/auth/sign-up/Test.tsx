@@ -1,15 +1,40 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { TypeOf, z } from "zod";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, LogIn } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import { Icons } from "@/components/Icons";
 import { trpc } from "@/app/_trpc/client";
+
+const registerSchema = z
+  .object({
+    name: z.string().min(3, "Username must be at least 3 characters").max(100),
+    full_name: z.string().min(1, "Full name is required").max(100),
+    email: z
+      .string()
+      .min(1, "Email address is required")
+      .email("Email Address is invalid"),
+    password: z
+      .string()
+      .min(1, "Password is required!")
+      .min(10, "Password must be at least 10 characters!")
+      .max(32, "Password must be shorter than 32 characters."),
+    passwordConfirm: z.string().min(1, "Please confirm your password!"),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    path: ["passwordConfirm"],
+    message: "Passwords do not match",
+  });
+
+export type RegisterInput = TypeOf<typeof registerSchema>;
 
 const Test = () => {
   const { data: session } = useSession();
@@ -23,13 +48,15 @@ const Test = () => {
   }
 
   const { mutate: createUser, isLoading } = trpc.createUser.useMutation({
-    onSuccess: ({ success }) => {
-      if (success) {
-        router.push("/auth/sign-in");
-      }
+    onSuccess: (data) => {
+      toast({
+        title: `Welcome ${data?.data.user.full_name}`,
+        description: "Enjoy your stay!",
+      });
+      router.push("/auth/sign-in");
     },
     onError: (err) => {
-      if (err.data?.code === "UNAUTHORIZED") {
+      if (err) {
         toast({
           title: "There was a problem creating your account.",
           description:
@@ -52,21 +79,25 @@ const Test = () => {
     },
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const methods = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+  });
 
-    const formData = new FormData(e.currentTarget);
-    const first_name = formData.get("first_name")?.toString()!;
-    const last_name = formData.get("last_name")?.toString()!;
-    const email = formData.get("email")?.toString()!;
-    const password = formData.get("password")?.toString()!;
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitSuccessful },
+  } = methods;
 
-    return createUser({
-      first_name,
-      last_name,
-      email,
-      password,
-    });
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful]);
+
+  const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
+    createUser(values);
   };
 
   const input_style =
@@ -84,82 +115,103 @@ const Test = () => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              First Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="first_name"
-                type="text"
-                placeholder="First Name..."
-                className={`${input_style}`}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              Last Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="last_name"
-                type="text"
-                placeholder="Last Name..."
-                className={`${input_style}`}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium leading-6">Email</label>
-            <div className="mt-2">
-              <input
-                required
-                name="email"
-                type="email"
-                placeholder="Email..."
-                className={`${input_style}`}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              Password
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="password"
-                type="password"
-                placeholder="Password..."
-                className={`${input_style}`}
-              />
-            </div>
-          </div>
-
-          <div>
-            <Button
-              type="submit"
-              disabled={isLoading}
-              className="w-full uppercase shadow-md"
-            >
-              {isLoading ? (
-                <div className="flex">
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Loading...
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-6">
+            <div className="flex justify-between gap-4">
+              <div className="w-full">
+                <label className="block text-sm font-medium leading-6">
+                  Username
+                </label>
+                <div className="mt-2">
+                  <input
+                    required
+                    name="name"
+                    type="text"
+                    placeholder="Username..."
+                    className={`${input_style}`}
+                  />
                 </div>
-              ) : (
-                "Sign Up"
-              )}
-            </Button>
-          </div>
-        </form>
+              </div>
+              <div className="w-full">
+                <label className="block text-sm font-medium leading-6">
+                  Full Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    required
+                    name="full_name"
+                    type="text"
+                    placeholder="First Name..."
+                    className={`${input_style}`}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium leading-6">
+                Email
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  placeholder="Email..."
+                  className={`${input_style}`}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between gap-4">
+              <div className="w-full">
+                <label className="block text-sm font-medium leading-6">
+                  Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    required
+                    name="password"
+                    type="password"
+                    placeholder="Password..."
+                    className={`${input_style}`}
+                  />
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="block text-sm font-medium leading-6">
+                  Confirm Password
+                </label>
+                <div className="mt-2">
+                  <input
+                    required
+                    name="passwordConfirm"
+                    type="password"
+                    placeholder="Confirm Password..."
+                    className={`${input_style}`}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full uppercase shadow-md"
+              >
+                {isLoading ? (
+                  <div className="flex">
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Loading...
+                  </div>
+                ) : (
+                  "Sign Up"
+                )}
+              </Button>
+            </div>
+          </form>
+        </FormProvider>
 
         <p className="mt-10 text-center text-sm text-muted">
           Already have an account?{" "}

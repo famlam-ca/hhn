@@ -30,6 +30,7 @@ interface UserAccountNavProps {
   email: string | undefined;
   imageUrl: string;
   name: string;
+  full_name: string;
   role: string;
 }
 
@@ -37,6 +38,7 @@ const UserAccountNav = ({
   email,
   imageUrl,
   name,
+  full_name,
   role,
 }: UserAccountNavProps) => {
   return (
@@ -68,7 +70,14 @@ const UserAccountNav = ({
       <DropdownMenuContent className="bg-background" align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
-            {name && <p className="text-sm font-medium text-text">{name}</p>}
+            <div className="flex justify-between">
+              {name && <p className="text-sm font-medium text-text">{name}</p>}
+              {full_name && (
+                <p className="truncate text-xs font-medium text-muted">
+                  {full_name}
+                </p>
+              )}
+            </div>
             {email && (
               <p className="w-[200px] truncate text-xs text-muted">{email}</p>
             )}

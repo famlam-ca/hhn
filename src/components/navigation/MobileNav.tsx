@@ -29,7 +29,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
       <Menu onClick={toggleOpen} className="relative z-50 h-6 w-6" />
 
       {isOpen ? (
-        <div className="fixed inset-0 z-0 w-full animate-in fade-in-20 slide-in-from-top-5">
+        <div className="fixed inset-0 z-10 w-full animate-in fade-in-20 slide-in-from-top-5">
           <ul className="absolute grid w-full gap-3 border-b border-border bg-background px-10 pb-8 pt-20 shadow-xl">
             {!isAuth && (
               <>
@@ -46,6 +46,16 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
               </>
             )}
 
+            <li>
+              <Link
+                href="/"
+                onClick={() => closeOnCurrent("/")}
+                className="flex w-full items-center font-semibold"
+              >
+                Home
+              </Link>
+            </li>
+            <li className="my-3 h-px w-full bg-input" />
             <li>
               <Link
                 href="/dashboard"

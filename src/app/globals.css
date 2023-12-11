@@ -34,6 +34,8 @@
     --accent-foreground: 240 6% 10%;
     --destructive: 0 86% 97%;
     --destructive-foreground: 0 74% 42%;
+    --alert: 355 100% 73%;
+    --alert-foreground: 355 100% 73%;
     --success: 160 86% 60%;
     --success-foreground: 160 86% 60%;
     --warning: 36 100% 67%;
@@ -65,6 +67,8 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 10% 5%;
     --destructive-foreground: 0 74% 42%;
+    --alert: 355 100% 73%;
+    --alert-foreground: 355 100% 73%;
     --success: 160 86% 60%;
     --success-foreground: 160 86% 60%;
     --warning: 36 100% 67%;
@@ -139,4 +143,49 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-background-clip: text;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ======================================== CircularProgressbar ======================================== */
+
+.CircularProgressbar {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+  stroke: var(--primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease 0s;
+}
+
+.CircularProgressbar .CircularProgressbar-trail {
+  stroke: none;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+  fill: var(--foreground);
+  font-size: 14px;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+.CircularProgressbar .CircularProgressbar-background {
+  fill: var(--background);
+}
+
+.CircularProgressbar.CircularProgressbar-inverted
+  .CircularProgressbar-background {
+  fill: var(--primary);
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-text {
+  fill: var(--text);
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-path {
+  stroke: var(--text);
+}
+
+.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
+  stroke: transparent;
 }

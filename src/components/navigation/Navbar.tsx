@@ -61,11 +61,8 @@ const Navbar = async () => {
             ) : (
               <>
                 <UserAccountNav
-                  name={
-                    !user.first_name && !user.last_name
-                      ? "User"
-                      : `${user.first_name} ${user.last_name}`
-                  }
+                  name={!user.name ? "Username" : `${user.name}`}
+                  full_name={!user.full_name ? "User" : `${user.full_name}`}
                   email={user.email ?? ""}
                   imageUrl={user.image ?? ""}
                   role={user.role ?? ""}

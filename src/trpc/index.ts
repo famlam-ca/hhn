@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { hash } from "bcrypt";
 import { z } from "zod";
@@ -5,60 +6,94 @@ import { z } from "zod";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { db } from "@/db";
 
+const prisma = new PrismaClient();
+
 export const appRouter = router({
   createUser: publicProcedure
     .input(
-      z.object({
-        first_name: z.string().min(2),
-        last_name: z.string().min(2),
-        email: z.string().email().min(3),
-        password: z.string().min(10),
-      }),
+      z
+        .object({
+          name: z
+            .string({ required_error: "Username is required" })
+            .min(3, "Username must be at least 3 characters"),
+          full_name: z
+            .string({ required_error: "Full name is required" })
+            .min(1, "Full name is required")
+            .max(100),
+          email: z.string({ required_error: "Email is required" }),
+          password: z
+            .string({ required_error: "Password is required" })
+            .min(10, "Password must be at least 10 characters!")
+            .max(32, "Password must not be longer than 32 characters!"),
+          passwordConfirm: z.string({
+            required_error: "Please confirm your password",
+          }),
+        })
+        .refine((data) => data.password === data.passwordConfirm, {
+          path: ["passwordConfirm"],
+          message: "Passwords do not match!",
+        }),
     )
-    .mutation(async (opts) => {
-      const { first_name, last_name, email, password } = opts.input;
+    .mutation(async ({ input }) => {
+      try {
+        const hashedPassword = await hash(input.password, 12);
+        const user = await prisma.user.create({
+          data: {
+            name: input.name,
+            full_name: input.full_name,
+            email: input.email,
+            password: hashedPassword,
+          },
+        });
 
-      const dbUser = await db.user.findFirst({
-        where: {
-          email: opts.input.email,
-        },
-      });
-
-      if (dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
-
-      const hashedPassword = await hash(password, 12);
-
-      await db.user.create({
-        data: {
-          first_name,
-          last_name,
-          email,
-          password: hashedPassword,
-        },
-      });
-
-      return { success: true };
+        return {
+          status: "success",
+          data: {
+            user,
+          },
+        };
+      } catch (err: any) {
+        if (err.code === "BAD_REQUEST") {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "Email already exists",
+          });
+        }
+      }
     }),
 
   updateUser: privateProcedure
     .input(
-      z.object({
-        name: z.string().optional(),
-        first_name: z.string().optional(),
-        last_name: z.string().optional(),
-        email: z.string().email().optional(),
-      }),
+      z
+        .object({
+          name: z
+            .string()
+            .min(3, "Username must be at least 3 characters")
+            .max(100)
+            .optional(),
+          full_name: z
+            .string()
+            .min(1, "Full name is required")
+            .max(100)
+            .optional(),
+          email: z
+            .string()
+            .min(1, "Email address is required")
+            .email("Email Address is invalid")
+            .optional(),
+        })
+        .nullish(),
     )
-    .query(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input }) => {
       const dbUser = await db.file.findFirst({
         where: {
           userId: ctx.userId,
         },
       });
 
-      if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+      if (!dbUser) throw new TRPCError({ code: "BAD_REQUEST" });
 
-      const updatedUser = db.user.update({
+      await db.user.update({
         where: {
           id: ctx.userId,
         },
@@ -67,7 +102,7 @@ export const appRouter = router({
         },
       });
 
-      return updatedUser;
+      return { success: true };
     }),
 });
 

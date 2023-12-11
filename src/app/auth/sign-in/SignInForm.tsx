@@ -45,7 +45,6 @@ const SignInForm = () => {
             "The email or password provided is invalid of does not exist!",
           variant: "destructive",
         });
-      } else {
         redirect("/");
       }
     } catch (error: any) {

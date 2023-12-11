@@ -31,10 +31,11 @@ const SignUpForm = () => {
     const res = await fetch(`/api/auth/register`, {
       method: "POST",
       body: JSON.stringify({
-        first_name: formData.get("first_name"),
-        last_name: formData.get("last_name"),
+        name: formData.get("name"),
+        full_name: formData.get("full_name"),
         email: formData.get("email"),
         password: formData.get("password"),
+        passwordConfirm: formData.get("passwordConfirm"),
       }),
     });
 
@@ -61,7 +62,6 @@ const SignUpForm = () => {
       toast({
         title: "Successfully created your account.",
         description: "Welcome to our humble home network.",
-        duration: 500,
       });
 
       setIsLoading(false);
@@ -85,33 +85,34 @@ const SignUpForm = () => {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              First Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="first_name"
-                type="text"
-                placeholder="First Name..."
-                className={`${input_style}`}
-              />
+          <div className="flex justify-between gap-4">
+            <div className="w-full">
+              <label className="block text-sm font-medium leading-6">
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="name"
+                  type="text"
+                  placeholder="Username..."
+                  className={`${input_style}`}
+                />
+              </div>
             </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              Last Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="last_name"
-                type="text"
-                placeholder="Last Name..."
-                className={`${input_style}`}
-              />
+            <div className="w-full">
+              <label className="block text-sm font-medium leading-6">
+                Full Name
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="full_name"
+                  type="text"
+                  placeholder="First Name..."
+                  className={`${input_style}`}
+                />
+              </div>
             </div>
           </div>
 
@@ -128,18 +129,34 @@ const SignUpForm = () => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium leading-6">
-              Password
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                name="password"
-                type="password"
-                placeholder="Password..."
-                className={`${input_style}`}
-              />
+          <div className="flex justify-between gap-4">
+            <div className="w-full">
+              <label className="block text-sm font-medium leading-6">
+                Password
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="password"
+                  type="password"
+                  placeholder="Password..."
+                  className={`${input_style}`}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label className="block text-sm font-medium leading-6">
+                Confirm Password
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="passwordConfirm"
+                  type="password"
+                  placeholder="Confirm Password..."
+                  className={`${input_style}`}
+                />
+              </div>
             </div>
           </div>
 
