@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ArrowUpRight, LogIn, Menu } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Menu } from "lucide-react";
 
-import { SignIn, SignOut } from "../auth/Button";
+import { SignOut } from "../auth/Button";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -16,7 +16,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
 
   useEffect(() => {
     if (isOpen) toggleOpen();
-  }, [pathname]);
+  });
 
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {
