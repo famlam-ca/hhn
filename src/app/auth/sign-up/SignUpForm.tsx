@@ -43,7 +43,7 @@ const SignUpForm = () => {
       toast({
         title: "There was a problem creating your account.",
         description:
-          "An account with this email already exists - Want to sign in instead?",
+          "An account with this email or Username already exists - Want to sign in instead?",
         variant: "destructive",
         action: (
           <Link
@@ -88,7 +88,7 @@ const SignUpForm = () => {
           <div className="flex justify-between gap-4">
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                Username
+                Username*
               </label>
               <div className="mt-2">
                 <input
@@ -106,7 +106,6 @@ const SignUpForm = () => {
               </label>
               <div className="mt-2">
                 <input
-                  required
                   name="full_name"
                   type="text"
                   placeholder="First Name..."
@@ -117,7 +116,9 @@ const SignUpForm = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium leading-6">Email</label>
+            <label className="block text-sm font-medium leading-6">
+              Email*
+            </label>
             <div className="mt-2">
               <input
                 required
@@ -132,7 +133,7 @@ const SignUpForm = () => {
           <div className="flex justify-between gap-4">
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                Password
+                Password*
               </label>
               <div className="mt-2">
                 <input
@@ -146,7 +147,7 @@ const SignUpForm = () => {
             </div>
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                Confirm Password
+                Confirm Password*
               </label>
               <div className="mt-2">
                 <input

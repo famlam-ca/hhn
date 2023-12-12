@@ -62,7 +62,7 @@ const Navbar = async () => {
               <>
                 <UserAccountNav
                   name={!user.name ? "Username" : `${user.name}`}
-                  full_name={!user.full_name ? "User" : `${user.full_name}`}
+                  full_name={!user.full_name ? "" : `${user.full_name}`}
                   email={user.email ?? ""}
                   imageUrl={user.image ?? ""}
                   role={user.role ?? ""}

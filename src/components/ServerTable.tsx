@@ -15,7 +15,7 @@ const ServerTable = async () => {
   );
   myHeaders.append(
     "Cookie",
-    "PVEAuthCookie=PVE:API@pve:6576B5FB::E/K++PolK2l6GlcjhTWga0Rj4kT0rm0jUivtAF++kAfu4Jn81rV2dr6qrHEz2fl0LaxPe71i2+Ld3HrgC3NV0m1DOuHZea5MLCIE5j7pgnPSGxR4I3am9viysuOscQlsPDeMHY0M5p78xsUwnguQgcYG8kQopAkWGcP8V8V4pfq8YLwQfKGIDyOwjgBHqFynXo6hjF7QT31vS5l0oRFFmK3k35QwGGk+hkIdqnprf6ME44UELHb3LSVoibyt9AOfUWbZIPZQlumSyRjlZGdJ5bg0eabt6879pbeM/D+7EK+HXqZGuZ1Kixq9b3p7nOp24zlZu8dkjeLWpNA/oUcdQQ==",
+    "PVEAuthCookie=PVE:API@pve:6577B88A::Jz3+MgANvRyeyl/FE9GWhg2jMFrN8G0rfWj5YqH/7lIevfPVqhwaHRPDNkciHrIAr9qT0sV4Ljf4kMMhtsAQymCsreMD8QZSuycWlXUVvjASal8XZAENSYsT1S+OeyFScDwmJQ/ZIQA1yUMXx3cqjFtai0Q2z/4KLQXofaqI7kWMZswNDtQEhsq2ockTIa5KNGLW1S0U/vT01wt5WRd+txhE12QGbCVDIkmD5he6zhaJNl7ManeHkbC0B/pYslselB4cOBFmUlD/L1OekUH+pUfgA6fgsv0Z2ihq9ZwfqzQJqfBFHuPNm19DgiynnOrGymVr3oLGpi3lOA5wMUebIw==",
   );
 
   const requestOptions = {
@@ -36,10 +36,10 @@ const ServerTable = async () => {
       const seconds = uptimeInSeconds % 60;
 
       return `
-      ${hours}h
-      ${minutes}m
-      ${seconds}s
-      `;
+        ${hours}h
+        ${minutes}m
+        ${seconds}s
+        `;
     };
 
     return (

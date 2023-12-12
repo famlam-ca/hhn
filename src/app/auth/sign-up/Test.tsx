@@ -120,7 +120,7 @@ const Test = () => {
             <div className="flex justify-between gap-4">
               <div className="w-full">
                 <label className="block text-sm font-medium leading-6">
-                  Username
+                  Username*
                 </label>
                 <div className="mt-2">
                   <input
@@ -150,7 +150,7 @@ const Test = () => {
 
             <div>
               <label className="block text-sm font-medium leading-6">
-                Email
+                Email*
               </label>
               <div className="mt-2">
                 <input
@@ -166,7 +166,7 @@ const Test = () => {
             <div className="flex justify-between gap-4">
               <div className="w-full">
                 <label className="block text-sm font-medium leading-6">
-                  Password
+                  Password*
                 </label>
                 <div className="mt-2">
                   <input
@@ -180,7 +180,7 @@ const Test = () => {
               </div>
               <div className="w-full">
                 <label className="block text-sm font-medium leading-6">
-                  Confirm Password
+                  Confirm Password*
                 </label>
                 <div className="mt-2">
                   <input
