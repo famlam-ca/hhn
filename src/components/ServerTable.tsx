@@ -15,7 +15,7 @@ const ServerTable = async () => {
   );
   myHeaders.append(
     "Cookie",
-    "PVEAuthCookie=PVE:API@pve:6577B88A::Jz3+MgANvRyeyl/FE9GWhg2jMFrN8G0rfWj5YqH/7lIevfPVqhwaHRPDNkciHrIAr9qT0sV4Ljf4kMMhtsAQymCsreMD8QZSuycWlXUVvjASal8XZAENSYsT1S+OeyFScDwmJQ/ZIQA1yUMXx3cqjFtai0Q2z/4KLQXofaqI7kWMZswNDtQEhsq2ockTIa5KNGLW1S0U/vT01wt5WRd+txhE12QGbCVDIkmD5he6zhaJNl7ManeHkbC0B/pYslselB4cOBFmUlD/L1OekUH+pUfgA6fgsv0Z2ihq9ZwfqzQJqfBFHuPNm19DgiynnOrGymVr3oLGpi3lOA5wMUebIw==",
+    "PVEAuthCookie=PVE:API@pve:6577DAD4::mOnm6l0IuCCiLoxKUAZbXPP9gImsA/0i3NptTeCcOkL0dru5lvb3yr0o1aotMMuutv3c/+lE+ZW28c6o37WN5KaOWLoec5g/yJ4wkSYSflK8oXyLDplTQCSjfd5ICf7U4F6sX58MebLxG9oHjUAg+ZASfPVK+7PjB5zm4mhwrv/us2dlwr8CTHxOpbKXoQEZgujEggXZShpZVTLH2mIvsB06bM/1Axx2vZXy5c5V1q9rg25o0eqoPIffsGqqG7AykhNC8coZD7/4mJPAiJrXeprxCRgjpSSM/53T0q0ugPqK6iMDquQRbpDtyTI2HK3GjR1oBT/nZ+ajMbNDZHnTuQ==",
   );
 
   const requestOptions = {
@@ -27,8 +27,10 @@ const ServerTable = async () => {
   const URL = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
 
   try {
-    const response = await fetch(URL, requestOptions);
-    const { data: serverDataList } = await response.json();
+    const res = await fetch(URL, requestOptions);
+    const { data: serverDataList } = await res.json();
+
+    serverDataList.sort((a: any, b: any) => a.name.localeCompare(b.name));
 
     const formatUptime = (uptimeInSeconds: any) => {
       const hours = Math.floor(uptimeInSeconds / 3600);
