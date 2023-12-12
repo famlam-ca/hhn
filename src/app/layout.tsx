@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-// import "react-loading-skeleton/dist/skeleton.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import "react-circular-progressbar/dist/styles.css";
 
 import { cn } from "@/lib/utils";

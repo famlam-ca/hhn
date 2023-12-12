@@ -1,3 +1,5 @@
+import Skeleton from "react-loading-skeleton";
+
 import {
   Table,
   TableBody,
@@ -15,7 +17,7 @@ const ServerTable = async () => {
   );
   myHeaders.append(
     "Cookie",
-    "PVEAuthCookie=PVE:API@pve:6577DAD4::mOnm6l0IuCCiLoxKUAZbXPP9gImsA/0i3NptTeCcOkL0dru5lvb3yr0o1aotMMuutv3c/+lE+ZW28c6o37WN5KaOWLoec5g/yJ4wkSYSflK8oXyLDplTQCSjfd5ICf7U4F6sX58MebLxG9oHjUAg+ZASfPVK+7PjB5zm4mhwrv/us2dlwr8CTHxOpbKXoQEZgujEggXZShpZVTLH2mIvsB06bM/1Axx2vZXy5c5V1q9rg25o0eqoPIffsGqqG7AykhNC8coZD7/4mJPAiJrXeprxCRgjpSSM/53T0q0ugPqK6iMDquQRbpDtyTI2HK3GjR1oBT/nZ+ajMbNDZHnTuQ==",
+    "PVEAuthCookie=PVE:API@pve:6577FC87::GqGeqnz7ITI2uiv6mLhk8ghmJoCv0VTCYaN+3UuakQQ8GgaRgI7KTH7ViH8orlVAAQn0vL80Ri0GeRoVXSu440PX6F2b6Dbmvz67RHGOdR7OFnd2yiz3P7Q/c0r+yuK+bSIKRlbgdWGsNpv7FGvwMzu52cS75ZrxLxWIx0PADQKlg60hw71nRbKkrDVQm32Ozo6VLMaDme/Ah2lqUvB1Mv2DjDxemM1QKiFn/9CRSlRiISrsiv1sLmYkUcRT1S/tJADg/pODTfLnkszg1EEl2q4nFt89TWGIppyjAFPQ0ScxJlD6kR6KuqNjicetiU0GAPLdUXl5LSL/90NJva7nVg==",
   );
 
   const requestOptions = {
@@ -57,64 +59,74 @@ const ServerTable = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {serverDataList.map((serverData: any) => {
-              const data = {
-                serverName: serverData.name,
-                status: serverData.status,
-                cpuUsage: `${(serverData.cpu * 100).toFixed(2)}`,
-                memoryUsage: `${(serverData.mem / (1024 * 1024)).toFixed(2)}`,
-                uptime: formatUptime(serverData.uptime),
-              };
+            {!serverDataList ? (
+              <Skeleton height={40} count={8} className="my-2" />
+            ) : (
+              <>
+                {serverDataList.map((serverData: any) => {
+                  const data = {
+                    serverName: serverData.name,
+                    status: serverData.status,
+                    cpuUsage: `${(serverData.cpu * 100).toFixed(2)}`,
+                    memoryUsage: `${(serverData.mem / (1024 * 1024)).toFixed(
+                      2,
+                    )}`,
+                    uptime: formatUptime(serverData.uptime),
+                  };
 
-              return (
-                <TableRow key={serverData.vmid}>
-                  <TableCell
-                    className={
-                      data.status === "running"
-                        ? "capitalize text-success max-sm:hidden"
-                        : "capitalize text-alert max-sm:hidden"
-                    }
-                  >
-                    {data.status}
-                  </TableCell>
+                  return (
+                    <TableRow key={serverData.vmid}>
+                      <TableCell
+                        className={
+                          data.status === "running"
+                            ? "capitalize text-success max-sm:hidden"
+                            : "capitalize text-alert max-sm:hidden"
+                        }
+                      >
+                        {data.status}
+                      </TableCell>
 
-                  <TableCell className="capitalize">
-                    {data.serverName}
-                  </TableCell>
+                      <TableCell className="capitalize">
+                        {data.serverName}
+                      </TableCell>
 
-                  <TableCell
-                    className={
-                      parseFloat(data.cpuUsage) <= 50
-                        ? "text-success"
-                        : parseFloat(data.cpuUsage) > 50
-                          ? "text-warning"
-                          : parseFloat(data.cpuUsage) >= 75
-                            ? "text-alert"
-                            : "text-text"
-                    }
-                  >
-                    {data.cpuUsage}
-                  </TableCell>
+                      <TableCell
+                        className={
+                          parseFloat(data.cpuUsage) <= 50
+                            ? "text-success"
+                            : parseFloat(data.cpuUsage) > 50
+                              ? "text-warning"
+                              : parseFloat(data.cpuUsage) >= 75
+                                ? "text-alert"
+                                : "text-text"
+                        }
+                      >
+                        {data.cpuUsage}
+                      </TableCell>
 
-                  <TableCell
-                    className={
-                      parseFloat(data.memoryUsage) <= 50 // 2048
-                        ? "text-success"
-                        : parseFloat(data.memoryUsage) > 50 // 4096
-                          ? "text-warning"
-                          : parseFloat(data.memoryUsage) >= 75 // 6144
-                            ? "text-alert"
-                            : "text-text"
-                    }
-                  >
-                    {data.memoryUsage} MB
-                  </TableCell>
+                      <TableCell
+                        className={
+                          parseFloat(data.memoryUsage) <= 50 // 2048
+                            ? "text-success"
+                            : parseFloat(data.memoryUsage) > 50 // 4096
+                              ? "text-warning"
+                              : parseFloat(data.memoryUsage) >= 75 // 6144
+                                ? "text-alert"
+                                : "text-text"
+                        }
+                      >
+                        {data.memoryUsage} MB
+                      </TableCell>
 
-                  <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
-                  <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-                </TableRow>
-              );
-            })}
+                      <TableCell className="max-lg:hidden">
+                        {data.uptime}
+                      </TableCell>
+                      <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
+                    </TableRow>
+                  );
+                })}
+              </>
+            )}
           </TableBody>
         </Table>
       </>
