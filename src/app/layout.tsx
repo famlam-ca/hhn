@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-import "react-loading-skeleton/dist/skeleton.css";
 import "react-circular-progressbar/dist/styles.css";
 
 import { cn } from "@/lib/utils";
@@ -22,7 +21,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html
+      lang="en"
+      className="dark"
+      // suppressHydrationWarning
+    >
       <body
         className={cn(
           "min-h-screen font-sans text-text antialiased",
