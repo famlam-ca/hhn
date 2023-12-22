@@ -44,25 +44,7 @@ const ServerTable = async () => {
 
                 return (
                   <TableRow key={serverData.vmid}>
-                    {!serverDataList ? ( // dynamically render skeletons
-                      <>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                      </>
-                    ) : (
+                    {!!serverDataList ? ( // dynamically render skeletons
                       <>
                         <TableCell
                           className={
@@ -110,6 +92,24 @@ const ServerTable = async () => {
                           {data.uptime}
                         </TableCell>
                         <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell>
+                          <Skeleton className="h-5" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-5" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-5" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-5" />
+                        </TableCell>
+                        <TableCell>
+                          <Skeleton className="h-5" />
+                        </TableCell>
                       </>
                     )}
                   </TableRow>
