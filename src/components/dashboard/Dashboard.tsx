@@ -23,7 +23,7 @@ const Dashboard = async () => {
           </small>
         </div>
         <UserAccountNav
-          name={!user.name ? "Username" : `${user.name}`}
+          name={!user.name ? "" : user.name}
           full_name={!user.full_name ? "User" : `${user.full_name}`}
           email={user.email ?? ""}
           imageUrl={user.image ?? ""}

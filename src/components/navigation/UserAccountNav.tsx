@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import {
   Cloud,
   LifeBuoy,
@@ -10,9 +8,13 @@ import {
   Settings,
   User,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Avatar, AvatarFallback } from "../ui/Avatar";
-import { Button } from "../ui/Button";
+import { Icons } from "@/components/Icons";
+import { SignOut } from "@/components/auth/Button";
+import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { Button } from "@/components/ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,9 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/DropdownMenu";
-import { Icons } from "../Icons";
-import { SignOut } from "../auth/Button";
+} from "@/components/ui/DropdownMenu";
 import { ThemeToggle } from "@/hooks/useTheme";
 
 interface UserAccountNavProps {
@@ -34,7 +34,7 @@ interface UserAccountNavProps {
   role: string;
 }
 
-const UserAccountNav = ({
+const UserAccountNav = async ({
   email,
   imageUrl,
   name,
@@ -93,7 +93,7 @@ const UserAccountNav = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href="/account/profile">
+            <Link href={`/account/${name}`}>
               <User className="mr-2 h-5 w-5" />
               Profile
             </Link>

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "./globals.css";
 import "react-circular-progressbar/dist/styles.css";
+import "./globals.css";
 
 import { cn } from "@/lib/utils";
 import Providers from "@/providers/providers";
-import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,10 +31,7 @@ export default function RootLayout({
           inter.className,
         )}
       >
-        <Providers>
-          {children}
-          <Footer />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

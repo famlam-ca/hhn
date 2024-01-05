@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 
 import Navbar from "@/components/navigation/Navbar";
+import Footer from "./_components/Footer";
 
 const NavbarLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -68,6 +69,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
 
       <Navbar />
       {children}
+      <Footer />
     </>
   );
 };

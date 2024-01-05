@@ -57,7 +57,7 @@ const Sidebar = ({ children }: PropsWithChildren) => {
         icon: User,
         label: "Profile",
         active: pathname === "/account/profile",
-        href: "/account/profile",
+        href: `/account/${user?.name}`,
       },
       {
         icon: Mail,
