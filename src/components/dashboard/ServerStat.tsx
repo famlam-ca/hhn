@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { useEffect, useState } from "react";
+import { ProgressCircle } from "@tremor/react";
 
 const Progressbar = () => {
   const [num, setNum] = useState<number>(0);
@@ -26,8 +26,10 @@ const Progressbar = () => {
   const percentage = num;
 
   return (
-    <div>
-      <CircularProgressbar value={percentage} text={`${num}%`} />
+    <div className="flex h-28 items-center justify-center ">
+      <ProgressCircle value={percentage} size="xl">
+        <span className="text-xl text-primary">{`${num}%`}</span>
+      </ProgressCircle>
     </div>
   );
 };

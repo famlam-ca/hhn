@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import UserAccountNav from "@/components/navigation/UserAccountNav";
-import ServerTable from "./ServerTable";
-import MobileNav from "../navigation/MobileNav";
-import ServerCards from "./ServerCard";
+import MobileNav from "@/components/navigation/MobileNav";
+import ServerTable from "@/components/dashboard/ServerTable";
+import ServerCards from "@/components/dashboard/ServerCard";
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ const Dashboard = async () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <MobileNav isAuth={!!user} />
-        <div>
+        <div className="text-center sm:text-left">
           <h1 className="text-3xl font-extrabold">Dashboard</h1>
           <small className="text-xs text-muted">
             Server Hardware Statistics

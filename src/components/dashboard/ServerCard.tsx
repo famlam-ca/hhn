@@ -11,9 +11,7 @@ const ServerCards = () => {
         <Cpu className="h-10 w-10 rounded-full bg-primary p-2" />
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">CPU Usage</h3>
-          <div className="h-28 w-28">
-            <ServerStat />
-          </div>
+          <ServerStat />
         </div>
         <small className="text-muted">Last 5 min</small>
       </Box>
@@ -23,9 +21,7 @@ const ServerCards = () => {
         <MemoryStick className="h-10 w-10 rounded-full bg-alert p-2" />
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">Memory Usage</h3>
-          <div className="h-28 w-28">
-            <ServerStat />
-          </div>
+          <ServerStat />
         </div>
         <small className="text-muted">Last 5 min</small>
       </Box>
@@ -35,9 +31,7 @@ const ServerCards = () => {
         <Database className="h-10 w-10 rounded-full bg-success p-2" />
         <div className="flex items-center justify-between">
           <h3 className="font-semibold">Disk Usage</h3>
-          <div className="h-28 w-28">
-            <ServerStat />
-          </div>
+          <ServerStat />
         </div>
         <small className="text-muted">Last 5 min</small>
       </Box>

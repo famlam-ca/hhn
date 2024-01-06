@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "react-circular-progressbar/dist/styles.css";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";

@@ -1,4 +1,4 @@
-import Box from "../Box";
+import Box from "@/components/Box";
 import {
   Table,
   TableBody,
@@ -7,9 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Skeleton } from "../ui/Skeleton";
+import { serverData, startInterval } from "@/server/ProxmoxAPI";
 import { ServerData } from "@/types/types";
-import { serverData, startInterval } from "../../../server/ProxmoxAPI";
 
 const ServerTable = async () => {
   const URL = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
@@ -44,74 +43,52 @@ const ServerTable = async () => {
 
                 return (
                   <TableRow key={serverData.vmid}>
-                    {!!serverDataList ? ( // dynamically render skeletons
-                      <>
-                        <TableCell
-                          className={
-                            data.status === "running"
-                              ? "capitalize text-success max-sm:hidden"
-                              : "capitalize text-alert max-sm:hidden"
-                          }
-                        >
-                          {data.status}
-                        </TableCell>
+                    <TableCell
+                      className={
+                        data.status === "running"
+                          ? "capitalize text-success max-sm:hidden"
+                          : "capitalize text-alert max-sm:hidden"
+                      }
+                    >
+                      {data.status}
+                    </TableCell>
 
-                        <TableCell className="capitalize">
-                          {data.serverName}
-                        </TableCell>
+                    <TableCell className="capitalize">
+                      {data.serverName}
+                    </TableCell>
 
-                        <TableCell
-                          className={
-                            parseFloat(data.cpuUsage) <= 50
-                              ? "text-success"
-                              : parseFloat(data.cpuUsage) > 50
-                                ? "text-warning"
-                                : parseFloat(data.cpuUsage) >= 75
-                                  ? "text-alert"
-                                  : "text-text"
-                          }
-                        >
-                          {data.cpuUsage}
-                        </TableCell>
+                    <TableCell
+                      className={
+                        parseFloat(data.cpuUsage) <= 50
+                          ? "text-success"
+                          : parseFloat(data.cpuUsage) > 50
+                            ? "text-warning"
+                            : parseFloat(data.cpuUsage) >= 75
+                              ? "text-alert"
+                              : "text-text"
+                      }
+                    >
+                      {data.cpuUsage}
+                    </TableCell>
 
-                        <TableCell
-                          className={
-                            parseFloat(data.memoryUsage) <= 50 // 2048
-                              ? "text-success"
-                              : parseFloat(data.memoryUsage) > 50 // 4096
-                                ? "text-warning"
-                                : parseFloat(data.memoryUsage) >= 75 // 6144
-                                  ? "text-alert"
-                                  : "text-text"
-                          }
-                        >
-                          {data.memoryUsage} MB
-                        </TableCell>
+                    <TableCell
+                      className={
+                        parseFloat(data.memoryUsage) <= 50 // 2048
+                          ? "text-success"
+                          : parseFloat(data.memoryUsage) > 50 // 4096
+                            ? "text-warning"
+                            : parseFloat(data.memoryUsage) >= 75 // 6144
+                              ? "text-alert"
+                              : "text-text"
+                      }
+                    >
+                      {data.memoryUsage} MB
+                    </TableCell>
 
-                        <TableCell className="max-lg:hidden">
-                          {data.uptime}
-                        </TableCell>
-                        <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-                      </>
-                    ) : (
-                      <>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton className="h-5" />
-                        </TableCell>
-                      </>
-                    )}
+                    <TableCell className="max-lg:hidden">
+                      {data.uptime}
+                    </TableCell>
+                    <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
                   </TableRow>
                 );
               })}
@@ -122,7 +99,7 @@ const ServerTable = async () => {
     );
   } catch (error) {
     console.error("Error fetching server data:", error); // debug
-    return null;
+    throw new Error("Error fetching server data");
   }
 };
 

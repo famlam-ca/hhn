@@ -1,4 +1,3 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient, User } from "@prisma/client";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
@@ -8,7 +7,6 @@ const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/auth/sign-in",
     // signOut: "/auth/sign-out",
