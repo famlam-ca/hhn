@@ -16,10 +16,10 @@ import {
   User,
 } from "lucide-react";
 
-import Box from "../Box";
-import { Icons } from "../Icons";
-import SidebarItem from "./SidebarItem";
-import { SignIn, SignOut } from "../auth/Button";
+import SidebarItem from "./sidebar-item";
+import Box from "@/components/box";
+import { Icons } from "@/components/icons";
+import { SignIn, SignOut } from "@/components/auth-button";
 
 const Sidebar = ({ children }: PropsWithChildren) => {
   const { data: session } = useSession();
@@ -72,7 +72,7 @@ const Sidebar = ({ children }: PropsWithChildren) => {
         href: "/account/settings",
       },
     ],
-    [pathname],
+    [pathname, user?.name],
   );
 
   return (

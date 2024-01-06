@@ -1,6 +1,6 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import SignUpForm from "./SignUpForm";
-import Test from "./Test";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import SignUpForm from "./_components/sign-up-form";
+// import Test from "./_components/test";
 
 const Page = () => {
   return (

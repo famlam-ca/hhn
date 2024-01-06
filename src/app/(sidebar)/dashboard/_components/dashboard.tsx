@@ -1,13 +1,14 @@
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/auth/authOptions";
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import UserAccountNav from "@/components/navigation/UserAccountNav";
-import MobileNav from "@/components/navigation/MobileNav";
-import ServerTable from "@/components/dashboard/ServerTable";
-import ServerCards from "@/components/dashboard/ServerCard";
+import { authOptions } from "@/lib/auth/auth-options";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { UserNav } from "@/components/navigation/user-nav";
+import MobileNav from "@/components/navigation/mobile-nav";
 
-const Dashboard = async () => {
+import ServerCards from "./server-card";
+import ServerTable from "./server-table";
+
+export const Dashboard = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user!;
 
@@ -22,9 +23,13 @@ const Dashboard = async () => {
             Server Hardware Statistics
           </small>
         </div>
-        <UserAccountNav
+        <UserNav
           name={!user.name ? "" : user.name}
-          full_name={!user.full_name ? "User" : `${user.full_name}`}
+          full_name={
+            !user.first_name && user.last_name
+              ? ""
+              : `${user.first_name} ${user.last_name}`
+          }
           email={user.email ?? ""}
           imageUrl={user.image ?? ""}
           role={user.role ?? ""}
@@ -44,5 +49,3 @@ const Dashboard = async () => {
     </MaxWidthWrapper>
   );
 };
-
-export default Dashboard;

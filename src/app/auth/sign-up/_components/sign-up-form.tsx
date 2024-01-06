@@ -4,11 +4,11 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Loader2, LogIn } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { Button, buttonVariants } from "@/components/ui/Button";
-import { Icons } from "@/components/Icons";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
 
 const SignUpForm = () => {
   const { data: session } = useSession();
@@ -43,7 +43,7 @@ const SignUpForm = () => {
       toast({
         title: "There was a problem creating your account.",
         description:
-          "An account with this email or Username already exists - Want to sign in instead?",
+          "An account with this email or name already exists - Want to sign in instead?",
         variant: "destructive",
         action: (
           <Link
@@ -88,14 +88,14 @@ const SignUpForm = () => {
           <div className="flex justify-between gap-4">
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                Username*
+                name*
               </label>
               <div className="mt-2">
                 <input
                   required
                   name="name"
                   type="text"
-                  placeholder="Username..."
+                  placeholder="name..."
                   className={`${input_style}`}
                 />
               </div>

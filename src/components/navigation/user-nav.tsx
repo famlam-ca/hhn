@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
 import {
   Cloud,
   LifeBuoy,
@@ -8,13 +11,12 @@ import {
   Settings,
   User,
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 
-import { Icons } from "@/components/Icons";
-import { SignOut } from "@/components/auth/Button";
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
-import { Button } from "@/components/ui/Button";
+import { authOptions } from "@/lib/auth/auth-options";
+import { ThemeToggle } from "@/hooks/use-theme";
+import { Icons } from "@/components/icons";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,10 +25,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
-import { ThemeToggle } from "@/hooks/useTheme";
+} from "@/components/ui/dropdown-menu";
 
-interface UserAccountNavProps {
+import { SignOut } from "../auth-button";
+
+interface UserNavProps {
   email: string | undefined;
   imageUrl: string;
   name: string;
@@ -34,13 +37,16 @@ interface UserAccountNavProps {
   role: string;
 }
 
-const UserAccountNav = async ({
+export const UserNav = async ({
   email,
   imageUrl,
   name,
   full_name,
   role,
-}: UserAccountNavProps) => {
+}: UserNavProps) => {
+  const session = await getServerSession(authOptions);
+  const user = session?.user!;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -74,7 +80,7 @@ const UserAccountNav = async ({
               {name && <p className="text-sm font-medium text-text">{name}</p>}
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
-                  {full_name}
+                  {user?.first_name} {user?.last_name}
                 </p>
               )}
             </div>
@@ -174,5 +180,3 @@ const UserAccountNav = async ({
     </DropdownMenu>
   );
 };
-
-export default UserAccountNav;

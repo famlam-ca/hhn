@@ -2,13 +2,13 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { ArrowUpRight, LogIn } from "lucide-react";
 
-import MaxWidtHWrapper from "../MaxWidthWrapper";
-import { Icons } from "../Icons";
-import { SignIn } from "../auth/Button";
-import { buttonVariants } from "../ui/Button";
-import UserAccountNav from "./UserAccountNav";
-import { authOptions } from "@/lib/auth/authOptions";
-import MobileNav from "./MobileNav";
+import { authOptions } from "@/lib/auth/auth-options";
+import MaxWidtHWrapper from "@/components/max-width-wrapper";
+import { Icons } from "@/components/icons";
+import { SignIn } from "@/components/auth-button";
+import { buttonVariants } from "@/components/ui/button";
+import { UserNav } from "@/components/navigation/user-nav";
+import MobileNav from "@/components/navigation/mobile-nav";
 
 const style =
   "relative tracking-wide after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition after:content-[''] hover:after:origin-bottom-left hover:after:scale-100";
@@ -60,9 +60,13 @@ const Navbar = async () => {
               </SignIn>
             ) : (
               <>
-                <UserAccountNav
-                  name={!user.name ? "Username" : `${user.name}`}
-                  full_name={!user.full_name ? "" : `${user.full_name}`}
+                <UserNav
+                  name={!user.name ? "" : user.name}
+                  full_name={
+                    !user.first_name && user.last_name
+                      ? ""
+                      : `${user.first_name} ${user.last_name}`
+                  }
                   email={user.email ?? ""}
                   imageUrl={user.image ?? ""}
                   role={user.role ?? ""}

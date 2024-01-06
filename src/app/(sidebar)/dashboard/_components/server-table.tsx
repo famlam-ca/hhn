@@ -1,4 +1,4 @@
-import Box from "@/components/Box";
+import Box from "@/components/box";
 import {
   Table,
   TableBody,
@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { serverData, startInterval } from "@/server/ProxmoxAPI";
+import { serverData, startInterval } from "@/server/proxmox-api";
 import { ServerData } from "@/types/types";
 
 const ServerTable = async () => {

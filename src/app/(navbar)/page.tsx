@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, GraduationCap, Server } from "lucide-react";
 
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { buttonVariants } from "@/components/ui/Button";
-import Wrapper from "@/components/Wrapper";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { buttonVariants } from "@/components/ui/button";
+import Wrapper from "@/components/wrapper";
 
 export default function Home() {
   return (
@@ -56,7 +56,7 @@ export default function Home() {
               H<span className="text-primary">HN</span>
             </h2>
             {/* fake text-balance until added to tailwind */}
-            <p className="text-balance mt-4 text-lg text-muted">
+            <p className="mt-4 text-balance text-lg text-muted">
               Stay and explore for a while. Around here you can learn about my
               current and past projects.
             </p>

@@ -1,6 +1,6 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import Wrapper from "@/components/Wrapper";
-import { Button } from "@/components/ui/Button";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import Wrapper from "@/components/wrapper";
+import { Button } from "@/components/ui/button";
 
 const Page = () => {
   return (

@@ -9,8 +9,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/sign-in",
-    // signOut: "/auth/sign-out",
-    // error: "/auth/error",
+    // error: "/error",
   },
   providers: [
     CredentialsProvider({
@@ -69,6 +68,7 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
+          username: token.name,
           full_name: token.full_name,
           role: token.role,
         },
@@ -82,6 +82,7 @@ export const authOptions: NextAuthOptions = {
           ...u,
           ...token,
           id: u.id,
+          username : u.name,
           full_name: u.full_name,
           role: u.role,
         };

@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
-import { Icons } from "@/components/Icons";
-import { Button } from "@/components/ui/Button";
+import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
 const SignInForm = () => {

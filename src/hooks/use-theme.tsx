@@ -6,7 +6,7 @@ import { Moon, Sun } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { Switch } from "@/components/ui/Switch";
+import { Switch } from "@/components/ui/switch";
 
 export const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();

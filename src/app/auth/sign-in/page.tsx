@@ -1,5 +1,5 @@
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import SignInForm from "./SignInForm";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import SignInForm from "./_components/sign-in-form";
 
 const Page = () => {
   return (

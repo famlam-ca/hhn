@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, LogIn } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { Button, buttonVariants } from "@/components/ui/Button";
-import { Icons } from "@/components/Icons";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
 import { trpc } from "@/app/_trpc/client";
 
 const registerSchema = z

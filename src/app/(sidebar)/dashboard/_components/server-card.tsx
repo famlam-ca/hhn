@@ -1,7 +1,8 @@
 import { Cpu, Database, MemoryStick } from "lucide-react";
 
-import Box from "@/components/Box";
-import ServerStat from "./ServerStat";
+import Box from "@/components/box";
+
+import ServerStat from "./server-stat";
 
 const ServerCards = () => {
   return (

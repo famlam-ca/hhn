@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 
-import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/HoverCard";
-import { Button } from "@/components/ui/Button";
-import Wrapper from "@/components/Wrapper";
+} from "@/components/ui/hover-card";
+import { Button } from "@/components/ui/button";
+import Wrapper from "@/components/wrapper";
 
 const AboutContent = () => {
   return (
