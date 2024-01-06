@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -88,30 +88,44 @@ const SignUpForm = () => {
           <div className="flex justify-between gap-4">
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-              Username*
+                First Name
               </label>
               <div className="mt-2">
                 <input
-                  required
-                  name="username"
+                  name="first_name"
                   type="text"
-                  placeholder="Username..."
+                  placeholder="First Name..."
                   className={`${input_style}`}
                 />
               </div>
             </div>
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                Full Name
+                Last Name
               </label>
               <div className="mt-2">
                 <input
-                  name="full_name"
+                  name="last_name"
                   type="text"
-                  placeholder="Full Name..."
+                  placeholder="Last Name..."
                   className={`${input_style}`}
                 />
               </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium leading-6">
+              Username*
+            </label>
+            <div className="mt-2">
+              <input
+                required
+                name="username"
+                type="text"
+                placeholder="Username..."
+                className={`${input_style}`}
+              />
             </div>
           </div>
 
@@ -192,5 +206,3 @@ const SignUpForm = () => {
     </div>
   );
 };
-
-export default SignUpForm;

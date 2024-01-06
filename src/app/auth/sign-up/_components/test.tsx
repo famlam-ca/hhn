@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -16,8 +16,12 @@ import { trpc } from "@/app/_trpc/client";
 
 const registerSchema = z
   .object({
-    username: z.string().min(3, "Username must be at least 3 characters").max(100),
-    full_name: z.string().min(1, "Full name is required").max(100),
+    username: z
+      .string()
+      .min(3, "Username must be at least 3 characters")
+      .max(100),
+    first_name: z.string().max(100),
+    last_name: z.string().max(100),
     email: z
       .string()
       .min(1, "Email address is required")
@@ -36,7 +40,9 @@ const registerSchema = z
 
 export type RegisterInput = TypeOf<typeof registerSchema>;
 
-const Test = () => {
+export const Test = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -47,10 +53,10 @@ const Test = () => {
     redirect("/");
   }
 
-  const { mutate: createUser, isLoading } = trpc.createUser.useMutation({
+  const { mutate: createUser } = trpc.createUser.useMutation({
     onSuccess: (data) => {
       toast({
-        title: `Welcome ${data?.data.user.full_name}`,
+        title: `Welcome ${data?.data.user.first_name} ${data?.data.user.last_name}!`,
         description: "Enjoy your stay!",
       });
       router.push("/auth/sign-in");
@@ -96,8 +102,12 @@ const Test = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful]);
 
-  const onSubmitHandler: SubmitHandler<RegisterInput> = (values) => {
-    createUser(values);
+  const onSubmitHandler: SubmitHandler<RegisterInput> = async (values) => {
+    try {
+      await createUser({ ...values, passwordConfirm: values.passwordConfirm });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const input_style =
@@ -116,35 +126,48 @@ const Test = () => {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmitHandler)} className="space-y-6">
+          <form className="space-y-6">
             <div className="flex justify-between gap-4">
               <div className="w-full">
                 <label className="block text-sm font-medium leading-6">
-                  Username*
+                  First Name
                 </label>
                 <div className="mt-2">
                   <input
-                    required
-                    name="username"
+                    name="first_name"
                     type="text"
-                    placeholder="Username..."
+                    placeholder="First Name..."
                     className={`${input_style}`}
                   />
                 </div>
               </div>
               <div className="w-full">
                 <label className="block text-sm font-medium leading-6">
-                  Full Name
+                  Last Name
                 </label>
                 <div className="mt-2">
                   <input
-                    required
-                    name="full_name"
+                    name="last_name"
                     type="text"
-                    placeholder="Full Name..."
+                    placeholder="Last Name..."
                     className={`${input_style}`}
                   />
                 </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium leading-6">
+                Username*
+              </label>
+              <div className="mt-2">
+                <input
+                  required
+                  name="username"
+                  type="text"
+                  placeholder="Username..."
+                  className={`${input_style}`}
+                />
               </div>
             </div>
 
@@ -197,6 +220,7 @@ const Test = () => {
             <div>
               <Button
                 type="submit"
+                onSubmit={handleSubmit(onSubmitHandler)}
                 disabled={isLoading}
                 className="w-full uppercase shadow-md"
               >
@@ -226,5 +250,3 @@ const Test = () => {
     </div>
   );
 };
-
-export default Test;

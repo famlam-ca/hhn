@@ -5,8 +5,8 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { UserNav } from "@/components/navigation/user-nav";
 import MobileNav from "@/components/navigation/mobile-nav";
 
-import ServerCards from "./server-card";
-import ServerTable from "./server-table";
+import { ServerCards } from "./server-card";
+import { ServerTable } from "./server-table";
 
 export const Dashboard = async () => {
   const session = await getServerSession(authOptions);
@@ -25,11 +25,7 @@ export const Dashboard = async () => {
         </div>
         <UserNav
           name={!user.username ? "" : user.username}
-          full_name={
-            !user.full_name
-              ? ""
-              : `${user.full_name}`
-          }
+          full_name={!user.full_name ? "" : `${user.full_name}`}
           email={user.email ?? ""}
           imageUrl={user.image ?? ""}
           role={user.role ?? ""}

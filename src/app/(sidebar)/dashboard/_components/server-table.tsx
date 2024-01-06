@@ -10,7 +10,7 @@ import {
 import { serverData, startInterval } from "@/server/proxmox-api";
 import { ServerData } from "@/types/types";
 
-const ServerTable = async () => {
+export const ServerTable = async () => {
   const URL = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
 
   try {
@@ -102,5 +102,3 @@ const ServerTable = async () => {
     throw new Error("Error fetching server data");
   }
 };
-
-export default ServerTable;

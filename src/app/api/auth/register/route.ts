@@ -4,8 +4,14 @@ import { db } from "@/db";
 
 export async function POST(request: Request) {
   try {
-    const { username, full_name, email, password, passwordConfirm } =
-      await request.json();
+    const {
+      username,
+      first_name,
+      last_name,
+      email,
+      password,
+      passwordConfirm,
+    } = await request.json();
 
     if (!username || !email || !password || !passwordConfirm) {
       return new NextResponse("Missing fields!", { status: 400 });
@@ -32,7 +38,8 @@ export async function POST(request: Request) {
     const res = await db.user.create({
       data: {
         username,
-        full_name,
+        first_name,
+        last_name,
         email,
         password: hashedPassword,
       },

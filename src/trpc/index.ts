@@ -3,8 +3,9 @@ import { TRPCError } from "@trpc/server";
 import { hash } from "bcrypt";
 import { z } from "zod";
 
-import { privateProcedure, publicProcedure, router } from "./trpc";
 import { db } from "@/db";
+
+import { privateProcedure, publicProcedure, router } from "./trpc";
 
 const prisma = new PrismaClient();
 
@@ -16,17 +17,15 @@ export const appRouter = router({
           username: z
             .string({ required_error: "Username is required" })
             .min(3, "Username must be at least 3 characters"),
-          full_name: z
-            .string({ required_error: "Full name is required" })
-            .min(1, "Full name is required")
-            .max(100),
+          first_name: z.string().max(100),
+          last_name: z.string().max(100),
           email: z.string({ required_error: "Email is required" }),
           password: z
             .string({ required_error: "Password is required" })
             .min(10, "Password must be at least 10 characters!")
             .max(32, "Password must not be longer than 32 characters!"),
           passwordConfirm: z.string({
-            required_error: "Please confirm your password",
+            required_error: "Passwords must match!",
           }),
         })
         .refine((data) => data.password === data.passwordConfirm, {
@@ -40,7 +39,8 @@ export const appRouter = router({
         const user = await prisma.user.create({
           data: {
             username: input.username,
-            full_name: input.full_name,
+            first_name: input.first_name,
+            last_name: input.last_name,
             email: input.email,
             password: hashedPassword,
           },

@@ -5,7 +5,7 @@ myHeaders.append(
 );
 myHeaders.append(
   "Cookie",
-  "PVEAuthCookie=PVE:API@pve:65865C69::AF2XWKQ1ZVID+8/muLMOUIlHMGtSZnM8emMICGD+8bPhdJ0vT8zLmLPRvdtTu/5zB+u91xeYkIb+cluPkNv+qb6RVzcZGapKzCOZE/vUxNzI8EQKXpyohDWNydkL4p/h00pgGBQKPsScMCzsk7dQwhtOFFciCFHGNPl4l+aBwAU8XoZe0Ku5TinGkC0fW+xFlRS125WO9CmQ8x8O2A/SvG1URZ+1HxvnflB+E4zyga5hqaGxuGO+3ifEMOaY54Dqk3lZ80pgnqz5Qt5+0HmhxqBXKoopoMbFgupEfUERQYs4NxiJAj3u7pP5SQushkqA7xAlFr4jmu8Ys92I/E2Bxg==",
+  "PVEAuthCookie=PVE:API@pve:6598F169::NIkPsGhiCAZZtHYsmtdQwC+Bh5lcrMrjTjL5bsYRjLM8YxlNRjBeOGX30J4PGcZUCQRmnepK1vZmkuJ1cd7DNIHHFzHpe1sQeVadHZR2rtp6ZmtkSib9/uRzpusGEIT23QQroD8y3l4ZknSIHOyfmKRQmNmlH7UkpmzLDePya5HiJoHgM5X3zKJwQeFj/kMgAXe9FRk/LZSV8tFHjqsqZkni1PmRohkfcUAMfk8xY/laAsnY5Exga6sQhR++k2iu6TGfzPCPfsXkr68zlSxrZOBREmYBgsyX3h1iK9Asvj6lgJ7S6bfhXaxjRHSLxMvNqktneZeOK0ZQ5iXeZn0qBA==",
 );
 
 const requestOptions = {

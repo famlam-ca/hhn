@@ -4,7 +4,7 @@ import Box from "@/components/box";
 
 import ServerStat from "./server-stat";
 
-const ServerCards = () => {
+export const ServerCards = () => {
   return (
     <>
       {/* CPU */}
@@ -39,5 +39,3 @@ const ServerCards = () => {
     </>
   );
 };
-
-export default ServerCards;
