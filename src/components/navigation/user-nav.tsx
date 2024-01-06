@@ -77,10 +77,10 @@ export const UserNav = async ({
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
             <div className="flex justify-between">
-              {name && <p className="text-sm font-medium text-text">{name}</p>}
+              {name && <p className="text-sm font-medium text-text">{user?.username}</p>}
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
-                  {user?.first_name} {user?.last_name}
+                  {user?.full_name}
                 </p>
               )}
             </div>

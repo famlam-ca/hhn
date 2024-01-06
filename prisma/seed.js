@@ -9,7 +9,7 @@ export const main = async () => {
     where: { email: "test@famlam.ca" },
     update: {},
     create: {
-      name: "Test",
+      username: "Test",
       email: "test@famlam.ca",
       full_name: "Test User",
       password,

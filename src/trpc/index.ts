@@ -13,16 +13,12 @@ export const appRouter = router({
     .input(
       z
         .object({
-          name: z
-            .string({ required_error: "name is required" })
-            .min(3, "name must be at least 3 characters"),
-          first_name: z
-            .string({ required_error: "First name is required" })
-            .min(1, "First name is required")
-            .max(100),
-          last_name: z
-            .string({ required_error: "Last name is required" })
-            .min(1, "Last name is required")
+          username: z
+            .string({ required_error: "Username is required" })
+            .min(3, "Username must be at least 3 characters"),
+          full_name: z
+            .string({ required_error: "Full name is required" })
+            .min(1, "Full name is required")
             .max(100),
           email: z.string({ required_error: "Email is required" }),
           password: z
@@ -43,9 +39,8 @@ export const appRouter = router({
         const hashedPassword = await hash(input.password, 12);
         const user = await prisma.user.create({
           data: {
-            name: input.name,
-            first_name: input.first_name,
-            last_name: input.last_name,
+            username: input.username,
+            full_name: input.full_name,
             email: input.email,
             password: hashedPassword,
           },
@@ -71,9 +66,9 @@ export const appRouter = router({
     .input(
       z
         .object({
-          name: z
+          username: z
             .string()
-            .min(3, "name must be at least 3 characters")
+            .min(3, "Username must be at least 3 characters")
             .max(100)
             .optional(),
           full_name: z

@@ -31,7 +31,7 @@ const SignUpForm = () => {
     const res = await fetch(`/api/auth/register`, {
       method: "POST",
       body: JSON.stringify({
-        name: formData.get("name"),
+        username: formData.get("username"),
         full_name: formData.get("full_name"),
         email: formData.get("email"),
         password: formData.get("password"),
@@ -43,7 +43,7 @@ const SignUpForm = () => {
       toast({
         title: "There was a problem creating your account.",
         description:
-          "An account with this email or name already exists - Want to sign in instead?",
+          "An account with this email or username already exists - Want to sign in instead?",
         variant: "destructive",
         action: (
           <Link
@@ -88,14 +88,14 @@ const SignUpForm = () => {
           <div className="flex justify-between gap-4">
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
-                name*
+              Username*
               </label>
               <div className="mt-2">
                 <input
                   required
-                  name="name"
+                  name="username"
                   type="text"
-                  placeholder="name..."
+                  placeholder="Username..."
                   className={`${input_style}`}
                 />
               </div>
@@ -108,7 +108,7 @@ const SignUpForm = () => {
                 <input
                   name="full_name"
                   type="text"
-                  placeholder="First Name..."
+                  placeholder="Full Name..."
                   className={`${input_style}`}
                 />
               </div>

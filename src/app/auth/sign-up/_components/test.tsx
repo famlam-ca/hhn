@@ -16,7 +16,7 @@ import { trpc } from "@/app/_trpc/client";
 
 const registerSchema = z
   .object({
-    name: z.string().min(3, "Username must be at least 3 characters").max(100),
+    username: z.string().min(3, "Username must be at least 3 characters").max(100),
     full_name: z.string().min(1, "Full name is required").max(100),
     email: z
       .string()
@@ -125,7 +125,7 @@ const Test = () => {
                 <div className="mt-2">
                   <input
                     required
-                    name="name"
+                    name="username"
                     type="text"
                     placeholder="Username..."
                     className={`${input_style}`}
@@ -141,7 +141,7 @@ const Test = () => {
                     required
                     name="full_name"
                     type="text"
-                    placeholder="First Name..."
+                    placeholder="Full Name..."
                     className={`${input_style}`}
                   />
                 </div>

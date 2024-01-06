@@ -61,11 +61,11 @@ const Navbar = async () => {
             ) : (
               <>
                 <UserNav
-                  name={!user.name ? "" : user.name}
+                  name={!user.username ? "" : user.username}
                   full_name={
-                    !user.first_name && user.last_name
+                    !user.full_name
                       ? ""
-                      : `${user.first_name} ${user.last_name}`
+                      : `${user.full_name}`
                   }
                   email={user.email ?? ""}
                   imageUrl={user.image ?? ""}
