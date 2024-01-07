@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/auth/auth-options";
+import { authOptions } from "@/lib/auth-options";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { UserNav } from "@/components/navigation/user-nav";
 import MobileNav from "@/components/navigation/mobile-nav";
@@ -25,7 +25,11 @@ export const Dashboard = async () => {
         </div>
         <UserNav
           name={!user.username ? "" : user.username}
-          full_name={!user.full_name ? "" : `${user.full_name}`}
+          full_name={
+            !user.first_name && !user.last_name
+              ? "Full name"
+              : `${user.first_name} ${user.last_name}`
+          }
           email={user.email ?? ""}
           imageUrl={user.image ?? ""}
           role={user.role ?? ""}

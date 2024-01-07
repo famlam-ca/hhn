@@ -17,6 +17,10 @@ export async function POST(request: Request) {
       return new NextResponse("Missing fields!", { status: 400 });
     }
 
+    if (passwordConfirm !== password) {
+      return new NextResponse("Passwords must match");
+    }
+
     const user = await db.user.findFirst({
       where: {
         email,
@@ -29,13 +33,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (password !== passwordConfirm) {
-      throw new Error("Passwords do not match");
-    }
-
     const hashedPassword = await hash(password, 12);
 
-    const res = await db.user.create({
+    await db.user.create({
       data: {
         username,
         first_name,
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         password: hashedPassword,
       },
     });
-  } catch (err) {
+  } catch (error) {
     throw new Error("Failed to create account! Please try again later.");
   }
 

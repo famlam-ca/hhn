@@ -11,7 +11,8 @@ export const main = async () => {
     create: {
       username: "Test",
       email: "test@famlam.ca",
-      full_name: "Test User",
+      first_name: "Test",
+      last_name: "User",
       password,
     },
   });

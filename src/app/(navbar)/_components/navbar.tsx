@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { ArrowUpRight, LogIn } from "lucide-react";
 
-import { authOptions } from "@/lib/auth/auth-options";
+import { authOptions } from "@/lib/auth-options";
 import MaxWidtHWrapper from "@/components/max-width-wrapper";
 import { Icons } from "@/components/icons";
 import { SignIn } from "@/components/auth-button";
@@ -21,8 +21,11 @@ const Navbar = async () => {
     <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full border-b border-border bg-background/75 backdrop-blur-lg transition-all">
       <MaxWidtHWrapper>
         <div className="flex h-14 items-center justify-between">
-          <Link href="/" className="z-40">
+          <Link href="/" className="z-40 flex items-center gap-2">
             <Icons.logo className="h-8 w-8 fill-text" />
+            <h2 className="text-xl font-bold">
+              H<span className="text-primary">HN</span>
+            </h2>
           </Link>
 
           <MobileNav isAuth={!!user} />
@@ -61,11 +64,11 @@ const Navbar = async () => {
             ) : (
               <>
                 <UserNav
-                  name={!user.username ? "" : user.username}
+                  name={!user.username ? "Username" : user.username}
                   full_name={
-                    !user.full_name
-                      ? ""
-                      : `${user.full_name}`
+                    !user.first_name && !user.last_name
+                      ? "Full name"
+                      : `${user.first_name} ${user.last_name}`
                   }
                   email={user.email ?? ""}
                   imageUrl={user.image ?? ""}

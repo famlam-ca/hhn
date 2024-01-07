@@ -12,6 +12,21 @@
 
 /* ======================================== Root ======================================== */
 
+html,
+body,
+:root {
+  height: 100%;
+}
+
+.hidden-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   :root {
     --background: 240 20% 97%;

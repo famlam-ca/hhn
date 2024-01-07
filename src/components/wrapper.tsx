@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-const Wrapper = ({
+export const Wrapper = ({
   children,
   className,
 }: {

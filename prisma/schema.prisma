@@ -21,8 +21,9 @@ model User {
     email      String  @unique
     password   String
 
-    image String @default("https://www.famlam.ca/logo/logo512-blue-s.png")
-    role  Role   @default(user)
+    image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
+    role  Role    @default(user)
+    bio   String? @db.Text
 
     file File[]
 

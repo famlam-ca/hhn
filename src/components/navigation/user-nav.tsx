@@ -12,7 +12,7 @@ import {
   User,
 } from "lucide-react";
 
-import { authOptions } from "@/lib/auth/auth-options";
+import { authOptions } from "@/lib/auth-options";
 import { ThemeToggle } from "@/hooks/use-theme";
 import { Icons } from "@/components/icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -77,10 +77,12 @@ export const UserNav = async ({
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
             <div className="flex justify-between">
-              {name && <p className="text-sm font-medium text-text">{user?.username}</p>}
+              {name && (
+                <p className="text-sm font-medium text-text">{user.username}</p>
+              )}
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
-                  {user?.full_name}
+                  {user.first_name} {user.last_name}
                 </p>
               )}
             </div>

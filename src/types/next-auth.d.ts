@@ -5,11 +5,13 @@ declare module "next-auth" {
     user: {
       id: string;
       username: string;
-      full_name: string;
+      first_name: string;
+      last_name: string;
       email: string;
 
       image: string;
       role: $Enums.Role;
+      bio: string;
 
       createdAt: Date;
       updatedAt: Date;

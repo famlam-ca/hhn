@@ -32,7 +32,8 @@ export const SignUpForm = () => {
       method: "POST",
       body: JSON.stringify({
         username: formData.get("username"),
-        full_name: formData.get("full_name"),
+        first_name: formData.get("first_name"),
+        last_name: formData.get("last_name"),
         email: formData.get("email"),
         password: formData.get("password"),
         passwordConfirm: formData.get("passwordConfirm"),
@@ -75,8 +76,11 @@ export const SignUpForm = () => {
   return (
     <div>
       <div className="mx-auto mb-10 flex flex-col items-center justify-center space-y-4">
-        <Link href="/">
+        <Link href="/" className="z-40 flex items-center gap-2">
           <Icons.logo className="h-8 w-8 fill-text" />
+          <h2 className="text-xl font-bold">
+            H<span className="text-primary">HN</span>
+          </h2>
         </Link>
         <h1 className="text-center text-3xl font-bold leading-9 tracking-tight md:text-4xl lg:text-5xl">
           Sign Up
