@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { User } from "@prisma/client";
+import { hash } from "bcrypt";
 
 import { getSelf } from "@/lib/auth-service";
 import { db } from "@/db";
@@ -9,15 +10,21 @@ import { db } from "@/db";
 export const updateUser = async (values: Partial<User>) => {
   const self = await getSelf();
 
+  let hashedPassword = self.password;
+
+  if (values.password) {
+    hashedPassword = await hash(values.password, 12);
+  }
+
   const validData = {
     username: values.username,
     first_name: values.first_name,
     last_name: values.last_name,
-    // email: values.email,
-    // password: values.password, // TODO: hash password
+    email: values.email,
+    password: hashedPassword,
 
     image: values.image,
-    // role: values.role,
+    role: values.role,
     bio: values.bio,
   };
 

@@ -27,8 +27,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { SignOut } from "../auth-button";
-
 interface UserNavProps {
   email: string | undefined;
   imageUrl: string;
@@ -58,9 +56,9 @@ export const UserNav = async ({
             {imageUrl ? (
               <div className="relative aspect-square h-full w-full">
                 <Image
-                  fill
                   src={imageUrl}
                   alt="profile picture"
+                  fill
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -172,11 +170,11 @@ export const UserNav = async ({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <SignOut className="w-full">
+        <DropdownMenuItem asChild>
+          <Link href="/auth/sign-out">
             <LogOut className="mr-1 h-5 w-5" />
             Sign Out
-          </SignOut>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

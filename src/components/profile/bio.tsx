@@ -12,7 +12,7 @@ export const Bio = ({ username, userId, identity, bio }: BioProps) => {
   const isOwner = identity === ownerAsUser;
 
   return (
-    <div className="space-y-2 px-4">
+    <div className="space-y-2">
       <div className="group items-center justify-between">
         <div className="flex items-center gap-x-2 text-lg font-semibold lg:text-2xl">
           About <span>{username}</span>

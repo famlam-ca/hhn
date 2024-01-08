@@ -9,13 +9,35 @@ import { SignIn } from "@/components/auth-button";
 import { buttonVariants } from "@/components/ui/button";
 import { UserNav } from "@/components/navigation/user-nav";
 import MobileNav from "@/components/navigation/mobile-nav";
-
-const style =
-  "relative tracking-wide after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-bottom-right after:scale-x-0 after:bg-primary after:transition after:content-[''] hover:after:origin-bottom-left hover:after:scale-100";
+import { NavItem } from "./nav-item";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user;
+
+  const routes = [
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: "Game Hub",
+      href: "/games",
+    },
+    {
+      label: "Server Manager",
+      href: "https://panel.famlam.ca/",
+      target: "_blank",
+    },
+    {
+      label: "About",
+      href: "/about",
+    },
+    {
+      label: "Docs",
+      href: "/docs",
+    },
+  ];
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full border-b border-border bg-background/75 backdrop-blur-lg transition-all">
@@ -30,27 +52,15 @@ const Navbar = async () => {
 
           <MobileNav isAuth={!!user} />
 
-          <div className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
-            <Link href="/dashboard" className={`${style}`}>
-              Dashboard
-            </Link>
-
-            <Link href="/games" className={`${style}`}>
-              Game Hub
-            </Link>
-
-            <Link
-              href="https://panel.famlam.ca/"
-              target="_blank"
-              className="flex items-center -space-x-2"
-            >
-              <span className={`${style}`}>Server Manager</span>
-              <ArrowUpRight className="relative -right-2 -top-1 h-3 w-3" />
-            </Link>
-
-            <Link href="/about" className={`${style}`}>
-              About
-            </Link>
+          <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
+            {routes.map((route) => (
+              <NavItem
+                key={route.href}
+                label={route.label}
+                href={route.href}
+                target={route.target}
+              />
+            ))}
 
             {!user ? (
               <SignIn
@@ -76,7 +86,7 @@ const Navbar = async () => {
                 />
               </>
             )}
-          </div>
+          </ul>
         </div>
       </MaxWidtHWrapper>
     </nav>

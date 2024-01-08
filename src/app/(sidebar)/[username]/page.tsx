@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { getUserByUsername } from "@/lib/user-service";
-import { Profile } from "@/components/profile/profile";
+import { Profile } from "@/components/profile";
 
 type CustomUser = {
   id: string;

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
+import { ArrowUpRight, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ interface NavItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
+  target?: string;
   isActive?: boolean;
 }
 
@@ -19,6 +20,7 @@ export const NavItem = ({
   icon: Icon,
   label,
   href,
+  target,
   isActive,
 }: NavItemProps) => {
   const { collapsed } = useProfileSidebar();
@@ -33,10 +35,17 @@ export const NavItem = ({
       )}
       asChild
     >
-      <Link href={href}>
+      <Link href={href} target={target}>
         <div className="flex items-center gap-x-4">
           <Icon className={cn("h-5 w-5", collapsed ? "mr-0" : "mr-2")} />
-          {!collapsed && <span>{label}</span>}
+          {!collapsed && (
+            <>
+              <span>{label}</span>
+              {target && (
+                <ArrowUpRight className="relative -top-1 right-4 h-3 w-3" />
+              )}
+            </>
+          )}
         </div>
       </Link>
     </Button>

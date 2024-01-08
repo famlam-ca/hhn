@@ -41,6 +41,7 @@ export const Navigation = () => {
     {
       label: "Server Manager",
       href: "https://panel.famlam.ca",
+      target: "_blank",
       icon: Server,
     },
     {
@@ -79,6 +80,7 @@ export const Navigation = () => {
             label={route.label}
             icon={route.icon}
             href={route.href}
+            target={route.target}
             isActive={pathname === route.href}
           />
         ))}

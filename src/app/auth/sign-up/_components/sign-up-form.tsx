@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 import { useToast } from "@/components/ui/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -18,6 +18,16 @@ export const SignUpForm = () => {
   const { toast } = useToast();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfPassword, setShowConfPassword] = useState<boolean>(false);
+
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const toggleConfPassword = () => {
+    setShowConfPassword((prev) => !prev);
+  };
 
   if (user) {
     redirect("/");
@@ -153,28 +163,50 @@ export const SignUpForm = () => {
               <label className="block text-sm font-medium leading-6">
                 Password*
               </label>
-              <div className="mt-2">
+              <div className="relative mt-2">
                 <input
                   required
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password..."
                   className={`${input_style}`}
                 />
+                <button
+                  onClick={togglePassword}
+                  type="button"
+                  className="absolute right-2 top-[25%]"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
               </div>
             </div>
             <div className="w-full">
               <label className="block text-sm font-medium leading-6">
                 Confirm Password*
               </label>
-              <div className="mt-2">
+              <div className="relative mt-2">
                 <input
                   required
                   name="passwordConfirm"
-                  type="password"
+                  type={showConfPassword ? "text" : "password"}
                   placeholder="Confirm Password..."
                   className={`${input_style}`}
                 />
+                <button
+                  onClick={toggleConfPassword}
+                  type="button"
+                  className="absolute right-2 top-[25%]"
+                >
+                  {showConfPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
               </div>
             </div>
           </div>

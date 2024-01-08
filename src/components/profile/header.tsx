@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export const Header = ({ username, image, role }: HeaderProps) => {
   return (
-    <div className="item-start flex flex-col justify-between gap-y-4 px-4 lg:flex-row lg:gap-y-0">
+    <div className="item-start flex flex-col justify-between gap-y-4 lg:flex-row lg:gap-y-0">
       <div className="flex items-center gap-x-3">
         <UserAvatar username={username} image={image} size="lg" />
         <div className="space-y-1">

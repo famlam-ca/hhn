@@ -8,6 +8,7 @@ import { Hint } from "@/components/hint";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useProfileSidebar } from "@/store/use-profile-sidebar";
+import { cn } from "@/lib/utils";
 
 export const Toggle = () => {
   const pathname = usePathname();
@@ -28,7 +29,12 @@ export const Toggle = () => {
               <Icons.logo className="h-8 w-8 fill-text" />
             </Link>
           </div>
-          <div className="hidden items-center p-3 pl-6 pt-0 lg:flex">
+          <div
+            className={cn(
+              "hidden items-center p-3 pl-6 pt-0 lg:flex",
+              collapsed && "px-0 pb-3 pt-6",
+            )}
+          >
             <Hint label={label} side="right" asChild>
               <Button onClick={onExpand} variant="ghost" className="h-auto p-2">
                 <ArrowRightFromLine className="h-4 w-4" />

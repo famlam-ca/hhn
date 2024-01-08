@@ -30,7 +30,7 @@ export const Info = ({
 
   return (
     <div className="rounded-xl bg-background">
-      <div className="flex items-center gap-x-2.5 p-4">
+      <div className="flex items-center gap-x-2.5">
         <div className="h-auto w-auto rounded-md bg-primary p-2 text-white">
           <Pencil className="h-5 w-5" />
         </div>

@@ -4,21 +4,31 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-import { Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { revalidatePath } from "next/cache";
 
-const SignInForm = () => {
+interface SignInFormProps {
+  callbackUrl: string;
+}
+
+const SignInForm = ({ callbackUrl }: SignInFormProps) => {
   const { data: session } = useSession();
   const user = session?.user;
 
   const { toast } = useToast();
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   if (user) {
     redirect("/");
@@ -31,10 +41,12 @@ const SignInForm = () => {
       setIsLoading(true);
 
       const res = await signIn("credentials", {
-        redirect: false,
+        callbackUrl: callbackUrl,
         email,
         password,
       });
+
+      revalidatePath(callbackUrl);
 
       setIsLoading(false);
 
@@ -45,6 +57,7 @@ const SignInForm = () => {
             "The email or password provided is invalid of does not exist!",
           variant: "destructive",
         });
+        revalidatePath("/");
         redirect("/");
       }
     } catch (error: any) {
@@ -88,14 +101,25 @@ const SignInForm = () => {
             <label className="block text-sm font-medium leading-6">
               Password
             </label>
-            <div className="mt-2">
+            <div className="relative mt-2">
               <input
                 required
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password..."
                 onChange={(e) => setPassword(e.target.value)}
                 className={`${input_style}`}
               />
+              <button
+                onClick={togglePassword}
+                type="button"
+                className="absolute right-2 top-[25%]"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
             </div>
           </div>
 

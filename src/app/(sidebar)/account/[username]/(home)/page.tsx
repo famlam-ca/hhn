@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { getSelfByUsername } from "@/lib/auth-service";
 
-import { Profile } from "@/components/profile/profile";
+import { Profile } from "@/components/profile";
 
 type CustomUser = {
   id: string;

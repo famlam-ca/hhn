@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ArrowUpRight, Menu } from "lucide-react";
+import { ArrowRight, ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react";
 
 import { SignOut } from "../auth-button";
+import { MobileNavItem } from "./mobile-nav-item";
 
 const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -25,6 +26,35 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
     }
   };
 
+  const routes = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+    },
+    {
+      label: "Game Hub",
+      href: "/games",
+    },
+    {
+      label: "Server Manager",
+      href: "https://panel.famlam.ca",
+      target: "_blank",
+      icon: ArrowUpRight,
+    },
+    {
+      label: "About",
+      href: "/about",
+    },
+    {
+      label: "Docs",
+      href: "/docs",
+    },
+  ];
+
   return (
     <div className="sm:hidden">
       <Menu onClick={toggleOpen} className="relative z-50 h-6 w-6" />
@@ -33,77 +63,32 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
         <div className="fixed inset-0 z-10 w-full animate-in fade-in-20 slide-in-from-top-5">
           <ul className="absolute grid w-full gap-3 border-b border-border bg-background px-10 pb-8 pt-20 shadow-xl">
             {!isAuth && (
-              <>
-                <li>
-                  <Link
-                    href="/auth/sign-up"
-                    className="flex w-full items-center font-semibold text-primary"
-                  >
-                    Get Started
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </li>
-                <li className="my-3 h-px w-full bg-input" />
-              </>
+              <MobileNavItem
+                label="Get Started"
+                href="/auth/sign-up"
+                icon={ArrowRight}
+                className="flex w-full items-center font-semibold text-primary"
+                IconClassName="ml-2 h-5 w-5"
+              />
             )}
 
-            <li>
-              <Link
-                href="/"
-                onClick={() => closeOnCurrent("/")}
-                className="flex w-full items-center font-semibold"
-              >
-                Home
-              </Link>
-            </li>
-            <li className="my-3 h-px w-full bg-input" />
-            <li>
-              <Link
-                href="/dashboard"
-                onClick={() => closeOnCurrent("/dashboard")}
-                className="flex w-full items-center font-semibold"
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li className="my-3 h-px w-full bg-input" />
-            <li>
-              <Link
-                href="/games"
-                onClick={() => closeOnCurrent("/games")}
-                className="flex w-full items-center font-semibold"
-              >
-                Game Hub
-              </Link>
-            </li>
-            <li className="my-3 h-px w-full bg-input" />
-            <li>
-              <Link
-                href="https://panel.famlam.ca"
-                className="flex w-full items-center font-semibold"
-              >
-                Server Manager
-                <ArrowUpRight className="relative -top-1 h-3 w-3" />
-              </Link>
-            </li>
-            <li className="my-3 h-px w-full bg-input" />
-            <li>
-              <Link
-                href="/about"
-                onClick={() => closeOnCurrent("/about")}
-                className="flex w-full items-center font-semibold"
-              >
-                About
-              </Link>
-            </li>
+            {routes.map((route) => (
+              <MobileNavItem
+                key={route.href}
+                label={route.label}
+                href={route.href}
+                icon={route.icon}
+              />
+            ))}
 
             {isAuth && (
-              <>
-                <li className="my-3 h-px w-full bg-input" />
-                <li>
-                  <SignOut className="flex w-full items-center font-semibold" />
-                </li>
-              </>
+              <MobileNavItem
+                label={isAuth ? "Sign Out" : "Sign In"}
+                href={isAuth ? "/auth/sign-out" : "/auth/sign-in"}
+                icon={isAuth ? LogOut : LogIn}
+                className="items-center gap-2"
+                IconClassName="w-4 h-4"
+              />
             )}
           </ul>
         </div>

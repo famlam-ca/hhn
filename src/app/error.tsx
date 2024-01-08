@@ -73,10 +73,10 @@ const ErrorPage = () => {
       <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] w-full items-center justify-center">
         <Wrapper className="space-y-4 text-center">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
-            OO<span className="text-primary">PS!</span>
+            OO<span className="text-primary">PS!</span> :(
           </h1>
           <p className="text-lg text-muted-foreground">
-            Looks like something went wrong. :(
+            Looks like something went wrong.
           </p>
           <Button variant="secondary" asChild>
             <Link href="/">Go back home</Link>

@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ChangeEvent,
-  ElementRef,
-  FormEvent,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import { ElementRef, FormEvent, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { revalidatePath } from "next/cache";
@@ -27,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Hint } from "@/components/hint";
-import { UploadDropzone } from "@/lib/upload-thing";
+// import { UploadDropzone } from "@/lib/upload-thing";
 
 interface InfoModalProps {
   initialUsername: string;
@@ -203,7 +196,7 @@ export const InfoModal = ({
             ) : (
               <div className="rounded-xl border outline-dashed outline-muted">
                 {/* TODO: Change to quill uploader */}
-                <UploadDropzone
+                {/* <UploadDropzone
                   endpoint="profileImageUploader"
                   appearance={{
                     label: {
@@ -218,7 +211,7 @@ export const InfoModal = ({
                     router.refresh();
                     closeRef?.current?.click?.();
                   }}
-                />
+                /> */}
               </div>
             )}
           </div>

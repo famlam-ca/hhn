@@ -22,9 +22,10 @@ export const SignIn = ({ className, children }: ButtonProps) => {
           : cn("text-left", className)
       }
       onClick={() =>
-        signIn(undefined, {
-          callbackUrl: pathname === "/" ? "/dashboard" : undefined,
-        })
+        signIn()
+        //   undefined, {
+        //   callbackUrl: pathname === "/" ? "/dashboard" : undefined,
+        // }
       }
     >
       {children ? children : <span className={cn("", className)}>Sign In</span>}
