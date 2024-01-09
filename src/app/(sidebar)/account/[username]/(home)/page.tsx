@@ -1,20 +1,9 @@
 import { getServerSession } from "next-auth";
 
+import { CustomUser } from "@/types/types";
 import { authOptions } from "@/lib/auth-options";
 import { getSelfByUsername } from "@/lib/auth-service";
-
 import { Profile } from "@/components/profile";
-
-type CustomUser = {
-  id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  bio: string | null;
-  image: string;
-  role: string;
-};
 
 interface PageProps {
   params: {

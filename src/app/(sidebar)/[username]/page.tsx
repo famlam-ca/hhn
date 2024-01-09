@@ -1,18 +1,8 @@
 import { notFound } from "next/navigation";
 
+import { CustomUser } from "@/types/types";
 import { getUserByUsername } from "@/lib/user-service";
 import { Profile } from "@/components/profile";
-
-type CustomUser = {
-  id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  bio: string | null;
-  image: string;
-  role: string;
-};
 
 interface UserPageProps {
   params: {

@@ -1,23 +1,12 @@
 "use client";
 
+import { CustomUser } from "@/types/types";
 import { useUserToken } from "@/hooks/use-user-token";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
 import { EditProfileModal } from "./edit-profile-modal";
-
-type CustomUser = {
-  id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  bio: string | null;
-  image: string;
-  role: string;
-  theme: string;
-};
 
 interface ProfileProps {
   user: CustomUser;
