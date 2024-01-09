@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import {
-  Cog,
   Gamepad2,
   Home,
   LayoutDashboard,
@@ -54,17 +53,12 @@ export const Navigation = () => {
       href: `/account/${user?.username}/mail`,
       icon: Mail,
     },
-    {
-      label: "Settings",
-      href: `/account/${user?.username}/settings`,
-      icon: Cog,
-    },
   ];
 
   if (!user?.username) {
     return (
       <ul className="space-y-2">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(7)].map((_, i) => (
           <NavItemSkeleton key={i} />
         ))}
       </ul>

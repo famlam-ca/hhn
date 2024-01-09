@@ -26,6 +26,7 @@ export const updateUser = async (values: Partial<User>) => {
     image: values.image,
     role: values.role,
     bio: values.bio,
+    theme: values.theme,
   };
 
   const user = await db.user.update({

@@ -13,6 +13,11 @@ enum Role {
     admin
 }
 
+enum Theme {
+    dark
+    light
+}
+
 model User {
     id         String  @id @default(cuid())
     username   String  @unique
@@ -24,6 +29,7 @@ model User {
     image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
     role  Role    @default(user)
     bio   String? @db.Text
+    theme Theme   @default(dark)
 
     file File[]
 

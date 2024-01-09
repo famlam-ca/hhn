@@ -27,7 +27,7 @@ export const Header = ({ username, image, role }: HeaderProps) => {
 
 export const HeaderSkeleton = () => {
   return (
-    <div className="flex flex-col items-start justify-between gap-y-4 px-4 lg:flex-row lg:gap-y-0">
+    <div className="flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:gap-y-0">
       <div className="flex items-center gap-x-2">
         <UserAvatarSkeleton size="lg" />
         <div className="space-y-2">

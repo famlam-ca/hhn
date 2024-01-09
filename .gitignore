@@ -1,11 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # depricated files
-/depricated
-
-# npm || pnpm
-package-lock.json
-pnpm-lock.yaml
+/deprecated
 
 # dependencies
 /node_modules

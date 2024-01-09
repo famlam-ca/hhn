@@ -20,11 +20,10 @@ import {
 import { Button } from "@/components/ui/button";
 
 interface AccountCardProps {
-  username: string;
   initialEmail: string;
 }
 
-export const AccountCard = ({ username, initialEmail }: AccountCardProps) => {
+export const AccountCard = ({ initialEmail }: AccountCardProps) => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>(initialEmail);
@@ -73,7 +72,7 @@ export const AccountCard = ({ username, initialEmail }: AccountCardProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Profile</CardTitle>
+        <CardTitle>Account</CardTitle>
         <CardDescription>
           Make changes to your account here. After saving, you&apos;ll be logged
           out.

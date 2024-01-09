@@ -12,6 +12,7 @@ declare module "next-auth" {
       image: string;
       role: $Enums.Role;
       bio: string;
+      theme: string;
 
       createdAt: Date;
       updatedAt: Date;
