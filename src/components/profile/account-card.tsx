@@ -19,11 +19,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+type Role = "admin" | "superUser" | "user";
+
 interface AccountCardProps {
   initialEmail: string;
+  userRole: string;
 }
 
-export const AccountCard = ({ initialEmail }: AccountCardProps) => {
+export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
   const router = useRouter();
 
   const [email, setEmail] = useState<string>(initialEmail);
@@ -98,6 +101,7 @@ export const AccountCard = ({ initialEmail }: AccountCardProps) => {
                   disabled={isPending}
                   type={showOldPassword ? "text" : "password"}
                   placeholder="Old Password"
+                  value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
                 />
                 <button
@@ -135,6 +139,17 @@ export const AccountCard = ({ initialEmail }: AccountCardProps) => {
                 </button>
               </div>
             </div>
+          </div>
+
+          <div className="w-full space-y-2">
+            <Label>Role</Label>
+            {/* Implement selector */}
+            <Input
+              disabled={isPending || userRole !== "admin"}
+              type="text"
+              placeholder={userRole}
+              className="capitalize"
+            />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-end">

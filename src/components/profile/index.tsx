@@ -33,6 +33,7 @@ export const Profile = ({ user }: ProfileProps) => {
             last_name={user.last_name}
             email={user.email}
             image={user.image}
+            role={user.role}
             userTheme={user.theme}
           />
         )}
