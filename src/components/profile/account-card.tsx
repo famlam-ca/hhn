@@ -18,8 +18,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-type Role = "admin" | "superUser" | "user";
+type Role = "admin" | "superuser" | "user";
 
 interface AccountCardProps {
   initialEmail: string;
@@ -32,10 +39,19 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
   const [email, setEmail] = useState<string>(initialEmail);
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
+  const [valueRole, setValueRole] = useState<string>();
 
   const [isPending, startTransition] = useTransition();
   const [showOldPassword, setShowOldPassword] = useState<boolean>(false);
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+
+  const toggleOldPassword = () => {
+    setShowOldPassword((prev) => !prev);
+  };
+
+  const toggleNewPassword = () => {
+    setShowNewPassword((prev) => !prev);
+  };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,6 +60,7 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
       updateUser({
         email: email,
         password: newPassword,
+        role: valueRole as Role,
       })
         .then(() => {
           setShowOldPassword(false);
@@ -60,16 +77,10 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
           });
         });
 
-      signOut();
+      if (email !== initialEmail || newPassword) {
+        signOut();
+      }
     });
-  };
-
-  const toggleOldPassword = () => {
-    setShowOldPassword((prev) => !prev);
-  };
-
-  const toggleNewPassword = () => {
-    setShowNewPassword((prev) => !prev);
   };
 
   return (
@@ -141,15 +152,22 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
             </div>
           </div>
 
-          <div className="w-full space-y-2">
+          <div className="space-y-2">
             <Label>Role</Label>
-            {/* Implement selector */}
-            <Input
+            <Select
               disabled={isPending || userRole !== "admin"}
-              type="text"
-              placeholder={userRole}
-              className="capitalize"
-            />
+              onValueChange={(value) => setValueRole(value)}
+              defaultValue={userRole}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={userRole} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="superuser">Super User</SelectItem>
+                <SelectItem value="user">User</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-end">

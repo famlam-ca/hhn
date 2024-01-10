@@ -10,7 +10,7 @@ declare module "next-auth" {
       email: string;
 
       image: string;
-      role: $Enums.Role;
+      role: string;
       bio: string;
       theme: string;
 

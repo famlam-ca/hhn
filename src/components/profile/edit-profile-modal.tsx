@@ -25,6 +25,7 @@ interface EditProfileModalProps {
   email: string;
   image: string;
   role: string;
+  bio: string | null;
   userTheme: string;
 }
 
@@ -35,6 +36,7 @@ export const EditProfileModal = ({
   email,
   image,
   role,
+  bio,
   userTheme,
 }: EditProfileModalProps) => {
   return (
@@ -48,7 +50,7 @@ export const EditProfileModal = ({
       </Hint>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit your account</DialogTitle>
+          <DialogTitle>Edit your profile</DialogTitle>
           <DialogDescription>
             Some options will require you to sign out.
           </DialogDescription>
@@ -56,7 +58,7 @@ export const EditProfileModal = ({
         <Tabs defaultValue="profile" className="mt-2 w-full">
           <TabsList className="grid w-full grid-cols-3">
             {/* Change */}
-            <TabsTrigger value="account">
+            <TabsTrigger value="profile">
               <UserCircle className="mr-2 h-4 w-4" />
               Profile
             </TabsTrigger>
@@ -76,6 +78,7 @@ export const EditProfileModal = ({
               initialFirstName={first_name}
               initialLastName={last_name}
               initialImage={image}
+              initialBio={bio}
             />
           </TabsContent>
 

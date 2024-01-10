@@ -8,6 +8,8 @@ import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
 import { EditProfileModal } from "./edit-profile-modal";
 
+import { Banner } from "./banner";
+
 interface ProfileProps {
   user: CustomUser;
 }
@@ -23,23 +25,32 @@ export const Profile = ({ user }: ProfileProps) => {
   }
 
   return (
-    <MaxWidthWrapper className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
-      <div className="flex items-center">
-        <Header username={user.username} image={user.image} role={user.role} />
-        {isOwner && (
-          <EditProfileModal
+    <div>
+      <Banner username={user.username} banner={user.image} />
+
+      <MaxWidthWrapper className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
+        <div className="flex items-center">
+          <Header
             username={user.username}
-            first_name={user.first_name}
-            last_name={user.last_name}
-            email={user.email}
             image={user.image}
             role={user.role}
-            userTheme={user.theme}
           />
-        )}
-      </div>
-      <Bio username={user.username} userId={user.id} bio={user.bio} />
-    </MaxWidthWrapper>
+          {isOwner && (
+            <EditProfileModal
+              username={user.username}
+              first_name={user.first_name}
+              last_name={user.last_name}
+              email={user.email}
+              image={user.image}
+              role={user.role}
+              bio={user.bio}
+              userTheme={user.theme}
+            />
+          )}
+        </div>
+        <Bio username={user.username} userId={user.id} bio={user.bio} />
+      </MaxWidthWrapper>
+    </div>
   );
 };
 

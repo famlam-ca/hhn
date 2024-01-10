@@ -17,7 +17,7 @@ const AboutContent = () => {
     <>
       <div className="mt-8 h-80 bg-aboutBanner">
         <div className="flex h-full flex-col items-center justify-center text-center font-bold tracking-widest backdrop-blur-sm">
-          <h1 className="text-6xl sm:text-8xl">About</h1>
+          <h1 className="text-6xl text-white sm:text-8xl">About</h1>
           <h2 className="text-primary">A Humble Home Network</h2>
         </div>
       </div>

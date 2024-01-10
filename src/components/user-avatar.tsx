@@ -9,6 +9,8 @@ const avatarSizes = cva("", {
     size: {
       default: "h-8 w-8",
       lg: "h-14 w-14",
+      profile: "h-32 w-32",
+      profileLg: "h-52 w-52",
     },
   },
   defaultVariants: {

@@ -70,8 +70,8 @@ export const SettingsCard = ({ userTheme }: SettingsCardProps) => {
           <div className="space-y-2">
             <Label>Theme</Label>
             <Select
-              onValueChange={() => {
-                setValueTheme(valueTheme === "dark" ? "light" : "dark");
+              onValueChange={(value) => {
+                setValueTheme(value);
               }}
               defaultValue={userTheme}
             >
