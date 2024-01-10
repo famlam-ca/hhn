@@ -50,7 +50,7 @@ const Navbar = async () => {
             </h2>
           </Link>
 
-          <MobileNav isAuth={!!user} />
+          <MobileNav user={user} isAuth={!!user} />
 
           <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
             {routes.map((route) => (

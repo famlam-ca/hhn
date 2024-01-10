@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react";
+import { ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react";
 
-import { SignOut } from "../auth-button";
 import { MobileNavItem } from "./mobile-nav-item";
+import { CustomUser } from "@/types/types";
 
-const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
+interface MobileNavProps {
+  user?: CustomUser;
+  isAuth: boolean;
+}
+
+const MobileNav = ({ user, isAuth }: MobileNavProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -62,34 +66,37 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
       {isOpen ? (
         <div className="fixed inset-0 z-10 w-full animate-in fade-in-20 slide-in-from-top-5">
           <ul className="absolute grid w-full gap-3 border-b border-border bg-background px-10 pb-8 pt-20 shadow-xl">
-            {!isAuth && (
-              <MobileNavItem
-                label="Get Started"
-                href="/auth/sign-up"
-                icon={ArrowRight}
-                className="flex w-full items-center font-semibold text-primary"
-                IconClassName="ml-2 h-5 w-5"
-              />
-            )}
-
             {routes.map((route) => (
-              <MobileNavItem
-                key={route.href}
-                label={route.label}
-                href={route.href}
-                icon={route.icon}
-              />
+              <>
+                <MobileNavItem
+                  key={route.href}
+                  label={route.label}
+                  href={route.href}
+                  icon={route.icon}
+                />
+                <div className="h-px w-full bg-accent" />
+              </>
             ))}
 
             {isAuth && (
-              <MobileNavItem
-                label={isAuth ? "Sign Out" : "Sign In"}
-                href={isAuth ? "/auth/sign-out" : "/auth/sign-in"}
-                icon={isAuth ? LogOut : LogIn}
-                className="items-center gap-2"
-                IconClassName="w-4 h-4"
-              />
+              <>
+                <MobileNavItem
+                  label="Profile"
+                  href={`/u/${user?.username}`}
+                  className="items-center gap-2"
+                  IconClassName="w-4 h-4"
+                />
+                <div className="h-px w-full bg-accent" />
+              </>
             )}
+
+            <MobileNavItem
+              label={isAuth ? "Sign Out" : "Sign In"}
+              href={isAuth ? "/auth/sign-out" : "/auth/sign-in"}
+              icon={isAuth ? LogOut : LogIn}
+              className="items-center gap-2"
+              IconClassName="w-4 h-4"
+            />
           </ul>
         </div>
       ) : null}

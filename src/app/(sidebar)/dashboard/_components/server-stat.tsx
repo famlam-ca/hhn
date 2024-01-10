@@ -26,7 +26,7 @@ const Progressbar = () => {
   const percentage = num;
 
   return (
-    <div className="flex h-28 items-center justify-center ">
+    <div className="flex max-h-28 items-center justify-center">
       <ProgressCircle value={percentage} size="xl">
         <span className="text-xl text-primary">{`${num}%`}</span>
       </ProgressCircle>

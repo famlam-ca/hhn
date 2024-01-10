@@ -15,12 +15,12 @@ export const Navigation = () => {
   const routes = [
     {
       label: "Profile",
-      href: `/account/${user?.username}`,
+      href: `/u/${user?.username}`,
       icon: User,
     },
     {
       label: "Settings",
-      href: `/account/${user?.username}/settings`,
+      href: `/u/${user?.username}/settings`,
       icon: Cog,
     },
   ];

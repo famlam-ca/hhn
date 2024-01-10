@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 export const Toggle = () => {
   const pathname = usePathname();
-  const path = pathname.split("/").filter(Boolean)[0];
+  let path = pathname.split("/").filter(Boolean)[0];
 
   const { collapsed, onExpand, onCollapse } = useProfileSidebar(
     (state) => state,

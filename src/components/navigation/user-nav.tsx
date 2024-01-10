@@ -99,21 +99,21 @@ export const UserNav = async ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href={`/account/${name}`}>
+            <Link href={`/u/${name}`}>
               <User className="mr-2 h-5 w-5" />
               Profile
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/account/mail">
+            <Link href="/u/mail">
               <Mail className="mr-2 h-5 w-5" />
               Email
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/account/settings">
+            <Link href="/u/settings">
               <Settings className="mr-2 h-5 w-5" />
               Settings
             </Link>

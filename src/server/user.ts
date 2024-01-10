@@ -34,8 +34,14 @@ export const updateUser = async (values: Partial<User>) => {
     data: { ...validData },
   });
 
-  revalidatePath(`/account/${self.username}`);
+  revalidatePath(`/u/${self.username}`);
   revalidatePath(`/${self.username}`);
+
+  return user;
+};
+
+export const getAllUsers = async () => {
+  const user = await db.user.findMany({});
 
   return user;
 };

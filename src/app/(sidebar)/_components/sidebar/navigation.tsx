@@ -3,12 +3,13 @@
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import {
+  File,
   Gamepad2,
   Home,
+  Info,
   LayoutDashboard,
   LogIn,
   LogOut,
-  Mail,
   Server,
   User,
 } from "lucide-react";
@@ -44,14 +45,19 @@ export const Navigation = () => {
       icon: Server,
     },
     {
-      label: "Account",
-      href: `/account/${user?.username}`,
-      icon: User,
+      label: "About",
+      href: "/about",
+      icon: Info,
     },
     {
-      label: "Email",
-      href: `/account/${user?.username}/mail`,
-      icon: Mail,
+      label: "Docs",
+      href: "/docs",
+      icon: File,
+    },
+    {
+      label: "Profile",
+      href: `/u/${user?.username}`,
+      icon: User,
     },
   ];
 

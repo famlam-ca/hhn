@@ -21,8 +21,8 @@ export const SignIn = ({ className, children }: ButtonProps) => {
           ? cn("flex items-center gap-1", className)
           : cn("text-left", className)
       }
-      onClick={() =>
-        signIn()
+      onClick={
+        () => signIn()
         //   undefined, {
         //   callbackUrl: pathname === "/" ? "/dashboard" : undefined,
         // }
@@ -46,7 +46,7 @@ export const SignOut = ({ className, children }: ButtonProps) => {
       onClick={() =>
         signOut({
           callbackUrl:
-            pathname === "/dashboard" || "/account/:path*" ? "/" : undefined,
+            pathname === "/dashboard" || "/u/:path*" ? "/" : undefined,
         })
       }
     >

@@ -33,7 +33,6 @@ export const MobileNavItem = ({
           </span>
         </Link>
       </Button>
-      <div className="mt-3 h-px w-full bg-accent" />
     </li>
   );
 };

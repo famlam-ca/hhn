@@ -44,7 +44,7 @@ export const Dashboard = async () => {
       {/* Servers */}
       <div className="my-8">
         <h2 className="mb-3 text-2xl font-semibold">Servers</h2>
-        <ServerTable />
+        {/* <ServerTable /> */}
       </div>
     </MaxWidthWrapper>
   );
