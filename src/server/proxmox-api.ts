@@ -1,3 +1,5 @@
+"use server";
+
 const myHeaders = new Headers();
 myHeaders.append(
   "CSRFPreventionToken",
@@ -5,7 +7,7 @@ myHeaders.append(
 );
 myHeaders.append(
   "Cookie",
-  "PVEAuthCookie=PVE:API@pve:659B10AD::gNmV2FtNuuE360osQxRj88z1cNBJ6I0yYdrRtxhZl9b3unbQYIXub/2iBMAhn5XelyTiJEPlUmTDPyskLDUlO1Q+RRHeAN32fkJYm3XJi7DaM50EiRIq1KT7m4Y8usvWdwX7+MRNMx85437zLp+vQDqhcWFrF6hxjvtrD9w2VLDITL+wsFKnGVeNaHd6BnnzZcWFWY6f3rXWo81WsgeJf2FGRFQvDO0FJUuT4Hs+lMC6bJWjwJuCHCA3tVJbV1h8jOPKGXgyducegHYKZ1n4J4Qsr0lFTejAPc/8t8fczZ8GkwHxWBHPIwIaJs872TnS+Q8x5Tygp36KGUs26x5ilA==",
+  "PVEAuthCookie=PVE:API@pve:659F54BD::HwiRFwDyc/+Mnz+MvEfwC4dLlmryHgtTAM9IDp6AGG/XwNZwiCNR+wJ9UchM/1+JNTr+PXExcVlM1tYAE7NakPOADnUK2l0YLu9PQ/dSQqhP2Tx9gtwUtZ7l8cRlG1IaU//XjpREdnaZImPt9+3nsAHofs+ZqyB59saqgALIUOqysHFpXypIrNrCvsH6lcWO0rsR786kkla55uCT/4dRNwiO6M4uZM05JCYM5jzkYyLw8/F7iLf6xajBNtymhLVAZNVIY2ks4T6kZ0ya6xTy1dpwG9dVfWLUZufdwteyZO2no92Xd9lbmxBFekRaitjPmuwH2wF2lHgPTtqFQVhPDg==",
 );
 
 const requestOptions = {
@@ -58,7 +60,6 @@ const serverData = async (url: string) => {
     // console.log("Server Data List:", data.serverDataList); // debug
     return data;
   } catch (error) {
-    console.error("Error fetching data:", error); // debug
     throw new Error("There was a problem fetching data from the server!", {
       cause: error,
     });
@@ -72,7 +73,6 @@ const startInterval = (url: string) => {
 
       return newData;
     } catch (error) {
-      console.error("Error fetching data:", error); // debug
       throw new Error(
         "There was a problem refreshing server data! Please refresh the page, or try again later.",
         { cause: error },

@@ -30,7 +30,7 @@ import {
 interface UserNavProps {
   email: string | undefined;
   imageUrl: string;
-  name: string;
+  username: string;
   full_name: string;
   role: string;
 }
@@ -38,13 +38,10 @@ interface UserNavProps {
 export const UserNav = async ({
   email,
   imageUrl,
-  name,
+  username,
   full_name,
   role,
 }: UserNavProps) => {
-  const session = await getServerSession(authOptions);
-  const user = session?.user!;
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -75,12 +72,12 @@ export const UserNav = async ({
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
             <div className="flex justify-between">
-              {name && (
-                <p className="text-sm font-medium text-text">{user.username}</p>
+              {username && (
+                <p className="text-sm font-medium text-text">{username}</p>
               )}
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
-                  {user.first_name} {user.last_name}
+                  {full_name}
                 </p>
               )}
             </div>
@@ -99,7 +96,7 @@ export const UserNav = async ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href={`/u/${name}`}>
+            <Link href={`/u/${username}`}>
               <User className="mr-2 h-5 w-5" />
               Profile
             </Link>

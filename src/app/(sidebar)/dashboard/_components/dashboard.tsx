@@ -13,7 +13,7 @@ export const Dashboard = async () => {
   const user = session?.user!;
 
   return (
-    <MaxWidthWrapper className="min-w-full">
+    <MaxWidthWrapper className="max-w-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <MobileNav isAuth={!!user} />
@@ -24,10 +24,10 @@ export const Dashboard = async () => {
           </small>
         </div>
         <UserNav
-          name={!user.username ? "" : user.username}
+          username={!user.username ? "" : user.username}
           full_name={
             !user.first_name && !user.last_name
-              ? "Full name"
+              ? ""
               : `${user.first_name} ${user.last_name}`
           }
           email={user.email ?? ""}
