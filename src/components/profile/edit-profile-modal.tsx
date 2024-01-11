@@ -75,15 +75,18 @@ export const EditProfileModal = ({
           <TabsContent value="profile">
             <ProfileCard
               initialUsername={username}
-              initialFirstName={first_name}
-              initialLastName={last_name}
               initialImage={image}
               initialBio={bio}
             />
           </TabsContent>
 
           <TabsContent value="account">
-            <AccountCard initialEmail={email} userRole={role} />
+            <AccountCard
+              initialFirstName={first_name}
+              initialLastName={last_name}
+              initialEmail={email}
+              userRole={role}
+            />
           </TabsContent>
 
           <TabsContent value="settings">

@@ -32,6 +32,7 @@ export const Profile = ({ user }: ProfileProps) => {
         <div className="flex items-center">
           <Header
             username={user.username}
+            email={user.email}
             image={user.image}
             role={user.role}
           />
@@ -48,7 +49,7 @@ export const Profile = ({ user }: ProfileProps) => {
             />
           )}
         </div>
-        <Bio username={user.username} userId={user.id} bio={user.bio} />
+        <Bio username={user.username} bio={user.bio} />
       </MaxWidthWrapper>
     </div>
   );

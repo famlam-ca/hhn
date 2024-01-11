@@ -2,7 +2,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 interface BioProps {
   username: string;
-  userId: string;
   bio: string | null;
 }
 

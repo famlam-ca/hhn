@@ -14,6 +14,10 @@ export const Toggle = () => {
   const pathname = usePathname();
   let path = pathname.split("/").filter(Boolean)[0];
 
+  if (path === "u") {
+    path = "Profile";
+  }
+
   const { collapsed, onExpand, onCollapse } = useProfileSidebar(
     (state) => state,
   );

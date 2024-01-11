@@ -73,7 +73,7 @@ export const SettingsCard = ({ userTheme }: SettingsCardProps) => {
               onValueChange={(value) => {
                 setValueTheme(value);
               }}
-              defaultValue={userTheme}
+              defaultValue={valueTheme}
             >
               <SelectTrigger>
                 <div className="capitalize">{valueTheme}</div>

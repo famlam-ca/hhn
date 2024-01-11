@@ -26,6 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Hint } from "../hint";
 
 interface UserNavProps {
   email: string | undefined;
@@ -103,22 +104,24 @@ export const UserNav = async ({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/u/mail">
+            <Link href={`/u/${username}/mail`}>
               <Mail className="mr-2 h-5 w-5" />
               Email
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/u/settings">
+            <Link href={`/u/${username}/settings`}>
               <Settings className="mr-2 h-5 w-5" />
               Settings
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem>
-            <ThemeToggle className="w-full" />
-          </DropdownMenuItem>
+          <Hint label="Currently unavailable - check your profile settings">
+            <DropdownMenuItem disabled>
+              <ThemeToggle className="w-full" />
+            </DropdownMenuItem>
+          </Hint>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

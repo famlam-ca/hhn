@@ -29,13 +29,22 @@ import {
 type Role = "admin" | "superuser" | "user";
 
 interface AccountCardProps {
+  initialFirstName: string;
+  initialLastName: string;
   initialEmail: string;
   userRole: string;
 }
 
-export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
+export const AccountCard = ({
+  initialFirstName,
+  initialLastName,
+  initialEmail,
+  userRole,
+}: AccountCardProps) => {
   const router = useRouter();
 
+  const [first_name, setFirst_name] = useState<string>(initialFirstName);
+  const [last_name, setLast_name] = useState<string>(initialLastName);
   const [email, setEmail] = useState<string>(initialEmail);
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
@@ -58,6 +67,8 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
 
     startTransition(() => {
       updateUser({
+        first_name: first_name,
+        last_name: last_name,
         email: email,
         password: newPassword,
         role: valueRole as Role,
@@ -77,7 +88,12 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
           });
         });
 
-      if (email !== initialEmail || newPassword) {
+      if (
+        first_name !== initialFirstName ||
+        last_name !== initialLastName ||
+        email !== initialEmail ||
+        newPassword
+      ) {
         signOut();
       }
     });
@@ -94,6 +110,27 @@ export const AccountCard = ({ initialEmail, userRole }: AccountCardProps) => {
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-2">
+          <div className="flex items-center justify-between gap-x-6">
+            <div className="w-full space-y-2">
+              <Label>First name</Label>
+              <Input
+                disabled={isPending}
+                placeholder="First name"
+                onChange={(e) => setFirst_name(e.target.value)}
+                value={first_name}
+              />
+            </div>
+            <div className="w-full space-y-2">
+              <Label>Last name</Label>
+              <Input
+                disabled={isPending}
+                placeholder="Last name"
+                onChange={(e) => setLast_name(e.target.value)}
+                value={last_name}
+              />
+            </div>
+          </div>
+
           <div className="space-y-2">
             <Label>Email</Label>
             <Input

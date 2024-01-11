@@ -22,24 +22,18 @@ import { EditProfileImage } from "./edit-profile-image";
 
 interface ProfileCardProps {
   initialUsername: string;
-  initialFirstName: string;
-  initialLastName: string;
   initialImage: string;
   initialBio: string | null;
 }
 
 export const ProfileCard = ({
   initialUsername,
-  initialFirstName,
-  initialLastName,
   initialImage,
   initialBio,
 }: ProfileCardProps) => {
   const closeRef = useRef<ElementRef<"button">>(null);
 
   const [username, setUsername] = useState<string>(initialUsername);
-  const [first_name, setFirst_name] = useState<string>(initialFirstName);
-  const [last_name, setLast_name] = useState<string>(initialLastName);
   const [bio, setBio] = useState(initialBio || "");
   const [isPending, startTransition] = useTransition();
 
@@ -49,8 +43,6 @@ export const ProfileCard = ({
     startTransition(() => {
       updateUser({
         username: username,
-        first_name: first_name,
-        last_name: last_name,
         bio: bio,
       })
         .then(() => {
@@ -86,27 +78,6 @@ export const ProfileCard = ({
               onChange={(e) => setUsername(e.target.value)}
               value={username}
             />
-          </div>
-
-          <div className="flex items-center justify-between gap-x-6">
-            <div className="w-full space-y-2">
-              <Label>First name</Label>
-              <Input
-                disabled={isPending}
-                placeholder="First name"
-                onChange={(e) => setFirst_name(e.target.value)}
-                value={first_name}
-              />
-            </div>
-            <div className="w-full space-y-2">
-              <Label>Last name</Label>
-              <Input
-                disabled={isPending}
-                placeholder="Last name"
-                onChange={(e) => setLast_name(e.target.value)}
-                value={last_name}
-              />
-            </div>
           </div>
 
           <div className="space-y-2">
