@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useTransition } from "react";
+import { FormEvent, use, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -25,27 +25,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CustomUser } from "@/types/types";
 
 type Role = "admin" | "superuser" | "user";
 
-interface AccountCardProps {
-  initialFirstName: string;
-  initialLastName: string;
-  initialEmail: string;
-  userRole: string;
+interface ProfileProps {
+  user: CustomUser;
 }
 
-export const AccountCard = ({
-  initialFirstName,
-  initialLastName,
-  initialEmail,
-  userRole,
-}: AccountCardProps) => {
+export const Account = ({ user }: ProfileProps) => {
   const router = useRouter();
 
-  const [first_name, setFirst_name] = useState<string>(initialFirstName);
-  const [last_name, setLast_name] = useState<string>(initialLastName);
-  const [email, setEmail] = useState<string>(initialEmail);
+  const [first_name, setFirst_name] = useState<string>(user.first_name);
+  const [last_name, setLast_name] = useState<string>(user.last_name);
+  const [email, setEmail] = useState<string>(user.email);
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [valueRole, setValueRole] = useState<string>();
@@ -89,9 +82,9 @@ export const AccountCard = ({
         });
 
       if (
-        first_name !== initialFirstName ||
-        last_name !== initialLastName ||
-        email !== initialEmail ||
+        first_name !== user.first_name ||
+        last_name !== user.last_name ||
+        email !== user.email ||
         newPassword
       ) {
         signOut();
@@ -192,12 +185,12 @@ export const AccountCard = ({
           <div className="space-y-2">
             <Label>Role</Label>
             <Select
-              disabled={isPending || userRole !== "admin"}
+              disabled={isPending || user.role !== "admin"}
               onValueChange={(value) => setValueRole(value)}
-              defaultValue={userRole}
+              defaultValue={user.role}
             >
               <SelectTrigger>
-                <SelectValue placeholder={userRole} />
+                <SelectValue placeholder={user.role} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="admin">Admin</SelectItem>

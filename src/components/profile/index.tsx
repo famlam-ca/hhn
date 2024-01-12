@@ -6,8 +6,6 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
-import { EditProfileModal } from "./edit-profile-modal";
-
 import { Banner } from "./banner";
 
 interface ProfileProps {
@@ -17,16 +15,13 @@ interface ProfileProps {
 export const Profile = ({ user }: ProfileProps) => {
   const { identity } = useUserToken(user.id);
 
-  const ownerAsUser = `owner-${user.id}`;
-  const isOwner = identity === ownerAsUser;
-
   if (!identity) {
     return <ProfileSkeleton />;
   }
 
   return (
     <div>
-      <Banner username={user.username} banner={user.image} />
+      <Banner username={user.username} banner={user.banner} />
 
       <MaxWidthWrapper className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
         <div className="flex items-center">
@@ -36,18 +31,6 @@ export const Profile = ({ user }: ProfileProps) => {
             image={user.image}
             role={user.role}
           />
-          {isOwner && (
-            <EditProfileModal
-              username={user.username}
-              first_name={user.first_name}
-              last_name={user.last_name}
-              email={user.email}
-              image={user.image}
-              role={user.role}
-              bio={user.bio}
-              userTheme={user.theme}
-            />
-          )}
         </div>
         <Bio username={user.username} bio={user.bio} />
       </MaxWidthWrapper>

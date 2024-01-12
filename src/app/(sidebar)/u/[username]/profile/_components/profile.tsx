@@ -1,14 +1,9 @@
 "use client";
 
-import { useState, useTransition, useRef, ElementRef } from "react";
+import { ElementRef, useRef, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 
-import { updateUser } from "@/server/user";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -17,24 +12,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { CustomUser } from "@/types/types";
+import { updateUser } from "@/server/user";
+import { toast } from "@/components/ui/use-toast";
 
-import { EditProfileImage } from "./edit-profile-image";
+import { EditImage } from "./edit-image";
 
-interface ProfileCardProps {
-  initialUsername: string;
-  initialImage: string;
-  initialBio: string | null;
+interface ProfileProps {
+  user: CustomUser;
 }
 
-export const ProfileCard = ({
-  initialUsername,
-  initialImage,
-  initialBio,
-}: ProfileCardProps) => {
+export const Profile = ({ user }: ProfileProps) => {
   const closeRef = useRef<ElementRef<"button">>(null);
 
-  const [username, setUsername] = useState<string>(initialUsername);
-  const [bio, setBio] = useState(initialBio || "");
+  const [username, setUsername] = useState<string>(user.username);
+  const [bio, setBio] = useState(user.bio || "");
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,12 +66,12 @@ export const ProfileCard = ({
         <CardContent className="space-y-2">
           <div className="space-y-2">
             <Label>Username</Label>
-            {/* TODO: Fix error on change || revalidate properly */}
+            {/* TODO: Add redirect on change */}
             <Input
               disabled
               placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
-              value={username}
+              defaultValue={user.username}
             />
           </div>
 
@@ -86,14 +81,14 @@ export const ProfileCard = ({
               disabled={isPending}
               placeholder="User bio"
               onChange={(e) => setBio(e.target.value)}
-              value={bio}
+              defaultValue={user.bio}
               className="resize-none"
             />
           </div>
 
           <div className="space-y-2">
             <Label>Edit your profile image</Label>
-            <EditProfileImage initialImage={initialImage} />
+            <EditImage initialImage={user.image} />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-end">

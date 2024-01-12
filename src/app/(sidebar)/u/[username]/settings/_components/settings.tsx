@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Loader2 } from "lucide-react";
 
@@ -23,17 +22,18 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { CustomUser } from "@/types/types";
 
 type Theme = "dark" | "light";
 
-interface SettingsCardProps {
-  userTheme: string;
+interface SettingsProps {
+  user: CustomUser;
 }
 
-export const SettingsCard = ({ userTheme }: SettingsCardProps) => {
+export const Settings = ({ user }: SettingsProps) => {
   const { setTheme } = useTheme();
 
-  const [valueTheme, setValueTheme] = useState<string>(userTheme);
+  const [valueTheme, setValueTheme] = useState<string>(user.theme);
 
   const [isPending, startTransition] = useTransition();
 

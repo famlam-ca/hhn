@@ -6,8 +6,9 @@ export type CustomUser = {
   email: string;
 
   image: string;
+  banner: string;
   role: string;
-  bio: string | null;
+  bio: string;
   theme: string;
 };
 

@@ -1,5 +1,5 @@
-const Page = () => {
-  return <div>Mail</div>;
+const MailPage = () => {
+  return <div>MailPage</div>;
 };
 
-export default Page;
+export default MailPage;

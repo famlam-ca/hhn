@@ -151,6 +151,11 @@ body,
   text-wrap: balance;
 }
 
+/* fake text-shadow until added to tailwind */
+.text-shadow {
+  text-shadow: #13131374 2px 5px;
+}
+
 /* custom autofill */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

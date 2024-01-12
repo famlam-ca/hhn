@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 
 import { getSelfByUsername } from "@/lib/auth-service";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { Navbar } from "@/components/profile/nav";
 
 interface ProfileLayoutProps {
   params: { username: string };
@@ -14,7 +16,12 @@ const ProfileLayout = async ({ params, children }: ProfileLayoutProps) => {
     redirect("/");
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Navbar user={self} />
+      {children}
+    </>
+  );
 };
 
 export default ProfileLayout;

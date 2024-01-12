@@ -18,11 +18,11 @@ import { toast } from "@/components/ui/use-toast";
 import { updateUser } from "@/server/user";
 import { UploadDropzone } from "@/lib/upload-thing";
 
-interface EditProfileImageProps {
+interface EditImageProps {
   initialImage: string;
 }
 
-export const EditProfileImage = ({ initialImage }: EditProfileImageProps) => {
+export const EditImage = ({ initialImage }: EditImageProps) => {
   const router = useRouter();
 
   const closeRef = useRef<ElementRef<"button">>(null);
