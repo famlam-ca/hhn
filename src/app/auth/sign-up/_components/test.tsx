@@ -106,7 +106,7 @@ export const Test = () => {
     try {
       await createUser({ ...values, passwordConfirm: values.passwordConfirm });
     } catch (error) {
-      console.error(error);
+      console.error(error); // debug
     }
   };
 

@@ -46,7 +46,7 @@ const fetchServerData = async (url: string) => {
 
     return { serverDataList, formatUptime };
   } catch (error) {
-    console.error("Error in fetchServerData: ", error);
+    console.error("Error in fetchServerData: ", error); // debug
     throw new Error("Error in fetchServerData: ", { cause: error });
   }
 };
@@ -56,7 +56,7 @@ const serverData = async (url: string) => {
     const data = await fetchServerData(url);
     return data;
   } catch (error) {
-    console.error("Error in serverData: ", error);
+    console.error("Error in serverData: ", error); // debug
     throw new Error("Error in serverData: ", { cause: error });
   }
 };
@@ -66,7 +66,7 @@ const startInterval = (url: string, intervalTime: number = 300000) => {
     try {
       const newData = await serverData(url);
     } catch (error) {
-      console.error("Error refreshing server data:", error);
+      console.error("Error refreshing server data:", error); // debug
     }
   }, intervalTime);
 };

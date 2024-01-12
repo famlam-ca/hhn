@@ -7,8 +7,6 @@ const urlencoded = new URLSearchParams();
 urlencoded.append("username", username);
 urlencoded.append("password", password);
 
-console.log(username, password);
-
 const requestOptions = {
   method: "POST",
   body: urlencoded,
@@ -31,7 +29,7 @@ export const fetchAccessTicket = async () => {
 
     return { csrfToken, accessTicket };
   } catch (error) {
-    console.error("Error in fetchAccessTicket: ", error);
+    console.error("Error in fetchAccessTicket: ", error); // debug
     throw new Error("Error in fetchAccessTicket: ", { cause: error });
   }
 };
