@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
 import {
-  Cloud,
+  CloudCog,
   LifeBuoy,
   LogOut,
   Mail,
@@ -10,10 +9,9 @@ import {
   Phone,
   Settings,
   User,
+  UserCircle,
 } from "lucide-react";
 
-import { authOptions } from "@/lib/auth-options";
-import { ThemeToggle } from "@/hooks/use-theme";
 import { Icons } from "@/components/icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -26,7 +24,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Hint } from "../hint";
 
 interface UserNavProps {
   email: string | undefined;
@@ -98,8 +95,15 @@ export const UserNav = async ({
 
           <DropdownMenuItem asChild>
             <Link href={`/u/${username}`}>
-              <User className="mr-2 h-5 w-5" />
+              <UserCircle className="mr-2 h-5 w-5" />
               Profile
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem asChild>
+            <Link href={`/u/${username}`}>
+              <User className="mr-2 h-5 w-5" />
+              Account
             </Link>
           </DropdownMenuItem>
 
@@ -116,12 +120,6 @@ export const UserNav = async ({
               Settings
             </Link>
           </DropdownMenuItem>
-
-          <Hint label="Currently unavailable - check your profile settings">
-            <DropdownMenuItem disabled>
-              <ThemeToggle className="w-full" />
-            </DropdownMenuItem>
-          </Hint>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
@@ -162,7 +160,7 @@ export const UserNav = async ({
 
           <DropdownMenuItem disabled={role !== "admin"} asChild>
             <Link href="/docs/api">
-              <Cloud className="mr-2 h-5 w-5" />
+              <CloudCog className="mr-2 h-5 w-5" />
               API
             </Link>
           </DropdownMenuItem>

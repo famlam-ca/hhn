@@ -11,11 +11,7 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
   const user = (await getSelfByUsername(params.username)) as CustomUser;
 
-  return (
-    <div className="h-full">
-      <Profile user={user} />
-    </div>
-  );
+  return <Profile user={user} />;
 };
 
 export default Page;

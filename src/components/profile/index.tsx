@@ -6,7 +6,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
-import { Banner } from "./banner";
+import { Banner, BannerSkeleton } from "./banner";
 
 interface ProfileProps {
   user: CustomUser;
@@ -21,7 +21,7 @@ export const Profile = ({ user }: ProfileProps) => {
 
   return (
     <div>
-      <Banner username={user.username} banner={user.banner} />
+      <Banner username={user.username} />
 
       <MaxWidthWrapper className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
         <div className="flex items-center">
@@ -40,13 +40,13 @@ export const Profile = ({ user }: ProfileProps) => {
 
 export const ProfileSkeleton = () => {
   return (
-    <MaxWidthWrapper>
-      <div className="grid h-full grid-cols-1 lg:grid-cols-3 lg:gap-y-0 xl:grid-cols-3 2xl:grid-cols-6">
-        <div className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
-          <HeaderSkeleton />
-          <BioSkeleton />
-        </div>
-      </div>
-    </MaxWidthWrapper>
+    <>
+      <BannerSkeleton />
+
+      <MaxWidthWrapper>
+        <HeaderSkeleton />
+        <BioSkeleton />
+      </MaxWidthWrapper>
+    </>
   );
 };

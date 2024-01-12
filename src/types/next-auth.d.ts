@@ -10,7 +10,6 @@ declare module "next-auth" {
       email: string;
 
       image: string;
-      banner: string;
       role: string;
       bio: string;
       theme: string;

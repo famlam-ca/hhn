@@ -30,7 +30,7 @@ export const UserAvatar = ({ username, image, size }: UserAvatarProps) => {
         <AvatarImage src={image} className="object-cover" />
         <AvatarFallback
           className={cn(
-            avatarSizes({ size }) === "h-14 w-14" ? "text-3xl" : "text-lg",
+            avatarSizes({ size }) === "h-52 w-52" ? "text-8xl" : "text-5xl",
           )}
         >
           {username[0]}
@@ -43,5 +43,5 @@ export const UserAvatar = ({ username, image, size }: UserAvatarProps) => {
 interface UserAvatarSkeletonProps extends VariantProps<typeof avatarSizes> {}
 
 export const UserAvatarSkeleton = ({ size }: UserAvatarSkeletonProps) => {
-  return <Skeleton className={cn("rounded0full", avatarSizes({ size }))} />;
+  return <Skeleton className={cn("rounded-full", avatarSizes({ size }))} />;
 };

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, GraduationCap, Server } from "lucide-react";
+import { ArrowRight, GraduationCap, PencilRuler, Server } from "lucide-react";
 
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
@@ -112,7 +112,7 @@ export default function Home() {
             <div className="flex flex-col space-y-2 border-l-4 border-border py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <div className="flex items-center">
                 <div className="mr-2 flex h-12 w-12 items-center justify-center rounded-full bg-background">
-                  <GraduationCap className="h-6 w-6" />
+                  <PencilRuler className="h-6 w-6" />
                 </div>
                 <span className="text-xl font-semibold">Projects</span>
               </div>
@@ -135,10 +135,10 @@ export default function Home() {
         <div>
           <Wrapper>
             <Image
-              src="/project-list.png" // add picture of projects page
+              src="/project-banner.png"
               alt="project list"
-              width={938}
-              height={718}
+              width={1920}
+              height={1080}
               quality={100}
             />
           </Wrapper>

@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
 
 import { getSelfByUsername } from "@/lib/auth-service";
-import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { Navbar } from "@/components/profile/nav";
+import { CustomUser } from "@/types/types";
+
+import { Navbar } from "./_components/nav";
 
 interface ProfileLayoutProps {
   params: { username: string };
@@ -10,7 +11,7 @@ interface ProfileLayoutProps {
 }
 
 const ProfileLayout = async ({ params, children }: ProfileLayoutProps) => {
-  const self = await getSelfByUsername(params.username);
+  const self = (await getSelfByUsername(params.username)) as CustomUser;
 
   if (!self) {
     redirect("/");

@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface BioProps {
   username: string;
@@ -7,32 +8,49 @@ interface BioProps {
 
 export const Bio = ({ username, bio }: BioProps) => {
   return (
-    <div className="space-y-2">
-      <div className="group items-center justify-between">
-        <div className="flex items-center gap-x-2 text-lg font-semibold lg:text-2xl">
-          About <span>{username}</span>
+    <Card>
+      <CardHeader>
+        <CardTitle>About {username}</CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        {/* Bio */}
+        <div className="space-y-2">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex h-px items-center justify-center text-xs">
+              <span className="bg-background px-2 text-muted-foreground">
+                Bio
+              </span>
+            </div>
+          </div>
+          <p className="text-sm">
+            {bio || "This user prefers to keep an air of mystery about them."}
+          </p>
         </div>
-      </div>
-      <p className="text-sm">
-        {bio || "This user prefers to keep an air of mystery about them."}
-      </p>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
 export const BioSkeleton = () => {
   return (
-    <>
-      <div className="flex flex-col items-start justify-between gap-y-4 lg:flex-row lg:gap-y-0">
-        <div className="flex items-center gap-x-2">
-          <div className="space-y-2">
-            <Skeleton className="h-7 w-52" />
-            <Skeleton className="h-4 w-96" />
-            <Skeleton className="h-4 w-96" />
-            <Skeleton className="h-4 w-96" />
-          </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <Skeleton className="h-8 w-52" />
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
         </div>
-      </div>
-    </>
+      </CardContent>
+    </Card>
   );
 };

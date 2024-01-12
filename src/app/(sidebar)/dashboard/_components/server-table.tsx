@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { serverData, startInterval } from "@/server/proxmox-api";
+import { serverData, startInterval } from "@/server/proxmox";
 import { ServerData } from "@/types/types";
 
 export const ServerTable = async () => {
@@ -31,74 +31,61 @@ export const ServerTable = async () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <>
-              {serverDataList.map((serverData: ServerData) => {
-                const data = {
-                  serverName: serverData.name,
-                  status: serverData.status,
-                  cpuUsage: `${(serverData.cpu * 100).toFixed(2)}`,
-                  memoryUsage: `${(serverData.mem / (1024 * 1024)).toFixed(2)}`,
-                  uptime: formatUptime(serverData.uptime),
-                };
+            {serverDataList.map((serverData: ServerData) => {
+              const data = {
+                serverName: serverData.name,
+                status: serverData.status,
+                cpuUsage: (serverData.cpu * 100).toFixed(2),
+                memoryUsage: (serverData.mem / (1024 * 1024)).toFixed(2),
+                uptime: formatUptime(serverData.uptime),
+              };
 
-                return (
-                  <TableRow key={serverData.vmid}>
-                    <TableCell
-                      className={
-                        data.status === "running"
-                          ? "capitalize text-success max-sm:hidden"
-                          : "capitalize text-alert max-sm:hidden"
-                      }
-                    >
-                      {data.status}
-                    </TableCell>
+              const statusClassName =
+                data.status === "running" ? "text-success" : "text-alert";
 
-                    <TableCell className="capitalize">
-                      {data.serverName}
-                    </TableCell>
+              const cpuUsageClassName =
+                parseFloat(data.cpuUsage) <= 50
+                  ? "text-success"
+                  : parseFloat(data.cpuUsage) >= 75
+                    ? "text-alert"
+                    : "text-text";
 
-                    <TableCell
-                      className={
-                        parseFloat(data.cpuUsage) <= 50
-                          ? "text-success"
-                          : parseFloat(data.cpuUsage) > 50
-                            ? "text-warning"
-                            : parseFloat(data.cpuUsage) >= 75
-                              ? "text-alert"
-                              : "text-text"
-                      }
-                    >
-                      {data.cpuUsage}
-                    </TableCell>
+              const memoryUsageClassName =
+                parseFloat(data.memoryUsage) <= 50
+                  ? "text-success"
+                  : parseFloat(data.memoryUsage) >= 75
+                    ? "text-alert"
+                    : "text-text";
 
-                    <TableCell
-                      className={
-                        parseFloat(data.memoryUsage) <= 50 // 2048
-                          ? "text-success"
-                          : parseFloat(data.memoryUsage) > 50 // 4096
-                            ? "text-warning"
-                            : parseFloat(data.memoryUsage) >= 75 // 6144
-                              ? "text-alert"
-                              : "text-text"
-                      }
-                    >
-                      {data.memoryUsage} MB
-                    </TableCell>
+              return (
+                <TableRow key={serverData.vmid}>
+                  <TableCell className={`capitalize ${statusClassName}`}>
+                    {data.status}
+                  </TableCell>
 
-                    <TableCell className="max-lg:hidden">
-                      {data.uptime}
-                    </TableCell>
-                    <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
-                  </TableRow>
-                );
-              })}
-            </>
+                  <TableCell className="capitalize">
+                    {data.serverName}
+                  </TableCell>
+
+                  <TableCell className={cpuUsageClassName}>
+                    {data.cpuUsage}
+                  </TableCell>
+
+                  <TableCell className={memoryUsageClassName}>
+                    {data.memoryUsage} MB
+                  </TableCell>
+
+                  <TableCell className="max-lg:hidden">{data.uptime}</TableCell>
+                  <TableCell className="text-right text-primary max-lg:hidden"></TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </Box>
     );
   } catch (error) {
-    console.error("Error fetching server data:", error); // debug
-    throw new Error("Error fetching server data");
+    console.error(error); // debug
+    return <div>Error fetching server data. Please try again later.</div>;
   }
 };
