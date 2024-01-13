@@ -9,9 +9,7 @@ export const Bio = ({ bio }: BioProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          About <menu></menu>
-        </CardTitle>
+        <CardTitle>About me</CardTitle>
       </CardHeader>
 
       <CardContent>
