@@ -32,7 +32,7 @@ export const Profile = ({ user }: ProfileProps) => {
             role={user.role}
           />
         </div>
-        <Bio username={user.username} bio={user.bio} />
+        <Bio bio={user.bio} />
       </MaxWidthWrapper>
     </div>
   );

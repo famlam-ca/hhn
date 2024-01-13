@@ -2,15 +2,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface BioProps {
-  username: string;
   bio: string | null;
 }
 
-export const Bio = ({ username, bio }: BioProps) => {
+export const Bio = ({ bio }: BioProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>About {username}</CardTitle>
+        <CardTitle>
+          About <menu></menu>
+        </CardTitle>
       </CardHeader>
 
       <CardContent>

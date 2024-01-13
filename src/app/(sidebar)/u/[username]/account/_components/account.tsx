@@ -70,7 +70,7 @@ export const Account = ({ user }: ProfileProps) => {
           setShowOldPassword(false);
           setShowNewPassword(false);
           // TODO: Dynamically render updated info
-          toast({ title: "Profile updated" });
+          toast({ title: "Account updated" });
           router.refresh();
         })
         .catch(() => {
