@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Mail, Settings, User, UserCircle } from "lucide-react";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CustomUser } from "@/types/types";
 

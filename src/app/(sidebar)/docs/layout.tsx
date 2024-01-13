@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Navbar } from "./_components/nav";
 
 const DocsLayout = ({ children }: React.PropsWithChildren) => {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Github, Globe } from "lucide-react";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 import { NavItem } from "./nav-item";
 import { SocialItem } from "./social-item";

@@ -1,5 +1,5 @@
-import MaxWidthWrapper from "@/components/max-width-wrapper";
-import Wrapper from "@/components/wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { Wrapper } from "@/components/wrapper";
 
 const Page = () => {
   return (

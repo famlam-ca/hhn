@@ -2,7 +2,7 @@
 
 import { CustomUser } from "@/types/types";
 import { useUserToken } from "@/hooks/use-user-token";
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";

@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 import SignInForm from "./_components/sign-in-form";
 

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { CloudCog } from "lucide-react";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 import { NavItem } from "./nav-item";
 import { MobileNav } from "./mobile-nav";

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { ArrowUpRight, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 
 import { authOptions } from "@/lib/auth-options";
-import MaxWidtHWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Icons } from "@/components/icons";
 import { SignIn } from "@/components/auth-button";
 import { buttonVariants } from "@/components/ui/button";
@@ -41,7 +41,7 @@ const Navbar = async () => {
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full border-b border-border bg-background/75 backdrop-blur-lg transition-all">
-      <MaxWidtHWrapper>
+      <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="z-40 flex items-center gap-2">
             <Icons.logo className="h-8 w-8 fill-text" />
@@ -88,7 +88,7 @@ const Navbar = async () => {
             )}
           </ul>
         </div>
-      </MaxWidtHWrapper>
+      </MaxWidthWrapper>
     </nav>
   );
 };

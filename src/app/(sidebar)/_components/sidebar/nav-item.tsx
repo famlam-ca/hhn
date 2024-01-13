@@ -5,7 +5,7 @@ import { ArrowUpRight, LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useProfileSidebar } from "@/store/use-profile-sidebar";
+import { useSidebar } from "@/store/use-profile-sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface NavItemProps {
@@ -23,7 +23,7 @@ export const NavItem = ({
   target,
   isActive,
 }: NavItemProps) => {
-  const { collapsed } = useProfileSidebar();
+  const { collapsed } = useSidebar();
 
   return (
     <Button

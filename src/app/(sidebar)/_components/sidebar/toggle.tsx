@@ -7,7 +7,7 @@ import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 import { Hint } from "@/components/hint";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { useProfileSidebar } from "@/store/use-profile-sidebar";
+import { useSidebar } from "@/store/use-profile-sidebar";
 import { cn } from "@/lib/utils";
 
 export const Toggle = () => {
@@ -18,9 +18,7 @@ export const Toggle = () => {
     path = "Profile";
   }
 
-  const { collapsed, onExpand, onCollapse } = useProfileSidebar(
-    (state) => state,
-  );
+  const { collapsed, onExpand, onCollapse } = useSidebar((state) => state);
 
   const label = collapsed ? "Expand" : "Collapse";
 

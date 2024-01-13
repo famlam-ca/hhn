@@ -3,8 +3,8 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import MaxWidthWrapper from "@/components/max-width-wrapper";
-import Wrapper from "@/components/wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { Wrapper } from "@/components/wrapper";
 
 const ErrorPage = () => {
   return (

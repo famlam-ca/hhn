@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { LogIn } from "lucide-react";
 
 import { authOptions } from "@/lib/auth-options";
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { SignIn } from "@/components/auth-button";
 

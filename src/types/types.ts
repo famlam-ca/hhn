@@ -15,7 +15,9 @@ export type ServerData = {
   name: string;
   status: string;
   cpu: number;
+  cpus: number;
   mem: number;
+  maxmem: number;
   uptime: number;
   vmid: number;
 };

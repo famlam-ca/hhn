@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   HoverCard,
@@ -10,7 +10,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
-import Wrapper from "@/components/wrapper";
+import { Wrapper } from "@/components/wrapper";
 
 const AboutContent = () => {
   return (

@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useProfileSidebar } from "@/store/use-profile-sidebar";
+import { useSidebar } from "@/store/use-profile-sidebar";
 
 export const Wrapper = ({ children }: React.PropsWithChildren) => {
-  const { collapsed } = useProfileSidebar((state) => state);
+  const { collapsed } = useSidebar((state) => state);
 
   return (
     <nav

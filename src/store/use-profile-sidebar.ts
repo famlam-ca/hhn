@@ -6,7 +6,7 @@ interface ProfileSidebarStore {
   onCollapse: () => void;
 }
 
-export const useProfileSidebar = create<ProfileSidebarStore>((set) => ({
+export const useSidebar = create<ProfileSidebarStore>((set) => ({
   collapsed: false,
   onExpand: () => set(() => ({ collapsed: false })),
   onCollapse: () => set(() => ({ collapsed: true })),

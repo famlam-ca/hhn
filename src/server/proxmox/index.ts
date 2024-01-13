@@ -5,7 +5,9 @@ interface Response {
   accessTicket: string;
 }
 
-const fetchServerData = async (url: string) => {
+const fetchServerData = async () => {
+  const url = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
+
   const res = (await fetchAccessTicket()) as Response;
 
   const myHeaders = new Headers();
@@ -51,24 +53,12 @@ const fetchServerData = async (url: string) => {
   }
 };
 
-const serverData = async (url: string) => {
+export const serverData = async () => {
   try {
-    const data = await fetchServerData(url);
+    const data = await fetchServerData();
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug
     throw new Error("Error in serverData: ", { cause: error });
   }
 };
-
-const startInterval = (url: string, intervalTime: number = 300000) => {
-  setInterval(async () => {
-    try {
-      const newData = await serverData(url);
-    } catch (error) {
-      console.error("Error refreshing server data:", error); // debug
-    }
-  }, intervalTime);
-};
-
-export { serverData, startInterval };

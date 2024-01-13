@@ -1,6 +1,6 @@
 import { CustomUser } from "@/types/types";
 import { getSelfByUsername } from "@/lib/auth-service";
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 import { Profile } from "./_components/profile";
 

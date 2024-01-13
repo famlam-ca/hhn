@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ProgressCircle } from "@tremor/react";
 
-const Progressbar = () => {
+export const ServerStat = () => {
   const [num, setNum] = useState<number>(0);
 
   const generateRandomPercentage = () => {
@@ -33,5 +33,3 @@ const Progressbar = () => {
     </div>
   );
 };
-
-export default Progressbar;

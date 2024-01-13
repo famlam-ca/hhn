@@ -2,9 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, GraduationCap, PencilRuler, Server } from "lucide-react";
 
-import MaxWidthWrapper from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
-import Wrapper from "@/components/wrapper";
+import { Wrapper } from "@/components/wrapper";
 
 export default function Home() {
   return (
