@@ -39,8 +39,11 @@ export const Dashboard = async () => {
       </div>
 
       <div className="my-8">
-        <div className="flex justify-between">
-          <h2 className="mb-3 text-2xl font-semibold">Servers</h2>
+        <div className="flex items-center justify-between">
+          <div className="mb-3 flex flex-col">
+            <h2 className="text-2xl font-semibold">Servers</h2>
+            <small className="text-muted">Last 30s</small>
+          </div>
           <RefreshButton />
         </div>
         <ServerTable />

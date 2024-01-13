@@ -1,3 +1,4 @@
+import { HostData } from "@/types/types";
 import { fetchAccessTicket } from "./request-access-ticket";
 
 interface Response {
@@ -25,7 +26,7 @@ const fetchServerData = async () => {
     const { data: serverDataList } = await res.json();
 
     if (!Array.isArray(serverDataList)) {
-      throw new Error("Invalid server data format");
+      throw new Error("Invalid data format");
     }
 
     serverDataList.sort((a, b) => {
@@ -60,5 +61,42 @@ export const serverData = async () => {
   } catch (error) {
     console.error("Error in serverData: ", error); // debug
     throw new Error("Error in serverData: ", { cause: error });
+  }
+};
+
+const fetchHostData = async () => {
+  const url = "https://pve.famlam.ca/api2/json/nodes/pve/status";
+
+  const res = (await fetchAccessTicket()) as Response;
+
+  const myHeaders = new Headers();
+  myHeaders.append("CSRFPreventionToken", res.csrfToken);
+  myHeaders.append("Cookie", `PVEAuthCookie=${res.accessTicket}`);
+
+  const requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow" as RequestRedirect,
+  };
+
+  try {
+    const res = await fetch(url, requestOptions);
+    const { data: hostDataList } = await res.json();
+
+    return hostDataList;
+  } catch (error) {
+    console.error("Error in fetchHostData: ", error); // debug
+    throw new Error("Error in fetchHostData: ", { cause: error });
+  }
+};
+
+export const hostData = async () => {
+  try {
+    const data = await fetchHostData();
+
+    return data;
+  } catch (error) {
+    console.error("Error in hostData: ", error); // debug
+    throw new Error("Error in hostData: ", { cause: error });
   }
 };

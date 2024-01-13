@@ -32,7 +32,7 @@ export const ServerTable = async () => {
               cpuUsage: (serverData.cpu * 100).toFixed(2),
               cpus: serverData.cpus,
               memoryUsage: (serverData.mem / 1024 ** 2).toFixed(2),
-              maxMem: (serverData.maxmem / 1024 ** 3).toFixed(0),
+              maxMem: (serverData.maxmem / 1024 ** 3).toFixed(2),
               uptime: formatUptime(serverData.uptime),
             };
 
@@ -42,9 +42,11 @@ export const ServerTable = async () => {
             const cpuUsageClassName =
               parseFloat(data.cpuUsage) <= 50
                 ? "text-success"
-                : parseFloat(data.cpuUsage) >= 75
-                  ? "text-warning"
-                  : "text-alert";
+                : parseFloat(data.cpuUsage) >= 90
+                  ? "text-alert"
+                  : parseFloat(data.cpuUsage) > 50
+                    ? "text-warning"
+                    : "text-text";
 
             const memoryUsagePercentage =
               (serverData.mem / serverData.maxmem) * 100;
@@ -52,10 +54,10 @@ export const ServerTable = async () => {
             const memoryUsageClassName =
               memoryUsagePercentage <= 50
                 ? "text-success"
-                : memoryUsagePercentage >= 75
+                : memoryUsagePercentage >= 90
                   ? "text-alert"
-                  : memoryUsagePercentage >= 90
-                    ? "text-alert"
+                  : memoryUsagePercentage > 50
+                    ? "text-warning"
                     : "text-text";
 
             return (

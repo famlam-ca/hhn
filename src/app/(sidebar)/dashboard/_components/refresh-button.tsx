@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 
@@ -12,6 +13,14 @@ export const RefreshButton = () => {
   const refresh = () => {
     router.refresh();
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      refresh();
+    }, 30000); // 30 sec = 30000 // 5 min = 300000
+
+    return () => clearInterval(intervalId);
+  });
 
   return (
     <Hint label="Refresh" asChild>

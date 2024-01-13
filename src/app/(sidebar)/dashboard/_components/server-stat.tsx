@@ -1,34 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { ProgressCircle } from "@tremor/react";
+interface ServerStatProps {
+  value: string;
+  maxValue: string;
+}
 
-export const ServerStat = () => {
-  const [num, setNum] = useState<number>(0);
+export const ServerStat = ({ maxValue, value }: ServerStatProps) => {
+  const percentage = parseFloat(value);
 
-  const generateRandomPercentage = () => {
-    return Math.floor(Math.random() * 100 + 1);
-  };
-
-  useEffect(() => {
-    setNum(generateRandomPercentage());
-
-    const interval = setInterval(
-      () => setNum(generateRandomPercentage()),
-      300000, // 30 seconds = 30000 // 5 min = 300000
-    );
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-
-  const percentage = num;
+  console.log("Max value:", maxValue);
 
   return (
     <div className="flex max-h-28 items-center justify-center">
       <ProgressCircle value={percentage} size="xl">
-        <span className="text-xl text-primary">{`${num}%`}</span>
+        <p className="flex flex-col items-center">
+          <span>{`${value}%`} of</span>
+          <span className="text-muted-foreground">{`${maxValue}`}</span>
+        </p>
       </ProgressCircle>
     </div>
   );
