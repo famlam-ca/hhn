@@ -39,7 +39,7 @@ A hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends
 - [NextAuth.js](https://next-auth.js.org "NextAuth JS")
 - [Prisma](https://prisma.io "Prisma")
 - [MySQL](https://www.mysql.com/ "MySQL")
-  [shadcn/ui](https://ui.shadcn.com/ "shadcn/ui")
+- [shadcn/ui](https://ui.shadcn.com/ "shadcn/ui")
 - [Tailwind CSS](https://tailwindcss.com "Tailwind CSS")
 
 ## Support
