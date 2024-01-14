@@ -19,7 +19,7 @@ import { UploadDropzone } from "@/lib/upload-thing";
 import { updateUser } from "@/server/user";
 
 interface EditImageProps {
-  userId: string;
+  userId?: string;
   initialImage: string;
 }
 
