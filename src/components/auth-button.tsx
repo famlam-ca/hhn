@@ -12,8 +12,6 @@ interface ButtonProps {
 }
 
 export const SignIn = ({ className, children }: ButtonProps) => {
-  const pathname = usePathname();
-
   return (
     <button
       className={
@@ -21,12 +19,7 @@ export const SignIn = ({ className, children }: ButtonProps) => {
           ? cn("flex items-center gap-1", className)
           : cn("text-left", className)
       }
-      onClick={
-        () => signIn()
-        //   undefined, {
-        //   callbackUrl: pathname === "/" ? "/dashboard" : undefined,
-        // }
-      }
+      onClick={() => signIn()}
     >
       {children ? children : <span className={cn("", className)}>Sign In</span>}
     </button>
@@ -34,8 +27,6 @@ export const SignIn = ({ className, children }: ButtonProps) => {
 };
 
 export const SignOut = ({ className, children }: ButtonProps) => {
-  const pathname = usePathname();
-
   return (
     <button
       className={
@@ -43,12 +34,7 @@ export const SignOut = ({ className, children }: ButtonProps) => {
           ? cn("flex items-center gap-1", className)
           : cn("text-left", className)
       }
-      onClick={() =>
-        signOut({
-          callbackUrl:
-            pathname === "/dashboard" || "/u/:path*" ? "/" : undefined,
-        })
-      }
+      onClick={() => signOut()}
     >
       {children ? (
         children

@@ -30,6 +30,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -65,7 +67,7 @@ export function UserTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <MaxWidthWrapper>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
@@ -140,14 +142,7 @@ export function UserTable<TData, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
+              <UserTableSkeleton columns={columns} data={data} />
             )}
           </TableBody>
         </Table>
@@ -174,6 +169,23 @@ export function UserTable<TData, TValue>({
           Next
         </Button>
       </div>
-    </div>
+    </MaxWidthWrapper>
+  );
+}
+
+export function UserTableSkeleton<TData, TValue>({
+  columns,
+}: DataTableProps<TData, TValue>) {
+  return (
+    <TableRow>
+      <TableCell
+        colSpan={columns.length}
+        className="h-24 space-y-4 text-center"
+      >
+        {[...Array(5)].map((_, i) => (
+          <Skeleton key={i} className="h-10" />
+        ))}
+      </TableCell>
+    </TableRow>
   );
 }

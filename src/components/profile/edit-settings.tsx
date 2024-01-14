@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, useState, useTransition } from "react";
-import { useTheme } from "next-themes";
 import { Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
+import { FormEvent, useState, useTransition } from "react";
 
-import { updateUser } from "@/server/user";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -20,8 +21,8 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { updateUser } from "@/server/user";
 import { CustomUser } from "@/types/types";
 
 type Theme = "dark" | "light";
@@ -30,7 +31,8 @@ interface SettingsProps {
   user: CustomUser;
 }
 
-export const Settings = ({ user }: SettingsProps) => {
+export const EditSettings = ({ user }: SettingsProps) => {
+  const pathname = usePathname();
   const { setTheme } = useTheme();
 
   const [valueTheme, setValueTheme] = useState<string>(user.theme);
@@ -42,6 +44,7 @@ export const Settings = ({ user }: SettingsProps) => {
 
     startTransition(() => {
       updateUser({
+        id: user.id,
         theme: valueTheme as Theme,
       })
         .then(() => {
@@ -63,7 +66,13 @@ export const Settings = ({ user }: SettingsProps) => {
     <Card>
       <CardHeader>
         <CardTitle>Settings</CardTitle>
-        <CardDescription>Customize your experience here.</CardDescription>
+        <CardDescription>
+          {pathname !== `/admin/${user.username}/edit` ? (
+            <span>Customize your experience here.</span>
+          ) : (
+            <span>Customize {user.username}&apos;s experience here.</span>
+          )}
+        </CardDescription>
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-2">
@@ -73,7 +82,7 @@ export const Settings = ({ user }: SettingsProps) => {
               onValueChange={(value) => {
                 setValueTheme(value);
               }}
-              defaultValue={valueTheme}
+              defaultValue={user.theme}
             >
               <SelectTrigger>
                 <div className="capitalize">{valueTheme}</div>

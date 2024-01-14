@@ -1,16 +1,20 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { User } from "@prisma/client";
 import { hash } from "bcrypt";
+import { revalidatePath } from "next/cache";
 
-import { getSelf } from "@/lib/auth-service";
 import { db } from "@/db";
+import { getUserById } from "@/lib/user-service";
 
 export const updateUser = async (values: Partial<User>) => {
-  const self = await getSelf();
+  const user = await getUserById(values.id!);
 
-  let hashedPassword = self.password;
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  let hashedPassword = user.password;
 
   if (values.password) {
     hashedPassword = await hash(values.password, 12);
@@ -29,15 +33,15 @@ export const updateUser = async (values: Partial<User>) => {
     theme: values.theme,
   };
 
-  const user = await db.user.update({
-    where: { id: self.id },
+  const dbUser = await db.user.update({
+    where: { id: user.id },
     data: { ...validData },
   });
 
-  revalidatePath(`/u/${self.username}`);
-  revalidatePath(`/${self.username}`);
+  revalidatePath(`/u/${dbUser.username}`);
+  revalidatePath(`/${dbUser.username}`);
 
-  return user;
+  return dbUser;
 };
 
 export const getAllUsers = async () => {

@@ -1,12 +1,12 @@
 "use client";
 
-import { CustomUser } from "@/types/types";
-import { useUserToken } from "@/hooks/use-user-token";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { useUserToken } from "@/hooks/use-user-token";
+import { CustomUser } from "@/types/types";
 
+import { Banner, BannerSkeleton } from "./banner";
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
-import { Banner, BannerSkeleton } from "./banner";
 
 interface ProfileProps {
   user: CustomUser;

@@ -1,14 +1,11 @@
 "use client";
 
-import { FormEvent, use, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { signOut } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import { FormEvent, useState, useTransition } from "react";
 
-import { updateUser } from "@/server/user";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -17,7 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -25,16 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
+import { updateUser } from "@/server/user";
 import { CustomUser } from "@/types/types";
 
 type Role = "admin" | "superuser" | "user";
 
 interface ProfileProps {
   user: CustomUser;
+  self?: CustomUser;
 }
 
-export const Account = ({ user }: ProfileProps) => {
+export const EditAccount = ({ user, self }: ProfileProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const [first_name, setFirst_name] = useState<string>(user.first_name);
   const [last_name, setLast_name] = useState<string>(user.last_name);
@@ -60,6 +62,7 @@ export const Account = ({ user }: ProfileProps) => {
 
     startTransition(() => {
       updateUser({
+        id: user.id,
         first_name: first_name,
         last_name: last_name,
         email: email,
@@ -87,7 +90,9 @@ export const Account = ({ user }: ProfileProps) => {
         email !== user.email ||
         newPassword
       ) {
-        signOut();
+        if (!self) {
+          signOut();
+        }
       }
     });
   };
@@ -97,8 +102,14 @@ export const Account = ({ user }: ProfileProps) => {
       <CardHeader>
         <CardTitle>Account</CardTitle>
         <CardDescription>
-          Make changes to your account here. After saving, you&apos;ll be logged
-          out.
+          {pathname !== `/admin/${user.username}/edit` ? (
+            <span>
+              Make changes to your account here. After saving, you&apos;ll be
+              logged out.
+            </span>
+          ) : (
+            <span>Make changes to {user.username}&apos;s account here.</span>
+          )}
         </CardDescription>
       </CardHeader>
       <form onSubmit={onSubmit}>
@@ -185,7 +196,10 @@ export const Account = ({ user }: ProfileProps) => {
           <div className="space-y-2">
             <Label>Role</Label>
             <Select
-              disabled={isPending || user.role !== "admin"}
+              disabled={
+                (self?.role !== "admin" && user.role !== "admin") ||
+                (isPending && user.role !== "admin")
+              }
               onValueChange={(value) => setValueRole(value)}
               defaultValue={user.role}
             >

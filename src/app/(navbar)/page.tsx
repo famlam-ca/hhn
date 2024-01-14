@@ -20,7 +20,7 @@ export default function Home() {
           Humble <span className="text-primary">Home Network</span>
         </h1>
         <p className="mt-5 max-w-prose sm:text-lg">
-          A home for friends and family.
+          Make yourself comfortable.
         </p>
         <Link
           href="/about"

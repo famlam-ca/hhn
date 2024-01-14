@@ -15,7 +15,7 @@ interface SignInFormProps {
   callbackUrl: string;
 }
 
-const SignInForm = ({ callbackUrl }: SignInFormProps) => {
+export const SignInForm = ({ callbackUrl }: SignInFormProps) => {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -46,8 +46,6 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
         password,
       });
 
-      revalidatePath(callbackUrl);
-
       setIsLoading(false);
 
       if (res?.error) {
@@ -60,6 +58,9 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
         revalidatePath("/");
         redirect("/");
       }
+
+      revalidatePath(callbackUrl);
+      redirect(callbackUrl);
     } catch (error: any) {
       setIsLoading(false);
     }
@@ -154,5 +155,3 @@ const SignInForm = ({ callbackUrl }: SignInFormProps) => {
     </div>
   );
 };
-
-export default SignInForm;

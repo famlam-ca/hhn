@@ -50,8 +50,9 @@ const AboutContent = () => {
                 >
                   CSS
                 </Link>
-                .<p>...</p>
+                .
               </p>
+              <p>...</p>
             </div>
 
             {/* How did it start? */}

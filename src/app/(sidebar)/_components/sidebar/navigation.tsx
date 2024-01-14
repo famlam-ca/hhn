@@ -12,6 +12,7 @@ import {
   LogOut,
   Server,
   User,
+  UserCog,
 } from "lucide-react";
 
 import { NavItem, NavItemSkeleton } from "./nav-item";
@@ -21,6 +22,7 @@ export const Navigation = () => {
   const user = session?.user;
 
   const pathname = usePathname();
+  const callbackUrl = `?callbackUrl=${encodeURIComponent(pathname)}` ?? "/";
 
   const routes = [
     {
@@ -61,10 +63,10 @@ export const Navigation = () => {
     },
   ];
 
-  if (!user?.username) {
+  if (!user) {
     return (
       <ul className="space-y-2">
-        {[...Array(7)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <NavItemSkeleton key={i} />
         ))}
       </ul>
@@ -84,6 +86,9 @@ export const Navigation = () => {
             isActive={pathname === route.href}
           />
         ))}
+        {user?.role === "admin" && (
+          <NavItem label="Admin" icon={UserCog} href={"/admin"} />
+        )}
       </ul>
 
       <div className="my-8 h-1 w-4/5 self-center rounded bg-primary" />
@@ -92,7 +97,11 @@ export const Navigation = () => {
         <NavItem
           label={user ? "Sign Out" : "Sign In"}
           icon={user ? LogOut : LogIn}
-          href={user ? "/auth/sign-out" : "/auth/sign-in"}
+          href={
+            user
+              ? `/auth/sign-out${callbackUrl}`
+              : `/auth/sign-in${callbackUrl}`
+          }
         />
       </ul>
     </>

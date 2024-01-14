@@ -1,10 +1,12 @@
 "use client";
 
-import { ElementRef, useRef, useState, useTransition } from "react";
+import { Loader2, Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil, Trash } from "lucide-react";
+import { ElementRef, useRef, useState, useTransition } from "react";
 
+import { Hint } from "@/components/hint";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -12,17 +14,16 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Hint } from "@/components/hint";
-import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { updateUser } from "@/server/user";
 import { UploadDropzone } from "@/lib/upload-thing";
+import { updateUser } from "@/server/user";
 
 interface EditImageProps {
+  userId: string;
   initialImage: string;
 }
 
-export const EditImage = ({ initialImage }: EditImageProps) => {
+export const EditImage = ({ userId, initialImage }: EditImageProps) => {
   const router = useRouter();
 
   const closeRef = useRef<ElementRef<"button">>(null);
@@ -32,7 +33,10 @@ export const EditImage = ({ initialImage }: EditImageProps) => {
 
   const onRemove = async () => {
     startTransition(() => {
-      updateUser({ image: "https://www.famlam.ca/logo/logo512-blue-s.png" })
+      updateUser({
+        id: userId,
+        image: "https://www.famlam.ca/logo/logo512-blue-s.png",
+      })
         .then(() => {
           toast({ title: "Profile image removed" });
           setImage("");

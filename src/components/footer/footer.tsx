@@ -45,7 +45,7 @@ const Footer = () => {
 
   return (
     <footer className="relative bottom-0 w-full border-t-2 border-border bg-background/80">
-      <MaxWidthWrapper className="h-20 sm:flex sm:items-center sm:justify-between">
+      <MaxWidthWrapper className="h-20 items-center justify-between sm:flex">
         <div className="flex items-center text-sm sm:text-center">
           <span>@ 2023&nbsp;</span>
           <Link
@@ -57,16 +57,16 @@ const Footer = () => {
           <span>™. All rights reserved.</span>
         </div>
 
-        <div className="flex items-center sm:space-x-4">
-          <ul className="mt-3 flex flex-wrap space-x-2 text-sm sm:mt-0">
+        <div className="mt-3 flex items-center space-x-4 text-sm sm:mt-0">
+          <ul className="flex flex-wrap space-x-2">
             {routes.map((route) => (
               <NavItem key={route.href} label={route.label} href={route.href} />
             ))}
           </ul>
 
-          <p>|</p>
+          <ul>|</ul>
 
-          <ul className="mt-3 flex flex-wrap space-x-2 text-sm sm:mt-0">
+          <ul className="flex flex-wrap space-x-2">
             {socials.map((social) => (
               <SocialItem
                 key={social.href}

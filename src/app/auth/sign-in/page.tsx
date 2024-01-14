@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 
-import SignInForm from "./_components/sign-in-form";
+import { SignInForm } from "./_components/sign-in-form";
 
 const Page = () => {
   const searchParams = useSearchParams();

@@ -1,7 +1,8 @@
 "use client";
 
-import { ElementRef, useRef, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { ElementRef, useRef, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,9 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CustomUser } from "@/types/types";
-import { updateUser } from "@/server/user";
 import { toast } from "@/components/ui/use-toast";
+import { updateUser } from "@/server/user";
+import { CustomUser } from "@/types/types";
 
 import { EditImage } from "./edit-image";
 
@@ -25,7 +26,8 @@ interface ProfileProps {
   user: CustomUser;
 }
 
-export const Profile = ({ user }: ProfileProps) => {
+export const EditProfile = ({ user }: ProfileProps) => {
+  const pathname = usePathname();
   const closeRef = useRef<ElementRef<"button">>(null);
 
   const [username, setUsername] = useState<string>(user.username);
@@ -37,6 +39,7 @@ export const Profile = ({ user }: ProfileProps) => {
 
     startTransition(() => {
       updateUser({
+        id: user.id,
         username: username,
         bio: bio,
       })
@@ -59,7 +62,14 @@ export const Profile = ({ user }: ProfileProps) => {
       <CardHeader>
         <CardTitle>Profile</CardTitle>
         <CardDescription>
-          Make changes to your profile here. Click save when you&apos;re done.
+          {pathname !== `/admin/${username}/edit` ? (
+            <span>
+              Make changes to your profile here. Click save when you&apos;re
+              done.
+            </span>
+          ) : (
+            <span>Make changes to {username}&apos;s profile here.</span>
+          )}
         </CardDescription>
       </CardHeader>
       <form onSubmit={onSubmit}>
@@ -88,7 +98,7 @@ export const Profile = ({ user }: ProfileProps) => {
 
           <div className="space-y-2">
             <Label>Edit your profile image</Label>
-            <EditImage initialImage={user.image} />
+            <EditImage userId={user.id} initialImage={user.image} />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-end">

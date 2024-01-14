@@ -1,8 +1,7 @@
 import { CustomUser } from "@/types/types";
 import { getSelfByUsername } from "@/lib/auth-service";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-
-import { Account } from "./_components/account";
+import { EditAccount } from "@/components/profile/edit-account";
 
 interface AccountPageProps {
   params: {
@@ -15,7 +14,7 @@ const ProfilePage = async ({ params }: AccountPageProps) => {
 
   return (
     <MaxWidthWrapper className="mt-5">
-      <Account user={user} />
+      <EditAccount user={user} />
     </MaxWidthWrapper>
   );
 };

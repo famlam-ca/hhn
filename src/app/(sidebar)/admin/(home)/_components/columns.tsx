@@ -147,13 +147,15 @@ export const columns: ColumnDef<Users>[] = [
             >
               Copy user ID
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/admin/${user.username}/edit`}>Edit user</Link>
+            </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem asChild>
               <Link href={`/${user.username}`}>View profile</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   CloudCog,
   LifeBuoy,
@@ -34,13 +37,16 @@ interface UserNavProps {
   role: string;
 }
 
-export const UserNav = async ({
+export const UserNav = ({
   email,
   imageUrl,
   username,
   full_name,
   role,
 }: UserNavProps) => {
+  const pathname = usePathname();
+  const callbackUrl = `?callbackUrl=${encodeURIComponent(pathname)}` ?? "/";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -189,7 +195,7 @@ export const UserNav = async ({
         )}
 
         <DropdownMenuItem asChild>
-          <Link href="/auth/sign-out">
+          <Link href={`/auth/sign-out${callbackUrl}`}>
             <LogOut className="mr-1 h-5 w-5" />
             Sign Out
           </Link>
