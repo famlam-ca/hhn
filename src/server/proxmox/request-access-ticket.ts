@@ -21,7 +21,9 @@ export const fetchAccessTicket = async () => {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch access ticket: ${data.message}`);
+      throw new Error("Failed to fetch access ticket:", {
+        cause: `${data.message}`,
+      });
     }
 
     const csrfToken = data.data.CSRFPreventionToken;

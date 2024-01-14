@@ -39,3 +39,9 @@ export const updateUser = async (values: Partial<User>) => {
 
   return user;
 };
+
+export const getAllUsers = async () => {
+  const dbUser = await db.user.findMany();
+
+  return dbUser;
+};

@@ -1,4 +1,3 @@
-import { HostData } from "@/types/types";
 import { fetchAccessTicket } from "./request-access-ticket";
 
 interface Response {
@@ -26,7 +25,9 @@ const fetchServerData = async () => {
     const { data: serverDataList } = await res.json();
 
     if (!Array.isArray(serverDataList)) {
-      throw new Error("Invalid data format");
+      throw new Error("Invalid data format", {
+        cause: "Invalid data format",
+      });
     }
 
     serverDataList.sort((a, b) => {
@@ -86,7 +87,9 @@ const fetchHostData = async () => {
     return hostDataList;
   } catch (error) {
     console.error("Error in fetchHostData: ", error); // debug
-    throw new Error("Error in fetchHostData: ", { cause: error });
+    throw new Error("Error whilst trying to run fetchHostData: ", {
+      cause: error,
+    });
   }
 };
 
@@ -97,6 +100,8 @@ export const hostData = async () => {
     return data;
   } catch (error) {
     console.error("Error in hostData: ", error); // debug
-    throw new Error("Error in hostData: ", { cause: error });
+    throw new Error("Error whilst trying to run hostData", {
+      cause: error,
+    });
   }
 };

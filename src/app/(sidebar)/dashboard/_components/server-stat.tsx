@@ -9,8 +9,6 @@ interface ServerStatProps {
 export const ServerStat = ({ maxValue, value }: ServerStatProps) => {
   const percentage = parseFloat(value);
 
-  console.log("Max value:", maxValue);
-
   return (
     <div className="flex max-h-28 items-center justify-center">
       <ProgressCircle value={percentage} size="xl">

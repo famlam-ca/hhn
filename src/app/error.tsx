@@ -1,12 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { RefreshCw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Wrapper } from "@/components/wrapper";
 
-const ErrorPage = () => {
+const ErrorPage = ({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) => {
+  useEffect(() => {
+    console.log(error);
+  });
+
   return (
     <>
       {/* deco */}
@@ -75,12 +87,30 @@ const ErrorPage = () => {
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
             OO<span className="text-primary">PS!</span> :(
           </h1>
+          {error ? (
+            <p className="text-lg font-semibold">
+              Error: <span className="text-alert">{error.message}</span>
+            </p>
+          ) : null}
           <p className="text-lg text-muted-foreground">
-            Looks like something went wrong.
+            Looks like something went wrong. If this error persists please
+            contact support.
           </p>
-          <Button variant="secondary" asChild>
-            <Link href="/">Go back home</Link>
-          </Button>
+          <div className="flex items-center justify-center gap-2">
+            <Button variant="secondary" asChild>
+              <Link href="/">Go back home</Link>
+            </Button>
+            <Button
+              onClick={
+                // Attempt to recover by trying to re-render the segment
+                () => reset()
+              }
+              variant="secondary"
+            >
+              <RefreshCw className="mr-2 h-5 w-5" />
+              Try again
+            </Button>
+          </div>
         </Wrapper>
       </MaxWidthWrapper>
     </>

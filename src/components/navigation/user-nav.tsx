@@ -10,6 +10,7 @@ import {
   Settings,
   User,
   UserCircle,
+  UserCog,
 } from "lucide-react";
 
 import { Icons } from "@/components/icons";
@@ -167,6 +168,25 @@ export const UserNav = async ({
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
+
+        {role === "admin" && (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <p className="text-muted">Administration</p>
+              </DropdownMenuLabel>
+
+              <DropdownMenuItem asChild>
+                <Link href="/admin">
+                  <UserCog className="mr-2 h-5 w-5" />
+                  Admin
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+          </>
+        )}
 
         <DropdownMenuItem asChild>
           <Link href="/auth/sign-out">

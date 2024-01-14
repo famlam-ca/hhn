@@ -51,3 +51,16 @@ export const Dashboard = async () => {
     </MaxWidthWrapper>
   );
 };
+
+export const DashboardSkeleton = () => {
+  return (
+    <div className="flex h-screen flex-col items-center justify-center space-y-4">
+      <div className="flex space-x-2">
+        <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.3s]" />
+        <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.15s]" />
+        <div className="h-8 w-8 animate-bounce rounded-full bg-text" />
+      </div>
+      <p className="text-4xl">Loading data... Please wait!</p>
+    </div>
+  );
+};

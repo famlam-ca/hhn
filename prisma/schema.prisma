@@ -34,7 +34,7 @@ model User {
     file File[]
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt DateTime @updatedAt
 }
 
 enum UploadStatus {
