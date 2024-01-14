@@ -23,7 +23,7 @@ A hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends
 - [x] Proxmox API integration
   - [x] fetch guest system info
 - [ ] User functions
-  - can change username
+  - [ ] can change username
   - [x] can change first/last name
   - [x] can change password
   - [x] can change avatar
