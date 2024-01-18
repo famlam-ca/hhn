@@ -45,9 +45,9 @@ const Footer = () => {
 
   return (
     <footer className="relative bottom-0 w-full border-t-2 border-border bg-background/80">
-      <MaxWidthWrapper className="h-20 items-center justify-between sm:flex">
-        <div className="flex items-center text-sm sm:text-center">
-          <span>@ 2023&nbsp;</span>
+      <MaxWidthWrapper className="h-20 text-sm items-center justify-between sm:flex">
+        <div className="flex items-center sm:text-center">
+          <span>© 2023&nbsp;</span>
           <Link
             href="/"
             className="text-primary underline-offset-2 hover:underline"
@@ -57,7 +57,7 @@ const Footer = () => {
           <span>™. All rights reserved.</span>
         </div>
 
-        <div className="mt-3 flex items-center space-x-4 text-sm sm:mt-0">
+        <div className="mt-3 flex items-center space-x-4 sm:mt-0">
           <ul className="flex flex-wrap space-x-2">
             {routes.map((route) => (
               <NavItem key={route.href} label={route.label} href={route.href} />

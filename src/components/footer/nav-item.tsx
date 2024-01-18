@@ -12,7 +12,7 @@ export const NavItem = ({ label, href, target }: NavItemProps) => {
       <Link
         href={href}
         target={target}
-        className="tracking-wide hover:text-text/80"
+        className="hover:text-text/80"
       >
         {label}
       </Link>

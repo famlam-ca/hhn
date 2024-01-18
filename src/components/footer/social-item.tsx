@@ -9,12 +9,10 @@ interface SocialItemProps {
   icon: LucideIcon;
 }
 
-const style = "flex items-center";
-
 export const SocialItem = ({ label, href, icon: Icon }: SocialItemProps) => {
   return (
     <li>
-      <Link href={href} target="_blank" className={style}>
+      <Link href={href} target="_blank" className="flex items-center">
         <Hint label={label}>
           <Icon className="h-5 w-5" />
         </Hint>
