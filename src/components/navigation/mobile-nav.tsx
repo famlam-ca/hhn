@@ -44,7 +44,7 @@ const MobileNav = ({ user, isAuth }: MobileNavProps) => {
       href: "/games",
     },
     {
-      label: "Server Manager",
+      label: "Game Servers",
       href: "https://panel.famlam.ca",
       target: "_blank",
       icon: ArrowUpRight,

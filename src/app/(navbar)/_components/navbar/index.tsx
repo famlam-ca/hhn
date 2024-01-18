@@ -25,7 +25,7 @@ const Navbar = async () => {
       href: "/games",
     },
     {
-      label: "Server Manager",
+      label: "Game Servers",
       href: "https://panel.famlam.ca/",
       target: "_blank",
     },

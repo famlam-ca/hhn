@@ -17,7 +17,7 @@ interface NavbarProps {
 export const Navbar = ({ user }: NavbarProps) => {
   const routes = [
     {
-      label: "Edit current users",
+      label: "Edit current user",
       icon: Users,
       href: `/admin/${user.username}/edit`,
     },

@@ -6,7 +6,7 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { Wrapper } from "@/components/wrapper";
 
-export default function Home() {
+const HomePage = () => {
   return (
     <>
       {/* top */}
@@ -146,4 +146,6 @@ export default function Home() {
       </div>
     </>
   );
-}
+};
+
+export default HomePage;

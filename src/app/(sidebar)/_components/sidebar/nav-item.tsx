@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowUpRight, LucideIcon } from "lucide-react";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useSidebar } from "@/store/use-profile-sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import { useSidebar } from "@/store/use-profile-sidebar";
 
 interface NavItemProps {
   icon: LucideIcon;
@@ -14,6 +14,7 @@ interface NavItemProps {
   href: string;
   target?: string;
   isActive?: boolean;
+  isNotAdmin?: boolean;
 }
 
 export const NavItem = ({
@@ -22,6 +23,7 @@ export const NavItem = ({
   href,
   target,
   isActive,
+  isNotAdmin,
 }: NavItemProps) => {
   const { collapsed } = useSidebar();
 
@@ -32,12 +34,19 @@ export const NavItem = ({
         "h-12 w-full text-muted",
         collapsed ? "justify-center" : "justify-start",
         isActive && "bg-accent text-text",
+        isNotAdmin && "hidden",
       )}
       asChild
     >
       <Link href={href} target={target}>
         <div className="flex items-center gap-x-4">
-          <Icon className={cn("h-5 w-5", collapsed ? "mr-0" : "mr-2")} />
+          <Icon
+            className={cn(
+              "h-5 w-5",
+              collapsed ? "mr-0" : "mr-2",
+              isActive && "fill-text",
+            )}
+          />
           {!collapsed && (
             <>
               <span>{label}</span>

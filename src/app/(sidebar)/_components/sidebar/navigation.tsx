@@ -41,7 +41,7 @@ export const Navigation = () => {
       icon: Gamepad2,
     },
     {
-      label: "Server Manager",
+      label: "Game Servers",
       href: "https://panel.famlam.ca",
       target: "_blank",
       icon: Server,
@@ -60,6 +60,12 @@ export const Navigation = () => {
       label: "Profile",
       href: `/u/${user?.username}`,
       icon: User,
+    },
+    {
+      label: "Admin",
+      href: "/admin",
+      icon: UserCog,
+      isNotAdmin: user?.role !== "admin",
     },
   ];
 
@@ -84,11 +90,9 @@ export const Navigation = () => {
             href={route.href}
             target={route.target}
             isActive={pathname === route.href}
+            isNotAdmin={route.isNotAdmin}
           />
         ))}
-        {user?.role === "admin" && (
-          <NavItem label="Admin" icon={UserCog} href={"/admin"} />
-        )}
       </ul>
 
       <div className="my-8 h-1 w-4/5 self-center rounded bg-primary" />
