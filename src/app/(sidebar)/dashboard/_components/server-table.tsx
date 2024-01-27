@@ -1,3 +1,21 @@
+"use client";
+
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import * as React from "react";
+
+import { RefreshButton } from "@/components/refresh-button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -6,108 +24,118 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { serverData } from "@/server/proxmox";
-import { ServerData } from "@/types/types";
 
-export const ServerTable = async () => {
-  const { serverDataList, formatUptime } = await serverData();
+import { ServerTableViewOptions } from "./column-toggle";
+import { ServerTablePagination } from "./table-pagination";
+
+interface ServerTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+}
+
+export function ServerTable<TData, TValue>({
+  columns,
+  data,
+}: ServerTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
 
   return (
-    <Table className="rounded-lg bg-foreground">
-      <TableHeader>
-        <TableRow className="font-semibold">
-          <TableHead className="max-lg:hidden">Status</TableHead>
-          <TableHead>Server Name</TableHead>
-          <TableHead>CPU Usage</TableHead>
-          <TableHead>Memory Usage</TableHead>
-          <TableHead className="max-lg:hidden">Uptime</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {serverDataList.map((serverData: ServerData) => {
-          const data = {
-            serverName: serverData.name,
-            status: serverData.status,
-            cpuUsage: (serverData.cpu * 100).toFixed(2),
-            cpus: serverData.cpus,
-            memoryUsage: (serverData.mem / 1024 ** 2).toFixed(2),
-            maxMem: (serverData.maxmem / 1024 ** 3).toFixed(2),
-            uptime: formatUptime(serverData.uptime),
-          };
+    <div>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-semibold">Servers</h2>
+        <small className="text-muted-foreground">Last 30s</small>
+      </div>
+      <div className="flex items-center gap-x-2 py-4">
+        <Input
+          placeholder="Filter by name..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => {
+            table.getColumn("name")?.setFilterValue(event.target.value);
+          }}
+          className="max-w-sm"
+        />
 
-          const statusClassName =
-            data.status === "running" ? "text-success" : "text-alert";
+        <ServerTableViewOptions table={table} />
 
-          const cpuUsageClassName =
-            parseFloat(data.cpuUsage) <= 50
-              ? "text-success"
-              : parseFloat(data.cpuUsage) >= 90
-                ? "text-alert"
-                : parseFloat(data.cpuUsage) > 50
-                  ? "text-warning"
-                  : "text-text";
+        <RefreshButton />
+      </div>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-          const memoryUsagePercentage =
-            (serverData.mem / serverData.maxmem) * 100;
-
-          const memoryUsageClassName =
-            memoryUsagePercentage <= 50
-              ? "text-success"
-              : memoryUsagePercentage >= 90
-                ? "text-alert"
-                : memoryUsagePercentage > 50
-                  ? "text-warning"
-                  : "text-text";
-
-          return (
-            <TableRow key={serverData.vmid}>
-              <TableCell
-                className={`capitalize max-lg:hidden ${statusClassName}`}
-              >
-                {data.status}
-              </TableCell>
-
-              <TableCell className="capitalize">{data.serverName}</TableCell>
-
-              <TableCell className={cpuUsageClassName}>
-                {data.status === "running" ? (
-                  <>
-                    {data.cpuUsage}%
-                    <span className="text-muted-foreground">
-                      {" "}
-                      / {data.cpus} CPU(s)
-                    </span>
-                  </>
-                ) : (
-                  <p className="text-text">-</p>
-                )}
-              </TableCell>
-
-              <TableCell className={memoryUsageClassName}>
-                {data.status === "running" ? (
-                  <>
-                    {data.memoryUsage} MB
-                    <span className="text-muted-foreground">
-                      {" "}
-                      / {data.maxMem} GB
-                    </span>
-                  </>
-                ) : (
-                  <p className="text-text">-</p>
-                )}
-              </TableCell>
-
-              <TableCell className="max-lg:hidden">
-                {data.status === "running" ? (
-                  <>{data.uptime}</>
-                ) : (
-                  <p className="text-text">-</p>
-                )}
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+      <ServerTablePagination table={table} />
+    </div>
   );
-};
+}

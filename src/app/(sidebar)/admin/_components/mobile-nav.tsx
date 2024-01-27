@@ -28,7 +28,7 @@ export const MobileNav = ({ user }: MobileNavProps) => {
     {
       label: "Edit current users",
       icon: Users,
-      href: `/admin/${user.username}/edit`,
+      href: `/u/${user.username}/profile`,
       isLast: true,
     },
   ];

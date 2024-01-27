@@ -19,7 +19,7 @@ export const Navbar = ({ user }: NavbarProps) => {
     {
       label: "Edit current user",
       icon: Users,
-      href: `/admin/${user.username}/edit`,
+      href: `/u/${user.username}/profile`,
     },
   ];
 

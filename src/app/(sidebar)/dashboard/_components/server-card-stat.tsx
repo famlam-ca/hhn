@@ -6,7 +6,7 @@ interface ServerStatProps {
   maxValue: string;
 }
 
-export const ServerStat = ({ maxValue, value }: ServerStatProps) => {
+export const ServerCardStat = ({ maxValue, value }: ServerStatProps) => {
   const percentage = parseFloat(value);
 
   return (

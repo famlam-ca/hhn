@@ -18,11 +18,7 @@ const EditUserPage = async ({ params }: EditUserPageProps) => {
   const self = (await getSelfByUsername(session?.user.username!)) as CustomUser;
   const user = (await getUserByUsername(params.username)) as CustomUser;
 
-  return (
-    <>
-      <AdminEditUserProfile user={user} self={self} />
-    </>
-  );
+  return <AdminEditUserProfile user={user} self={self} />;
 };
 
 export default EditUserPage;
