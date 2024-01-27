@@ -1,10 +1,11 @@
 import { Suspense } from "react";
 
-import { Dashboard, DashboardSkeleton } from "./_components/dashboard";
+import { Dashboard } from "./_components/dashboard";
+import DashboardLoading from "./loading";
 
 const Page = async () => {
   return (
-    <Suspense fallback={<DashboardSkeleton />}>
+    <Suspense fallback={<DashboardLoading />}>
       <Dashboard />
     </Suspense>
   );

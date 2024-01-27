@@ -1,11 +1,7 @@
 import { ProfileSkeleton } from "@/components/profile";
 
 const UserLoading = () => {
-  return (
-    <>
-      <ProfileSkeleton />
-    </>
-  );
+  return <ProfileSkeleton />;
 };
 
 export default UserLoading;
