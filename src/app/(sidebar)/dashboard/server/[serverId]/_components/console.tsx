@@ -14,9 +14,7 @@ export const Console = () => {
         </div>
       </CardHeader>
       <CardContent className="h-[calc(100%-4.5rem)]">
-        <div className="h-full border border-border">
-          <Shell />
-        </div>
+        <div className="h-full border border-border">{/* <Shell /> */}</div>
       </CardContent>
     </Card>
   );
