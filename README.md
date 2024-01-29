@@ -22,6 +22,9 @@ A hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends
   - via [SendGrid](https://login.sendgrid.com/ "SendGrid")
 - [x] Proxmox API integration
   - [x] fetch guest system info
+  - [ ] server actions
+    - [x] servers can be started/shutdown/stopped/rebooted
+    - [ ] Web terminal
 - [ ] User functions
   - [ ] can change username
   - [x] can change first/last name
