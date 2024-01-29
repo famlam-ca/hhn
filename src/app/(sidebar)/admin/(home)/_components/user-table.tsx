@@ -67,7 +67,7 @@ export function UserTable<TData, TValue>({
   });
 
   return (
-    <MaxWidthWrapper>
+    <>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
@@ -169,7 +169,7 @@ export function UserTable<TData, TValue>({
           Next
         </Button>
       </div>
-    </MaxWidthWrapper>
+    </>
   );
 }
 

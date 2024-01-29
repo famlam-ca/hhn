@@ -2,12 +2,12 @@
 
 import { ProgressCircle } from "@tremor/react";
 
-interface ServerStatProps {
+interface HeaderCardStatProps {
   value: string;
   maxValue: string;
 }
 
-export const ServerCardStat = ({ maxValue, value }: ServerStatProps) => {
+export const HeaderCardStat = ({ value, maxValue }: HeaderCardStatProps) => {
   const percentage = parseFloat(value);
 
   return (

@@ -6,7 +6,7 @@ interface Response {
 }
 
 const fetchServerData = async () => {
-  const url = "https://pve.famlam.ca/api2/json/nodes/pve/lxc";
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/lxc`;
 
   const res = (await fetchAccessTicket()) as Response;
 
@@ -31,9 +31,9 @@ const fetchServerData = async () => {
     }
 
     serverDataList.sort((a, b) => {
-      const nameA = a.name?.toLowerCase() || "";
-      const nameB = b.name?.toLowerCase() || "";
-      return nameA.localeCompare(nameB);
+      const vmidA = a.vmid;
+      const vmidB = b.vmid;
+      return vmidA - vmidB;
     });
 
     const formatUptime = (uptimeInSeconds: any) => {

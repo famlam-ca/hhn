@@ -27,7 +27,7 @@ export const Navbar = ({ user }: NavbarProps) => {
     <nav className="sticky inset-x-0 top-0 z-30 h-12 w-full border-b border-accent bg-background/75 backdrop-blur-lg transition-all">
       <MaxWidthWrapper>
         <div className="flex h-12 items-center justify-between">
-          <Link href={`/admin`} className="z-40 flex items-center gap-2">
+          <Link href={`/admin`} className="z-40 flex items-center">
             <h2 className="flex items-center text-xl font-semibold text-muted-foreground hover:text-text">
               <UserCog className="mr-2 h-6 w-6" />
               Admin
