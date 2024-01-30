@@ -1,23 +1,15 @@
 "use client";
 
 import { RefreshCw } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { useRefresh } from "@/hooks/use-refresh";
 
 export const RefreshButton = () => {
-  const router = useRouter();
-
-  const [isDisabled, setIsDisabled] = useState(false);
-
-  const refresh = () => {
-    setIsDisabled(true);
-    router.refresh();
-    setTimeout(() => setIsDisabled(false), 3000); // 3 sec = 3000
-  };
+  const { isDisabled, refresh } = useRefresh();
 
   const handleClick = () => {
     toast({

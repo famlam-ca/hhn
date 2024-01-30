@@ -4,7 +4,7 @@ import { fetchAccessTicket } from "./request-access-ticket";
 
 interface ServerActionProps {
   vmid: number;
-  action: "start" | "shutdown" | "stop" | "reboot";
+  action: "start" | "shutdown" | "stop" | "reboot" | string;
 }
 
 export const serverAction = async ({ vmid, action }: ServerActionProps) => {

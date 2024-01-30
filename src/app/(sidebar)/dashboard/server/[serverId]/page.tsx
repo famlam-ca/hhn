@@ -26,8 +26,9 @@ const ServerPage = async ({ params }: ServerPageProps) => {
   const server: ServerData = await getServerById(params.serverId);
 
   return (
-    <MaxWidthWrapper className="max-w-full">
+    <MaxWidthWrapper className="max-w-full space-y-4">
       <Header server={server} />
+
       <Console />
     </MaxWidthWrapper>
   );

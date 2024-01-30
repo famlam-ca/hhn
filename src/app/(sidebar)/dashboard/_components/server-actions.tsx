@@ -30,8 +30,9 @@ interface ServerActionsProps {
 }
 
 export const ServerActions = ({ server }: ServerActionsProps) => {
+  let role = "user";
   const { data: session } = useSession();
-  const user = session?.user!;
+  role = session?.user.role!;
 
   return (
     <DropdownMenu>
@@ -66,7 +67,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          disabled={server.status === "running" || user.role !== "admin"}
+          disabled={server.status === "running" || role !== "admin"}
           onClick={() => {
             serverAction({ action: "start", vmid: server.vmid });
             toast({
@@ -81,7 +82,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem
-          disabled={server.status === "stopped" || user.role !== "admin"}
+          disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
             serverAction({ action: "shutdown", vmid: server.vmid });
             toast({
@@ -96,7 +97,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem
-          disabled={server.status === "stopped" || user.role !== "admin"}
+          disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
             serverAction({ action: "stop", vmid: server.vmid });
             toast({
@@ -111,7 +112,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem
-          disabled={server.status === "stopped" || user.role !== "admin"}
+          disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
             serverAction({ action: "reboot", vmid: server.vmid });
             toast({

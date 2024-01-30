@@ -1,14 +1,26 @@
-import { Cpu, MemoryStick } from "lucide-react";
+"use client";
 
+import {
+  Cpu,
+  MemoryStick,
+  Play,
+  PowerIcon,
+  RefreshCcw,
+  Square,
+} from "lucide-react";
+
+import { cn } from "@/lib/utils";
 import { ServerData } from "@/types/types";
 
+import { ActionButton } from "./action-buttons";
 import { HeaderCard } from "./header-card";
+import { RefreshButton } from "@/components/refresh-button";
 
 interface HeaderProps {
   server: ServerData;
 }
 
-export const Header = async ({ server }: HeaderProps) => {
+export const Header = ({ server }: HeaderProps) => {
   const serverInfo = [
     {
       label: "CPU Usage",
@@ -26,9 +38,66 @@ export const Header = async ({ server }: HeaderProps) => {
     },
   ];
 
+  const serverAction = [
+    {
+      label: "Start",
+      action: "start",
+      icon: Play,
+      color: "success",
+      fill: true,
+    },
+    {
+      label: "Shutdown",
+      action: "shutdown",
+      icon: PowerIcon,
+      color: "alert",
+    },
+    {
+      label: "Stop",
+      action: "stop",
+      icon: Square,
+      color: "alert",
+      fill: true,
+    },
+    {
+      label: "Reboot",
+      action: "reboot",
+      icon: RefreshCcw,
+      color: "warning",
+    },
+  ];
+
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-semibold capitalize">{server.name}</h2>
+    <div className="space-y-1">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold capitalize">{server.name}</h2>
+          <small
+            className={cn(
+              "text-xs capitalize",
+              server.status === "running" ? "text-success" : "text-alert",
+            )}
+          >
+            {server.status}
+          </small>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          {serverAction.map((action) => (
+            <ActionButton
+              key={action.label}
+              label={action.label}
+              action={action.action}
+              icon={action.icon}
+              color={action.color}
+              fill={action.fill}
+              server={server}
+            />
+          ))}
+
+          <RefreshButton />
+        </div>
+      </div>
 
       <div className="flex flex-col gap-2 sm:gap-4 xl:flex-row">
         {serverInfo.map((info) => (
