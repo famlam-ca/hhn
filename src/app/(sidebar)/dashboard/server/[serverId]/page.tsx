@@ -29,7 +29,7 @@ const ServerPage = async ({ params }: ServerPageProps) => {
     <MaxWidthWrapper className="max-w-full space-y-4">
       <Header server={server} />
 
-      <Console />
+      <Console server={server} />
     </MaxWidthWrapper>
   );
 };

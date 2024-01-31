@@ -27,6 +27,7 @@ import {
 
 import { ServerTableViewOptions } from "./column-toggle";
 import { ServerTablePagination } from "./table-pagination";
+import { ServerSelector } from "./server-selector";
 
 interface ServerTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -66,11 +67,8 @@ export function ServerTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Servers</h2>
-        <small className="text-muted-foreground">Last 30s</small>
-      </div>
       <div className="flex items-center gap-x-2 py-4">
+        <ServerSelector />
         <Input
           placeholder="Filter by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}

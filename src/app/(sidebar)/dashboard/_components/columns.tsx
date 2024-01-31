@@ -58,9 +58,7 @@ export const columns: ColumnDef<ServerData>[] = [
       <ServerTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
-      return (
-        <div className="font-medium capitalize">{row.getValue("name")}</div>
-      );
+      return <div className="font-medium">{row.getValue("name")}</div>;
     },
     enableHiding: false,
   },

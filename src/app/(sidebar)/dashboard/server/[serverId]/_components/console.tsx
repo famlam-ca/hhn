@@ -1,19 +1,15 @@
 import { TerminalIcon } from "lucide-react";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ServerData } from "@/types/types";
 
-import { Terminal } from "./terminal";
+interface TerminalProps {
+  server: ServerData;
+}
 
-export const Console = () => {
-  const sshConfig = {
-    host: "192.168.0.33",
-    port: 22,
-    username: "root",
-    password: "Server22523",
-  };
-
+export const Console = ({ server }: TerminalProps) => {
   return (
-    <Card className="h-[35rem] border border-border">
+    <Card className="h-[34rem] border border-border">
       <CardHeader>
         <div className="flex items-center gap-x-2">
           <TerminalIcon className="h-5 w-5" />
@@ -21,9 +17,7 @@ export const Console = () => {
         </div>
       </CardHeader>
       <CardContent className="h-[calc(100%-4.5rem)]">
-        <div className="h-full border border-border">
-          <Terminal sshConfig={sshConfig} />
-        </div>
+        <div className="h-full border border-border">{/* <Terminal /> */}</div>
       </CardContent>
     </Card>
   );
