@@ -1,3 +1,5 @@
+import { ServerData, serverType } from "@/types/types";
+
 import { fetchAccessTicket } from "./request-access-ticket";
 
 interface Response {
@@ -5,8 +7,8 @@ interface Response {
   accessTicket: string;
 }
 
-const fetchServerData = async () => {
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/lxc`;
+const fetchServerData = async (type: serverType) => {
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type}`;
 
   const res = (await fetchAccessTicket()) as Response;
 
@@ -22,7 +24,9 @@ const fetchServerData = async () => {
 
   try {
     const res = await fetch(url, requestOptions);
-    const { data: serverDataList } = await res.json();
+    const { data: serverDataList } = (await res.json()) as {
+      data: ServerData[];
+    };
 
     if (!Array.isArray(serverDataList)) {
       throw new Error("Invalid data format", {
@@ -55,9 +59,9 @@ const fetchServerData = async () => {
   }
 };
 
-export const serverData = async () => {
+export const serverData = async (type: serverType) => {
   try {
-    const data = await fetchServerData();
+    const data = await fetchServerData(type);
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug

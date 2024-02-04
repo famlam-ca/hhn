@@ -1,12 +1,14 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { serverData } from "@/server/proxmox";
+import { serverType } from "@/types/types";
 
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
 
 export const Dashboard = async () => {
-  const { serverDataList: data } = await serverData();
+  const type = "lxc" as serverType;
+  const { serverDataList: data } = await serverData(type);
 
   return (
     <MaxWidthWrapper className="max-w-full">

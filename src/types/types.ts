@@ -60,3 +60,5 @@ export type HostData = {
     free: number;
   };
 };
+
+export type serverType = "lxc" | "qemu";

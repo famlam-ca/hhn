@@ -12,9 +12,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { serverType } from "@/types/types";
 
 export const ServerSelector = () => {
-  const [label, setLabel] = useState<string>("Containers");
+  const [label, setLabel] = useState<"Containers" | "Virtual Machines">(
+    "Containers",
+  );
+  const [type, setType] = useState<serverType>("lxc");
+
+  const onSelect = (
+    newLabel: "Containers" | "Virtual Machines",
+    newType: serverType,
+  ) => {
+    setLabel(newLabel);
+    setType(newType);
+  };
 
   return (
     <DropdownMenu>
@@ -27,20 +39,21 @@ export const ServerSelector = () => {
           <ChevronsUpDown className="ml-2 h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="start">
         <DropdownMenuLabel className="text-muted-foreground">
-          Server Type
+          Server Type: ({type})
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => setLabel("Containers")}>
+        <DropdownMenuItem onClick={() => onSelect("Containers", "lxc")}>
           <Container className="mr-2 h-4 w-4 text-muted-foreground" />
-          Containers
+          Containers <span className="ml-1 text-muted-foreground">(lxc)</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setLabel("Virtual Machines")}>
+        <DropdownMenuItem onClick={() => onSelect("Virtual Machines", "qemu")}>
           <Monitor className="mr-2 h-4 w-4 text-muted-foreground" />
           Virtual Machines
+          <span className="ml-1 text-muted-foreground">(qemu)</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

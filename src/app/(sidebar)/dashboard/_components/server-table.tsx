@@ -26,7 +26,6 @@ import {
 } from "@/components/ui/table";
 
 import { ServerTableViewOptions } from "./column-toggle";
-import { ServerTablePagination } from "./table-pagination";
 import { ServerSelector } from "./server-selector";
 
 interface ServerTableProps<TData, TValue> {
@@ -69,6 +68,7 @@ export function ServerTable<TData, TValue>({
     <div>
       <div className="flex items-center gap-x-2 py-4">
         <ServerSelector />
+
         <Input
           placeholder="Filter by name..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -133,7 +133,7 @@ export function ServerTable<TData, TValue>({
         </Table>
       </div>
 
-      <ServerTablePagination table={table} />
+      {/* <ServerTablePagination table={table} /> */}
     </div>
   );
 }
