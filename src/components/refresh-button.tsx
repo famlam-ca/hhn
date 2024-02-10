@@ -14,7 +14,7 @@ export const RefreshButton = () => {
   const handleClick = () => {
     toast({
       title: "Refreshed data...",
-      duration: 1000,
+      duration: 2000,
     });
     refresh();
   };

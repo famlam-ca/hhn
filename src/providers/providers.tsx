@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 
-import AuthProvider from "./auth-provider";
-import ThemeProvider from "./theme-provider";
+import { AuthProvider } from "./auth-provider";
+import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./toast-provider";
 
 const Providers = ({ children }: PropsWithChildren) => {

@@ -8,7 +8,7 @@ interface Response {
 }
 
 const fetchServerData = async (type: serverType) => {
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type}`;
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type || "lxc"}`;
 
   const res = (await fetchAccessTicket()) as Response;
 
@@ -35,9 +35,19 @@ const fetchServerData = async (type: serverType) => {
     }
 
     serverDataList.sort((a, b) => {
-      const vmidA = a.vmid;
-      const vmidB = b.vmid;
-      return vmidA - vmidB;
+      if (a.status === b.status) {
+        return a.vmid - b.vmid;
+      }
+
+      if (a.status === "running" && b.status !== "running") {
+        return -1;
+      }
+
+      if (b.status === "running" && a.status !== "running") {
+        return 1;
+      }
+
+      return 0;
     });
 
     const formatUptime = (uptimeInSeconds: any) => {
@@ -70,7 +80,7 @@ export const serverData = async (type: serverType) => {
 };
 
 const fetchHostData = async () => {
-  const url = "https://pve.famlam.ca/api2/json/nodes/pve/status";
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/status`;
 
   const res = (await fetchAccessTicket()) as Response;
 

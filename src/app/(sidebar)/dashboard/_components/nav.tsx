@@ -15,7 +15,7 @@ export const Navbar = async () => {
 
   const routes = [
     {
-      label: "placeholder",
+      label: "Bulk Actions",
       icon: Image,
       href: "/dashboard",
     },

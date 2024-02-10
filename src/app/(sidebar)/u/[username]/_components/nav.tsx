@@ -26,11 +26,11 @@ export const Navbar = ({ user }: NavbarProps) => {
       icon: User,
       href: `/u/${user.username}/account`,
     },
-    {
-      label: "Mail",
-      icon: Mail,
-      href: `/u/${user.username}/mail`,
-    },
+    // {
+    //   label: "Mail",
+    //   icon: Mail,
+    //   href: `/u/${user.username}/mail`,
+    // },
     {
       label: "Settings",
       icon: Settings,

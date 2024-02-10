@@ -4,10 +4,11 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ServerData } from "@/types/types";
+import { ServerData, serverType } from "@/types/types";
 
 import { ServerTableColumnHeader } from "./column-header";
 import { ServerActions } from "./server-actions";
+import { useSearchParams } from "next/navigation";
 
 export const columns: ColumnDef<ServerData>[] = [
   {
@@ -51,6 +52,7 @@ export const columns: ColumnDef<ServerData>[] = [
         </div>
       );
     },
+    enableHiding: false,
   },
   {
     accessorKey: "name",
@@ -200,10 +202,13 @@ export const columns: ColumnDef<ServerData>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: function Cell({ row }) {
       const server = row.original;
 
-      return <ServerActions server={server} />;
+      const searchParams = useSearchParams();
+      const type = searchParams.get("type") as serverType;
+
+      return <ServerActions server={server} type={type} />;
     },
   },
 ];

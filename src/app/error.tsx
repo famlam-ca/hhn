@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-import Link from "next/link";
 import { RefreshCw } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-import { Button } from "@/components/ui/button";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { Button } from "@/components/ui/button";
 import { Wrapper } from "@/components/wrapper";
 
 const ErrorPage = ({
@@ -15,6 +16,8 @@ const ErrorPage = ({
   error: Error & { digest?: string };
   reset: () => void;
 }) => {
+  const router = useRouter();
+
   useEffect(() => {
     console.log(error);
   });
@@ -94,11 +97,18 @@ const ErrorPage = ({
           ) : null}
           <p className="text-lg text-muted-foreground">
             Looks like something went wrong. If this error persists please
-            contact support.
+            contact{" "}
+            <Link
+              href="/contact"
+              className="underline underline-offset-2 hover:text-primary"
+            >
+              support
+            </Link>
+            .
           </p>
           <div className="flex items-center justify-center gap-2">
-            <Button variant="secondary" asChild>
-              <Link href="/">Go back home</Link>
+            <Button onClick={() => router.back()} variant="secondary">
+              Go back
             </Button>
             <Button
               onClick={

@@ -8,8 +8,7 @@ interface ServerActionProps {
 }
 
 export const serverAction = async ({ vmid, action }: ServerActionProps) => {
-  const url = `${process.env
-    .PROXMOX_API_URL!}nodes/pve/lxc/${vmid}/status/${action}`;
+  const url = `${process.env.PROXMOX_API_URL!}nodes/pve/lxc/${vmid}/status/${action}`;
 
   const access = await fetchAccessTicket();
 

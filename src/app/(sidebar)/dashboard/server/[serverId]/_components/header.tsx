@@ -9,12 +9,12 @@ import {
   Square,
 } from "lucide-react";
 
+import { RefreshButton } from "@/components/refresh-button";
 import { cn } from "@/lib/utils";
 import { ServerData } from "@/types/types";
 
 import { ActionButton } from "./action-buttons";
 import { HeaderCard } from "./header-card";
-import { RefreshButton } from "@/components/refresh-button";
 
 interface HeaderProps {
   server: ServerData;
@@ -71,7 +71,7 @@ export const Header = ({ server }: HeaderProps) => {
     <div className="space-y-1">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold capitalize">{server.name}</h2>
+          <h2 className="text-2xl font-semibold">{server.name}</h2>
           <small
             className={cn(
               "text-xs capitalize",

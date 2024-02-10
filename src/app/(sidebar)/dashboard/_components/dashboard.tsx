@@ -6,8 +6,14 @@ import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
 
-export const Dashboard = async () => {
-  const type = "lxc" as serverType;
+type DashboardProps = {
+  searchParams: {
+    type: serverType;
+  };
+};
+
+export const Dashboard = async (searchParams: DashboardProps) => {
+  const type = searchParams.searchParams.type;
   const { serverDataList: data } = await serverData(type);
 
   return (

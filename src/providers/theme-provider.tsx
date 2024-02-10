@@ -3,7 +3,7 @@
 import { PropsWithChildren, useState, useEffect } from "react";
 import { ThemeProvider as ThemeContext } from "next-themes";
 
-const ThemeProvider = ({ children }: PropsWithChildren) => {
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -20,5 +20,3 @@ const ThemeProvider = ({ children }: PropsWithChildren) => {
     </ThemeContext>
   );
 };
-
-export default ThemeProvider;

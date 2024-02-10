@@ -23,13 +23,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData } from "@/types/types";
+import { ServerData, serverType } from "@/types/types";
 
 interface ServerActionsProps {
   server: ServerData;
+  type: serverType;
 }
 
-export const ServerActions = ({ server }: ServerActionsProps) => {
+export const ServerActions = ({ server, type }: ServerActionsProps) => {
   let role = "user";
   const { data: session } = useSession();
   role = session?.user.role!;
@@ -58,7 +59,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href={`/dashboard/server/${server.vmid}`}>
+          <Link href={`/dashboard/server/${server.vmid}?type=${type}`}>
             <Terminal className="mr-2 h-4 w-4" />
             View server
           </Link>

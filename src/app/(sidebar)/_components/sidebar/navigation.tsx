@@ -89,7 +89,11 @@ export const Navigation = () => {
             icon={route.icon}
             href={route.href}
             target={route.target}
-            isActive={pathname === route.href}
+            isActive={
+              route.href === "/"
+                ? pathname === route.href
+                : pathname.startsWith(route.href)
+            }
             isNotAdmin={route.isNotAdmin}
           />
         ))}

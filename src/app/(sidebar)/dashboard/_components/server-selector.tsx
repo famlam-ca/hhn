@@ -1,7 +1,9 @@
 "use client";
 
 import { ChevronsUpDown, Container, Monitor } from "lucide-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDebounce } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +21,19 @@ export const ServerSelector = () => {
     "Containers",
   );
   const [type, setType] = useState<serverType>("lxc");
+  const [query] = useDebounce(type, 500);
 
-  const onSelect = (
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!query) {
+      router.push("/dashboard");
+    } else {
+      router.push(`/dashboard?type=${type}`);
+    }
+  }, [type, query, router]);
+
+  const onSelect = async (
     newLabel: "Containers" | "Virtual Machines",
     newType: serverType,
   ) => {
