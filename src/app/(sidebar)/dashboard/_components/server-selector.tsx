@@ -28,7 +28,7 @@ export const ServerSelector = () => {
     if (!params) {
       router.push(`/dashboard?type=${type}`);
     }
-  }, [router, type]);
+  }, [params, router, type]);
 
   const onSelect = async (newType: serverType) => {
     setType(newType);
