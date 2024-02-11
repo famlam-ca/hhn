@@ -19,6 +19,8 @@ interface ServerPageProps {
 }
 
 const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
+  console.log("server type:", searchParams.type);
+
   const session = await getServerSession(authOptions);
   const role = session?.user.role!;
 
@@ -33,7 +35,7 @@ const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
 
   return (
     <MaxWidthWrapper className="max-w-full space-y-4">
-      <Header server={server} />
+      <Header server={server} type={searchParams.type} />
 
       <Console server={server} />
     </MaxWidthWrapper>

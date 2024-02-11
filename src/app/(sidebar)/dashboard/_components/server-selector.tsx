@@ -1,9 +1,8 @@
 "use client";
 
 import { ChevronsUpDown, Container, Monitor } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDebounce } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,28 +16,28 @@ import {
 import { serverType } from "@/types/types";
 
 export const ServerSelector = () => {
-  const [label, setLabel] = useState<"Containers" | "Virtual Machines">(
-    "Containers",
-  );
-  const [type, setType] = useState<serverType>("lxc");
-  const [query] = useDebounce(type, 500);
-
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = searchParams.get("type");
+
+  const label = params === "qemu" ? "Virtual Machines" : "Containers";
+
+  const [type, setType] = useState<serverType>("lxc");
 
   useEffect(() => {
-    if (!query) {
-      router.push("/dashboard");
-    } else {
+    if (!params) {
       router.push(`/dashboard?type=${type}`);
     }
-  }, [type, query, router]);
+  }, [router, type]);
 
-  const onSelect = async (
-    newLabel: "Containers" | "Virtual Machines",
-    newType: serverType,
-  ) => {
-    setLabel(newLabel);
+  const onSelect = async (newType: serverType) => {
     setType(newType);
+
+    if (!newType) {
+      router.push("/dashboard");
+    } else {
+      router.push(`/dashboard?type=${newType}`);
+    }
   };
 
   return (
@@ -59,11 +58,11 @@ export const ServerSelector = () => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={() => onSelect("Containers", "lxc")}>
+        <DropdownMenuItem onClick={() => onSelect("lxc")}>
           <Container className="mr-2 h-4 w-4 text-muted-foreground" />
           Containers <span className="ml-1 text-muted-foreground">(lxc)</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onSelect("Virtual Machines", "qemu")}>
+        <DropdownMenuItem onClick={() => onSelect("qemu")}>
           <Monitor className="mr-2 h-4 w-4 text-muted-foreground" />
           Virtual Machines
           <span className="ml-1 text-muted-foreground">(qemu)</span>

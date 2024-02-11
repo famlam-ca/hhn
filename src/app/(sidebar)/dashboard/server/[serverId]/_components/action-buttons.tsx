@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData } from "@/types/types";
+import { ServerData, serverType } from "@/types/types";
 
 interface ActionButtonProps {
   label: string;
@@ -15,6 +15,7 @@ interface ActionButtonProps {
   color: string;
   fill?: boolean;
   server: ServerData;
+  type: serverType;
 }
 
 export const ActionButton = ({
@@ -24,6 +25,7 @@ export const ActionButton = ({
   color,
   fill,
   server,
+  type,
 }: ActionButtonProps) => {
   let isDisabled = false;
   if (
@@ -38,7 +40,7 @@ export const ActionButton = ({
     <Button
       disabled={isDisabled}
       onClick={() => {
-        serverAction({ action: action, vmid: server.vmid });
+        serverAction({ type: type, action: action, vmid: server.vmid });
         toast({
           title: `${label}ing server: ${server.name}`,
         });

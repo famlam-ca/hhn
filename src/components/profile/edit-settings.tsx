@@ -49,7 +49,7 @@ export const EditSettings = ({ user }: SettingsProps) => {
       })
         .then(() => {
           // TODO: Dynamically render updated info
-          toast({ title: "Settings updated" });
+          toast({ title: "Profile settings updated" });
           setTheme(valueTheme);
         })
         .catch(() => {

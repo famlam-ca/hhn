@@ -70,7 +70,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "running" || role !== "admin"}
           onClick={() => {
-            serverAction({ action: "start", vmid: server.vmid });
+            serverAction({ type: type, action: "start", vmid: server.vmid });
             toast({
               title: `Starting server: ${server.name}`,
               duration: 2000,
@@ -85,7 +85,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ action: "shutdown", vmid: server.vmid });
+            serverAction({ type: type, action: "shutdown", vmid: server.vmid });
             toast({
               title: `Shutting down server: ${server.name}`,
               duration: 2000,
@@ -100,7 +100,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ action: "stop", vmid: server.vmid });
+            serverAction({ type: type, action: "stop", vmid: server.vmid });
             toast({
               title: `Stopping server: ${server.name}`,
               duration: 2000,
@@ -115,7 +115,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ action: "reboot", vmid: server.vmid });
+            serverAction({ type: type, action: "reboot", vmid: server.vmid });
             toast({
               title: `Rebooting server: ${server.name}`,
               duration: 2000,

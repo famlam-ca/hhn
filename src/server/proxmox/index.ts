@@ -8,7 +8,7 @@ interface Response {
 }
 
 const fetchServerData = async (type: serverType) => {
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type || "lxc"}`;
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type ? type : "lxc"}`;
 
   const res = (await fetchAccessTicket()) as Response;
 
@@ -69,9 +69,9 @@ const fetchServerData = async (type: serverType) => {
   }
 };
 
-export const serverData = async (type: serverType) => {
+export const serverData = async (type?: serverType) => {
   try {
-    const data = await fetchServerData(type);
+    const data = await fetchServerData(type!);
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug
