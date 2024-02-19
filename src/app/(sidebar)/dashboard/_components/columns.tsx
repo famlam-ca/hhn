@@ -1,14 +1,14 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { useSearchParams } from "next/navigation";
 
+import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { ServerData, serverType } from "@/types/types";
 
-import { ServerTableColumnHeader } from "./column-header";
 import { ServerActions } from "./server-actions";
-import { useSearchParams } from "next/navigation";
 
 export const columns: ColumnDef<ServerData>[] = [
   {
@@ -36,7 +36,7 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="Status" />
+      <TableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
       return (
@@ -56,9 +56,7 @@ export const columns: ColumnDef<ServerData>[] = [
   },
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="Name" />
-    ),
+    header: ({ column }) => <TableColumnHeader column={column} title="Name" />,
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue("name")}</div>;
     },
@@ -66,9 +64,7 @@ export const columns: ColumnDef<ServerData>[] = [
   },
   {
     accessorKey: "cpu",
-    header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="CPU" />
-    ),
+    header: ({ column }) => <TableColumnHeader column={column} title="CPU" />,
     cell: ({ row }) => {
       const cpu = (parseFloat(row.getValue("cpu")) * 100).toFixed(2);
 
@@ -101,11 +97,7 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     accessorKey: "cpus",
     header: ({ column }) => (
-      <ServerTableColumnHeader
-        column={column}
-        title="CPUs"
-        className="hidden"
-      />
+      <TableColumnHeader column={column} title="CPUs" className="hidden" />
     ),
     cell: () => {
       return null;
@@ -114,7 +106,7 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     accessorKey: "mem",
     header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="Memory" />
+      <TableColumnHeader column={column} title="Memory" />
     ),
     cell: ({ row }) => {
       const memoryUsagePercentage =
@@ -151,7 +143,7 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     accessorKey: "maxmem",
     header: ({ column }) => (
-      <ServerTableColumnHeader
+      <TableColumnHeader
         column={column}
         title="Max Memory"
         className="hidden"
@@ -164,7 +156,7 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     accessorKey: "uptime",
     header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="Uptime" />
+      <TableColumnHeader column={column} title="Uptime" />
     ),
     cell: ({ row }) => {
       const uptime = (row: any) => {
@@ -192,9 +184,7 @@ export const columns: ColumnDef<ServerData>[] = [
   },
   {
     accessorKey: "vmid",
-    header: ({ column }) => (
-      <ServerTableColumnHeader column={column} title="VM ID" />
-    ),
+    header: ({ column }) => <TableColumnHeader column={column} title="VM ID" />,
     cell: ({ row }) => {
       return <div className={cn()}>{row.getValue("vmid")}</div>;
     },

@@ -17,7 +17,7 @@ interface ServerTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
-export function ServerTableColumnHeader<TData, TValue>({
+export function TableColumnHeader<TData, TValue>({
   column,
   title,
   className,

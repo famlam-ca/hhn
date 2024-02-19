@@ -14,7 +14,9 @@ import {
 } from "@tanstack/react-table";
 import * as React from "react";
 
+import { TableViewOptions } from "@/components/column-toggle";
 import { RefreshButton } from "@/components/refresh-button";
+import { TablePagination } from "@/components/table-pagination";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -25,7 +27,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { ServerTableViewOptions } from "./column-toggle";
 import { ServerSelector } from "./server-selector";
 
 interface ServerTableProps<TData, TValue> {
@@ -78,7 +79,7 @@ export function ServerTable<TData, TValue>({
           className="max-w-sm"
         />
 
-        <ServerTableViewOptions table={table} />
+        <TableViewOptions table={table} />
 
         <RefreshButton />
       </div>
@@ -133,7 +134,7 @@ export function ServerTable<TData, TValue>({
         </Table>
       </div>
 
-      {/* <ServerTablePagination table={table} /> */}
+      <TablePagination table={table} />
     </div>
   );
 }

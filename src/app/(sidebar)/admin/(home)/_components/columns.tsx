@@ -1,10 +1,11 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import Link from "next/link";
 import { format } from "date-fns";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 
+import { TableColumnHeader } from "@/components/column-header";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -52,14 +53,19 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "username",
-    header: () => <div>Username</div>,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Username" />
+    ),
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue("username")}</div>;
     },
+    enableHiding: false,
   },
   {
     accessorKey: "first_name",
-    header: () => <div>First Name</div>,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="First Name" />
+    ),
     cell: ({ row }) => {
       return (
         <div className="font-medium capitalize">
@@ -70,7 +76,9 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "last_name",
-    header: () => <div>Last Name</div>,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Last Name" />
+    ),
     cell: ({ row }) => {
       return (
         <div className="font-medium capitalize">
@@ -81,22 +89,12 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="p-0"
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => <TableColumnHeader column={column} title="Email" />,
+    enableHiding: false,
   },
   {
     accessorKey: "role",
-    header: () => <div>Role</div>,
+    header: ({ column }) => <TableColumnHeader column={column} title="Role" />,
     cell: ({ row }) => {
       return (
         <div className="font-medium capitalize">{row.getValue("role")}</div>
@@ -105,7 +103,9 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: () => <div>Updated at</div>,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Created At" />
+    ),
     cell: ({ row }) => {
       const createdAt: Date = row.getValue("createdAt") as Date;
 
@@ -115,7 +115,9 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "updatedAt",
-    header: () => <div>Updated at</div>,
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Updated At" />
+    ),
     cell: ({ row }) => {
       const updatedAt: Date = row.getValue("updatedAt") as Date;
 
