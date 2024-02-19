@@ -17,7 +17,7 @@ const DashboardErrorPage = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log(error);
+    console.log(error); // debug
   });
 
   return (

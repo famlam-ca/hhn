@@ -8,8 +8,9 @@ interface Response {
 }
 
 const fetchServerData = async (type: serverType) => {
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${!type ? ("lxc" as serverType) : type}`;
+  // console.log("Server Type", type); // debug
 
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type === undefined ? ("lxc" as serverType) : type}`;
   const res = (await fetchAccessTicket()) as Response;
 
   const myHeaders = new Headers();
@@ -69,9 +70,9 @@ const fetchServerData = async (type: serverType) => {
   }
 };
 
-export const serverData = async (type?: serverType) => {
+export const serverData = async (type: serverType) => {
   try {
-    const data = await fetchServerData(type!);
+    const data = await fetchServerData(type);
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug

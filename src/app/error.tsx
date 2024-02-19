@@ -19,7 +19,7 @@ const ErrorPage = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log(error);
+    console.log(error); // debug
   });
 
   return (

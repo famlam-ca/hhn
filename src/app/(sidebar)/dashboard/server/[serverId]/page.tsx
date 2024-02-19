@@ -19,7 +19,7 @@ interface ServerPageProps {
 }
 
 const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
-  console.log("server type:", searchParams.type);
+  // console.log("server type:", searchParams.type); // debug
 
   const session = await getServerSession(authOptions);
   const role = session?.user.role!;
