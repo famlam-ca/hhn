@@ -7,10 +7,10 @@ interface Response {
   accessTicket: string;
 }
 
-const fetchServerData = async (type: serverType) => {
-  // console.log("Server Type", type); // debug
+const fetchServerData = async (type: serverType = "lxc") => {
+  // console.log("Server Type:", type); // debug
 
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type === undefined ? ("lxc" as serverType) : type}`;
+  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type}`;
   const res = (await fetchAccessTicket()) as Response;
 
   const myHeaders = new Headers();
@@ -120,3 +120,6 @@ export const hostData = async () => {
     });
   }
 };
+function ifelse() {
+  throw new Error("Function not implemented.");
+}
