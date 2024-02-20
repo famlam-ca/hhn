@@ -25,8 +25,8 @@ A hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends
   - [ ] server actions
     - [x] servers can be started/shutdown/stopped/rebooted
     - [ ] Web terminal
-- [ ] User functions
-  - [ ] can change username
+- [x] User functions
+  - [x] can change display name
   - [x] can change first/last name
   - [x] can change password
   - [x] can change avatar
