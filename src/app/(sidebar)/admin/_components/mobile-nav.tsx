@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { Menu, Users } from "lucide-react";
-
-import { CustomUser } from "@/types/types";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { MobileNavItem } from "./mobile-nav-item";
 
 interface MobileNavProps {
-  user: CustomUser;
+  username: string;
 }
 
-export const MobileNav = ({ user }: MobileNavProps) => {
+export const MobileNav = ({ username }: MobileNavProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -28,7 +26,7 @@ export const MobileNav = ({ user }: MobileNavProps) => {
     {
       label: "Edit current users",
       icon: Users,
-      href: `/u/${user.username}/profile`,
+      href: `/u/${username}/profile`,
       isLast: true,
     },
   ];

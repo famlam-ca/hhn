@@ -16,8 +16,8 @@ const AdminLayout = async ({ children }: React.PropsWithChildren) => {
 
   return (
     <>
-      <Navbar user={user} />
-      <MaxWidthWrapper>{children}</MaxWidthWrapper>
+      <Navbar username={user.username} />
+      <MaxWidthWrapper className="max-w-full">{children}</MaxWidthWrapper>
     </>
   );
 };

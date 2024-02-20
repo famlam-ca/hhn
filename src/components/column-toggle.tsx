@@ -51,7 +51,9 @@ export function TableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {column.id
+                  .replace(/_/g, " ")
+                  .replace(/([a-z])([A-Z])/g, "$1 $2")}
               </DropdownMenuCheckboxItem>
             );
           })}

@@ -1,19 +1,22 @@
-import Link from "next/link";
-import { getServerSession } from "next-auth";
 import { LogIn } from "lucide-react";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
 
-import { authOptions } from "@/lib/auth-options";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Icons } from "@/components/icons";
 import { SignIn } from "@/components/auth-button";
-import { buttonVariants } from "@/components/ui/button";
+import { Icons } from "@/components/icons";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { MobileNav } from "@/components/navigation/mobile-nav";
 import { UserNav } from "@/components/navigation/user-nav";
-import MobileNav from "@/components/navigation/mobile-nav";
+import { buttonVariants } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth-options";
+import { CustomUser } from "@/types/types";
+
 import { NavItem } from "./nav-item";
+import { getUserByUsername } from "@/lib/user-service";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  const user = session?.user;
+  const user = (await getUserByUsername(session?.user.username!)) as CustomUser;
 
   const routes = [
     {
@@ -50,7 +53,7 @@ const Navbar = async () => {
             </h2>
           </Link>
 
-          <MobileNav user={user} isAuth={!!user} />
+          <MobileNav username={user?.username} isAuth={!!user} />
 
           <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
             {routes.map((route) => (
@@ -72,19 +75,7 @@ const Navbar = async () => {
                 <LogIn className="h-5 w-5" />
               </SignIn>
             ) : (
-              <>
-                <UserNav
-                  username={!user.username ? "" : user.username}
-                  full_name={
-                    !user.first_name && !user.last_name
-                      ? ""
-                      : `${user.first_name} ${user.last_name}`
-                  }
-                  email={user.email ?? ""}
-                  imageUrl={user.image ?? ""}
-                  role={user.role ?? ""}
-                />
-              </>
+              <UserNav user={user} />
             )}
           </ul>
         </div>

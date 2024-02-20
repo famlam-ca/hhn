@@ -4,15 +4,9 @@ import { Image, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { CustomUser } from "@/types/types";
-
 import { MobileNavItem } from "./mobile-nav-item";
 
-interface MobileNavProps {
-  user: CustomUser;
-}
-
-export const MobileNav = ({ user }: MobileNavProps) => {
+export const MobileNav = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);

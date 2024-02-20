@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { Menu, Settings, User, UserCircle } from "lucide-react";
-
-import { CustomUser } from "@/types/types";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { MobileNavItem } from "./mobile-nav-item";
 
 interface MobileNavProps {
-  user: CustomUser;
+  username: string;
 }
 
-export const MobileNav = ({ user }: MobileNavProps) => {
+export const MobileNav = ({ username }: MobileNavProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -27,17 +25,17 @@ export const MobileNav = ({ user }: MobileNavProps) => {
   const routes = [
     {
       label: "Profile",
-      href: `/u/${user.username}/profile`,
+      href: `/u/${username}/profile`,
       icon: UserCircle,
     },
     {
       label: "Account",
-      href: `/u/${user.username}/account`,
+      href: `/u/${username}/account`,
       icon: User,
     },
     {
       label: "Settings",
-      href: `/u/${user.username}/settings`,
+      href: `/u/${username}/settings`,
       icon: Settings,
       isLast: true,
     },

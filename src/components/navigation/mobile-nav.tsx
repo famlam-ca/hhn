@@ -1,18 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { MobileNavItem } from "./mobile-nav-item";
-import { CustomUser } from "@/types/types";
 
 interface MobileNavProps {
-  user?: CustomUser;
+  username?: string;
   isAuth: boolean;
 }
 
-const MobileNav = ({ user, isAuth }: MobileNavProps) => {
+export const MobileNav = ({ username, isAuth }: MobileNavProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -82,7 +81,7 @@ const MobileNav = ({ user, isAuth }: MobileNavProps) => {
               <>
                 <MobileNavItem
                   label="Profile"
-                  href={`/u/${user?.username}`}
+                  href={`/u/${username}`}
                   className="items-center gap-2"
                   IconClassName="w-4 h-4"
                 />
@@ -103,5 +102,3 @@ const MobileNav = ({ user, isAuth }: MobileNavProps) => {
     </div>
   );
 };
-
-export default MobileNav;

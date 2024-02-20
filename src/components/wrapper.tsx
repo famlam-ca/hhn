@@ -20,7 +20,7 @@ export const Wrapper = ({
         >
           <div
             className={cn(
-              "rounded-md bg-background/80 p-2 shadow-2xl ring-1 ring-ring/10 sm:p-8 md:p-20",
+              "rounded-md bg-background/80 p-4 shadow-2xl ring-1 ring-ring/10 sm:p-8 md:p-20",
               className,
             )}
           >

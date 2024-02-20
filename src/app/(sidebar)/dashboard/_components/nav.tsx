@@ -5,13 +5,15 @@ import Link from "next/link";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserNav } from "@/components/navigation/user-nav";
 import { authOptions } from "@/lib/auth-options";
+import { getUserByUsername } from "@/lib/user-service";
+import { CustomUser } from "@/types/types";
 
-import { NavItem } from "./nav-item";
 import { MobileNav } from "./mobile-nav";
+import { NavItem } from "./nav-item";
 
 export const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  const user = session?.user!;
+  const user = (await getUserByUsername(session?.user.username!)) as CustomUser;
 
   const routes = [
     {
@@ -32,7 +34,7 @@ export const Navbar = async () => {
             </h2>
           </Link>
 
-          <MobileNav user={user} />
+          <MobileNav />
 
           <div className="hidden gap-4 sm:flex">
             <ul className="flex items-center space-x-4 font-semibold text-muted-foreground">
@@ -46,17 +48,7 @@ export const Navbar = async () => {
               ))}
             </ul>
 
-            <UserNav
-              username={!user.username ? "" : user.username}
-              full_name={
-                !user.first_name && !user.last_name
-                  ? ""
-                  : `${user.first_name} ${user.last_name}`
-              }
-              email={user.email ?? ""}
-              imageUrl={user.image ?? ""}
-              role={user.role ?? ""}
-            />
+            <UserNav user={user} />
           </div>
         </div>
       </MaxWidthWrapper>
