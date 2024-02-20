@@ -10,10 +10,14 @@ export const getUserByUsername = async (username: string) => {
       first_name: true,
       last_name: true,
       email: true,
-      bio: true,
+
       image: true,
       role: true,
+      bio: true,
       theme: true,
+
+      createdAt: true,
+      updatedAt: true,
     },
   });
 
