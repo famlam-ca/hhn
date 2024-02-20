@@ -1,13 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   CloudCog,
   LifeBuoy,
   LogOut,
-  Mail,
   Newspaper,
   Phone,
   Settings,
@@ -15,6 +11,9 @@ import {
   UserCircle,
   UserCog,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Icons } from "@/components/icons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -28,24 +27,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { CustomUser } from "@/types/types";
 
 interface UserNavProps {
-  email: string | undefined;
-  imageUrl: string;
-  username: string;
-  full_name: string;
-  role: string;
+  user: CustomUser;
 }
 
-export const UserNav = ({
-  email,
-  imageUrl,
-  username,
-  full_name,
-  role,
-}: UserNavProps) => {
+export const UserNav = ({ user }: UserNavProps) => {
   const pathname = usePathname();
   const callbackUrl = `?callbackUrl=${encodeURIComponent(pathname)}` ?? "/";
+
+  const full_name = `${user.first_name} ${user.last_name}`;
 
   return (
     <DropdownMenu>
@@ -55,10 +47,10 @@ export const UserNav = ({
           className="aspect-square h-8 w-6 rounded-full bg-transparent ring-2 ring-primary ring-offset-2"
         >
           <Avatar className="relative h-8 w-8">
-            {imageUrl ? (
+            {user.image ? (
               <div className="relative aspect-square h-full w-full">
                 <Image
-                  src={imageUrl}
+                  src={user.image}
                   alt="profile picture"
                   fill
                   referrerPolicy="no-referrer"
@@ -77,19 +69,19 @@ export const UserNav = ({
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
             <div className="flex justify-between">
-              {username && (
-                <p className="text-sm font-medium text-text">{username}</p>
-              )}
+              <p className="text-sm font-medium text-text">
+                {user.display_name}
+              </p>
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
                   {full_name}
                 </p>
               )}
             </div>
-            {email && (
-              <p className="w-[200px] truncate text-xs text-muted">{email}</p>
-            )}
-            {role && <p className="text-xs capitalize text-muted">{role}</p>}
+            <p className="w-[200px] truncate text-xs text-muted">
+              {user.email}
+            </p>
+            <p className="text-xs capitalize text-muted">{user.role}</p>
           </div>
         </div>
 
@@ -101,28 +93,28 @@ export const UserNav = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href={`/u/${username}`}>
+            <Link href={`/u/${user.username}/profile`}>
               <UserCircle className="mr-2 h-5 w-5" />
               Profile
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`/u/${username}`}>
+            <Link href={`/u/${user.username}/account`}>
               <User className="mr-2 h-5 w-5" />
               Account
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem asChild>
+          {/* <DropdownMenuItem asChild>
             <Link href={`/u/${username}/mail`}>
               <Mail className="mr-2 h-5 w-5" />
               Email
             </Link>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
 
           <DropdownMenuItem asChild>
-            <Link href={`/u/${username}/settings`}>
+            <Link href={`/u/${user.username}/settings`}>
               <Settings className="mr-2 h-5 w-5" />
               Settings
             </Link>
@@ -165,7 +157,7 @@ export const UserNav = ({
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem disabled={role !== "admin"} asChild>
+          <DropdownMenuItem disabled={user.role !== "admin"} asChild>
             <Link href="/docs/api">
               <CloudCog className="mr-2 h-5 w-5" />
               API
@@ -175,7 +167,7 @@ export const UserNav = ({
 
         <DropdownMenuSeparator />
 
-        {role === "admin" && (
+        {user.role === "admin" && (
           <>
             <DropdownMenuGroup>
               <DropdownMenuLabel>

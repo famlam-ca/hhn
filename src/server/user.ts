@@ -21,7 +21,7 @@ export const updateUser = async (values: Partial<User>) => {
   }
 
   const validData = {
-    username: values.username,
+    display_name: values.display_name,
     first_name: values.first_name,
     last_name: values.last_name,
     email: values.email,

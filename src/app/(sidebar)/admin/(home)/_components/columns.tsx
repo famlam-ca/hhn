@@ -52,6 +52,15 @@ export const columns: ColumnDef<Users>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "display_name",
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Display Name" />
+    ),
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("display_name")}</div>;
+    },
+  },
+  {
     accessorKey: "username",
     header: ({ column }) => (
       <TableColumnHeader column={column} title="Username" />

@@ -19,12 +19,13 @@ enum Theme {
 }
 
 model User {
-    id         String  @id @default(cuid())
-    username   String  @unique
-    first_name String?
-    last_name  String?
-    email      String  @unique
-    password   String
+    id           String  @id @default(cuid())
+    display_name String
+    username     String  @unique
+    first_name   String?
+    last_name    String?
+    email        String  @unique
+    password     String
 
     image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
     role  Role    @default(user)

@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, useState, useTransition } from "react";
 
+import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -38,9 +39,8 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [first_name, setFirst_name] = useState<string>(user.first_name);
-  const [last_name, setLast_name] = useState<string>(user.last_name);
-  const [email, setEmail] = useState<string>(user.email);
+  const [first_name, setFirst_name] = useState<string | null>(user.first_name);
+  const [last_name, setLast_name] = useState<string | null>(user.last_name);
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [valueRole, setValueRole] = useState<string>();
@@ -65,7 +65,6 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
         id: user.id,
         first_name: first_name,
         last_name: last_name,
-        email: email,
         password: newPassword,
         role: valueRole as Role,
       })
@@ -87,10 +86,9 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
       if (
         first_name !== user.first_name ||
         last_name !== user.last_name ||
-        email !== user.email ||
         newPassword
       ) {
-        if (!self) {
+        if (self) {
           signOut();
         }
       }
@@ -114,6 +112,17 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-2">
+          <Hint
+            align="start"
+            label="Your username cannot be changed after you have created your account."
+            asChild
+          >
+            <div className="space-y-2">
+              <Label>Username</Label>
+              <Input disabled placeholder="Username" value={user.username} />
+            </div>
+          </Hint>
+
           <div className="flex items-center justify-between gap-x-6">
             <div className="w-full space-y-2">
               <Label>First name</Label>
@@ -121,7 +130,7 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
                 disabled={isPending}
                 placeholder="First name"
                 onChange={(e) => setFirst_name(e.target.value)}
-                value={first_name}
+                value={first_name || ""}
               />
             </div>
             <div className="w-full space-y-2">
@@ -130,19 +139,9 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
                 disabled={isPending}
                 placeholder="Last name"
                 onChange={(e) => setLast_name(e.target.value)}
-                value={last_name}
+                value={last_name || ""}
               />
             </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Email</Label>
-            <Input
-              disabled={isPending}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
           </div>
 
           <div className="flex items-center justify-between gap-x-6">

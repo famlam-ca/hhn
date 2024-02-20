@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useRef, useState, useTransition } from "react";
 
@@ -30,7 +31,8 @@ export const EditProfile = ({ user }: ProfileProps) => {
   const pathname = usePathname();
   const closeRef = useRef<ElementRef<"button">>(null);
 
-  const [username, setUsername] = useState<string>(user.username);
+  const [displayName, setDisplayName] = useState<string>(user.display_name);
+  const [email, setEmail] = useState<string>(user.email);
   const [bio, setBio] = useState(user.bio || "");
   const [isPending, startTransition] = useTransition();
 
@@ -40,10 +42,12 @@ export const EditProfile = ({ user }: ProfileProps) => {
     startTransition(() => {
       updateUser({
         id: user.id,
-        username: username,
+        email: email,
+        display_name: displayName,
         bio: bio,
       })
         .then(() => {
+          // TODO: Dynamically render updated info
           toast({ title: "Profile updated" });
           closeRef?.current?.click?.();
         })
@@ -54,6 +58,12 @@ export const EditProfile = ({ user }: ProfileProps) => {
             variant: "destructive",
           }),
         );
+
+      if (email !== user.email) {
+        if (self) {
+          signOut();
+        }
+      }
     });
   };
 
@@ -62,26 +72,34 @@ export const EditProfile = ({ user }: ProfileProps) => {
       <CardHeader>
         <CardTitle>Profile</CardTitle>
         <CardDescription>
-          {pathname !== `/admin/${username}/edit` ? (
+          {pathname !== `/admin/${user.username}/edit` ? (
             <span>
               Make changes to your profile here. Click save when you&apos;re
               done.
             </span>
           ) : (
-            <span>Make changes to {username}&apos;s profile here.</span>
+            <span>Make changes to {user.username}&apos;s profile here.</span>
           )}
         </CardDescription>
       </CardHeader>
       <form onSubmit={onSubmit}>
         <CardContent className="space-y-2">
           <div className="space-y-2">
-            <Label>Username</Label>
-            {/* TODO: Add redirect on change */}
+            <Label>Display Name</Label>
             <Input
-              disabled
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-              defaultValue={user.username}
+              placeholder="Display Name"
+              onChange={(e) => setDisplayName(e.target.value)}
+              defaultValue={displayName}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Email</Label>
+            <Input
+              disabled={isPending}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
           </div>
 

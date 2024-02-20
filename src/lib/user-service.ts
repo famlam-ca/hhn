@@ -5,6 +5,7 @@ export const getUserByUsername = async (username: string) => {
     where: { username },
     select: {
       id: true,
+      display_name: true,
       username: true,
       first_name: true,
       last_name: true,
@@ -12,6 +13,7 @@ export const getUserByUsername = async (username: string) => {
       bio: true,
       image: true,
       role: true,
+      theme: true,
     },
   });
 

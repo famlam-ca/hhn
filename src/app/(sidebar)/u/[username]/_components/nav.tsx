@@ -1,14 +1,14 @@
 "use client";
 
+import { Settings, User, UserCircle } from "lucide-react";
 import Link from "next/link";
-import { Mail, Settings, User, UserCircle } from "lucide-react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CustomUser } from "@/types/types";
 
-import { NavItem, NavItemSkeleton } from "./nav-item";
 import { MobileNav } from "./mobile-nav";
+import { NavItem, NavItemSkeleton } from "./nav-item";
 
 interface NavbarProps {
   user: CustomUser;
@@ -47,11 +47,11 @@ export const Navbar = ({ user }: NavbarProps) => {
             className="z-40 flex items-center gap-2"
           >
             <h2 className="text-xl font-semibold text-muted-foreground hover:text-text">
-              {user.username}
+              {user.display_name}
             </h2>
           </Link>
 
-          <MobileNav user={user!} />
+          <MobileNav username={user.username} />
 
           <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground sm:flex">
             {routes.map((route) => (
