@@ -1,13 +1,14 @@
 import { Suspense } from "react";
 
+import { RegisterForm } from "./_components/register-form";
 import { SignUpForm } from "./_components/sign-up-form";
-// import { Test } from "./_components/test";
 import SignOutLoading from "./loading";
 
 const Page = () => {
   return (
     <Suspense fallback={<SignOutLoading />}>
-      <SignUpForm />
+      {/* <SignUpForm /> */}
+      <RegisterForm />
     </Suspense>
   );
 };

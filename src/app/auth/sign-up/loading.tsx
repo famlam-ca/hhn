@@ -1,7 +1,7 @@
-import { SignOutSkeleton } from "./_components/sign-up-form";
+import { SignUpSkeleton } from "./_components/sign-up-form";
 
 const SignOutLoading = () => {
-  return <SignOutSkeleton />;
+  return <SignUpSkeleton />;
 };
 
 export default SignOutLoading;

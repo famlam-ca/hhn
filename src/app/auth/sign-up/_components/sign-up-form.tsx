@@ -252,7 +252,7 @@ export const SignUpForm = () => {
   );
 };
 
-export const SignOutSkeleton = () => {
+export const SignUpSkeleton = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center space-y-4">
       <div className="flex space-x-2">
