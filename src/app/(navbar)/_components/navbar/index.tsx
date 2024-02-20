@@ -9,14 +9,13 @@ import { MobileNav } from "@/components/navigation/mobile-nav";
 import { UserNav } from "@/components/navigation/user-nav";
 import { buttonVariants } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth-options";
-import { CustomUser } from "@/types/types";
 
 import { NavItem } from "./nav-item";
-import { getUserByUsername } from "@/lib/user-service";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  const user = (await getUserByUsername(session?.user.username!)) as CustomUser;
+  // const user = (await getUserByUsername(session?.user.username!)) as CustomUser;
+  const user = session?.user;
 
   const routes = [
     {

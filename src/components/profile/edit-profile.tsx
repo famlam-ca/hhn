@@ -31,7 +31,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
   const pathname = usePathname();
   const closeRef = useRef<ElementRef<"button">>(null);
 
-  const [displayName, setDisplayName] = useState<string>(user.display_name);
+  const [displayName, setDisplayName] = useState<string>(user.username);
   const [email, setEmail] = useState<string>(user.email);
   const [bio, setBio] = useState(user.bio || "");
   const [isPending, startTransition] = useTransition();

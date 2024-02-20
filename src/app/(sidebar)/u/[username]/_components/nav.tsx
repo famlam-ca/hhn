@@ -26,11 +26,6 @@ export const Navbar = ({ user }: NavbarProps) => {
       icon: User,
       href: `/u/${user.username}/account`,
     },
-    // {
-    //   label: "Mail",
-    //   icon: Mail,
-    //   href: `/u/${user.username}/mail`,
-    // },
     {
       label: "Settings",
       icon: Settings,
@@ -47,7 +42,7 @@ export const Navbar = ({ user }: NavbarProps) => {
             className="z-40 flex items-center gap-2"
           >
             <h2 className="text-xl font-semibold text-muted-foreground hover:text-text">
-              {user.display_name}
+              {user.username}
             </h2>
           </Link>
 

@@ -1,6 +1,6 @@
 export type CustomUser = {
   id: string;
-  display_name: string;
+  // display_name: string;
   username: string;
   first_name: string | null;
   last_name: string | null;
