@@ -14,7 +14,7 @@ const requestOptions = {
 };
 
 export const fetchAccessTicket = async () => {
-  const url = `${process.env.PROXMOX_API_URL}access/ticket`;
+  const url = `${process.env.PROXMOX_API_URL}/access/ticket`;
 
   try {
     const res = await fetch(url, requestOptions);

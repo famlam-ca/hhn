@@ -14,7 +14,9 @@ export const serverAction = async ({
   vmid,
   action,
 }: ServerActionProps) => {
-  const url = `${process.env.PROXMOX_API_URL!}nodes/pve/${type}/${vmid}/status/${action}`;
+  // console.log("Server Type:", type); // debug
+
+  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}/${vmid}/status/${action}`;
 
   const access = await fetchAccessTicket();
 

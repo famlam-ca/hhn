@@ -15,9 +15,6 @@ export const getUserByUsername = async (username: string) => {
       role: true,
       bio: true,
       theme: true,
-
-      createdAt: true,
-      updatedAt: true,
     },
   });
 

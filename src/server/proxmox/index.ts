@@ -7,10 +7,29 @@ interface Response {
   accessTicket: string;
 }
 
-const fetchServerData = async (type: serverType = "lxc") => {
+export const serverData = async (type: serverType = "lxc") => {
   // console.log("Server Type:", type); // debug
 
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/${type}`;
+  if (type !== "lxc" && type !== "qemu") {
+    throw new Error(
+      "An invalid server type was used; either LXC or QEMU should be used.",
+      {
+        cause: "Invalid server type.",
+      },
+    );
+  }
+
+  try {
+    const data = await fetchServerData(type);
+    return data;
+  } catch (error) {
+    console.error("Error in serverData: ", error); // debug
+    throw new Error("Error in serverData: ", { cause: error });
+  }
+};
+
+const fetchServerData = async (type: serverType) => {
+  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}`;
   const res = (await fetchAccessTicket()) as Response;
 
   const myHeaders = new Headers();
@@ -70,18 +89,8 @@ const fetchServerData = async (type: serverType = "lxc") => {
   }
 };
 
-export const serverData = async (type: serverType) => {
-  try {
-    const data = await fetchServerData(type);
-    return data;
-  } catch (error) {
-    console.error("Error in serverData: ", error); // debug
-    throw new Error("Error in serverData: ", { cause: error });
-  }
-};
-
 const fetchHostData = async () => {
-  const url = `${process.env.PROXMOX_API_URL}nodes/pve/status`;
+  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/status`;
 
   const res = (await fetchAccessTicket()) as Response;
 
