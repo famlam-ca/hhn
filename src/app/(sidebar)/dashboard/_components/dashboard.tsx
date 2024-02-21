@@ -1,25 +1,14 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { serverData } from "@/server/proxmox";
-import { ServerType } from "@/types/types";
 
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
 
-interface DashboardProps {
-  type: ServerType;
-}
-
-export const Dashboard = async ({ type }: DashboardProps) => {
+export const Dashboard = async () => {
   // console.log("Dashboard type:", type); // debug
 
-  const dataRes = await serverData(type);
-
-  if (!dataRes) {
-    return <DashboardSkeleton />;
-  }
-
-  const { serverDataList: data } = dataRes;
+  const { serverDataList: data } = await serverData();
 
   return (
     <MaxWidthWrapper className="max-w-full">

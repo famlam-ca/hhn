@@ -2,7 +2,7 @@
 
 import { ChevronsUpDown, Container, Monitor } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,25 +24,25 @@ export const ServerSelector = () => {
 
   const [type, setType] = useState<ServerType>("lxc");
 
-  useEffect(() => {
-    if (!params) {
-      router.push(`/dashboard?type=${type}`);
-    }
-  }, [params, router, type]);
+  // useEffect(() => {
+  //   if (!params) {
+  //     router.push(`/dashboard?type=${type}`);
+  //   }
+  // }, [params, router, type]);
 
   const onSelect = async (newType: ServerType) => {
     setType(newType);
 
-    if (!newType) {
-      router.push("/dashboard");
-    } else {
-      router.push(`/dashboard?type=${newType}`);
-    }
+    // if (!newType) {
+    //   router.push("/dashboard");
+    // } else {
+    //   router.push(`/dashboard?type=${newType}`);
+    // }
   };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger disabled asChild>
         <Button
           variant="outline"
           className="text-2xl font-semibold data-[state=open]:bg-accent"

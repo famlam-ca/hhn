@@ -23,14 +23,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData } from "@/types/types";
 
 interface ServerActionsProps {
   server: ServerData;
-  type: ServerType;
 }
 
-export const ServerActions = ({ server, type }: ServerActionsProps) => {
+export const ServerActions = ({ server }: ServerActionsProps) => {
   let role = "user";
   const { data: session } = useSession();
   role = session?.user.role!;
@@ -59,7 +58,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href={`/dashboard/server/${server.vmid}?type=${type}`}>
+          <Link href={`/dashboard/server/${server.vmid}`}>
             <Terminal className="mr-2 h-4 w-4" />
             View server
           </Link>
@@ -70,7 +69,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "running" || role !== "admin"}
           onClick={() => {
-            serverAction({ type: type, action: "start", vmid: server.vmid });
+            serverAction({ action: "start", vmid: server.vmid });
             toast({
               title: `Starting server: ${server.name}`,
               duration: 2000,
@@ -85,7 +84,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ type: type, action: "shutdown", vmid: server.vmid });
+            serverAction({ action: "shutdown", vmid: server.vmid });
             toast({
               title: `Shutting down server: ${server.name}`,
               duration: 2000,
@@ -100,7 +99,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ type: type, action: "stop", vmid: server.vmid });
+            serverAction({ action: "stop", vmid: server.vmid });
             toast({
               title: `Stopping server: ${server.name}`,
               duration: 2000,
@@ -115,7 +114,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
         <DropdownMenuItem
           disabled={server.status === "stopped" || role !== "admin"}
           onClick={() => {
-            serverAction({ type: type, action: "reboot", vmid: server.vmid });
+            serverAction({ action: "reboot", vmid: server.vmid });
             toast({
               title: `Rebooting server: ${server.name}`,
               duration: 2000,

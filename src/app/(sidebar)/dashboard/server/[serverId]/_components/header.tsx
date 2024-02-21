@@ -11,17 +11,16 @@ import {
 
 import { RefreshButton } from "@/components/refresh-button";
 import { cn } from "@/lib/utils";
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData } from "@/types/types";
 
 import { ActionButton } from "./action-buttons";
 import { HeaderCard } from "./header-card";
 
 interface HeaderProps {
   server: ServerData;
-  type: ServerType;
 }
 
-export const Header = ({ server, type }: HeaderProps) => {
+export const Header = ({ server }: HeaderProps) => {
   const serverInfo = [
     {
       label: "CPU Usage",
@@ -93,7 +92,6 @@ export const Header = ({ server, type }: HeaderProps) => {
               color={action.color}
               fill={action.fill}
               server={server}
-              type={type}
             />
           ))}
 

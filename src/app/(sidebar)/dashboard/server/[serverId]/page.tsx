@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { authOptions } from "@/lib/auth-options";
 import { getServerById } from "@/lib/server-service";
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData } from "@/types/types";
 
 import { Console } from "./_components/console";
 import { Header } from "./_components/header";
@@ -13,12 +13,9 @@ interface ServerPageProps {
   params: {
     serverId: number;
   };
-  searchParams: {
-    type: ServerType;
-  };
 }
 
-const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
+const ServerPage = async ({ params }: ServerPageProps) => {
   const session = await getServerSession(authOptions);
   const role = session?.user.role!;
 
@@ -26,14 +23,11 @@ const ServerPage = async ({ params, searchParams }: ServerPageProps) => {
     redirect("/unauthorized");
   }
 
-  const server: ServerData = await getServerById(
-    params.serverId,
-    searchParams.type,
-  );
+  const server: ServerData = await getServerById(params.serverId);
 
   return (
     <MaxWidthWrapper className="max-w-full space-y-4">
-      <Header server={server} type={searchParams.type} />
+      <Header server={server} />
 
       <Console server={server} />
     </MaxWidthWrapper>

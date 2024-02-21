@@ -1,4 +1,4 @@
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData } from "@/types/types";
 
 import { fetchAccessTicket } from "./request-access-ticket";
 
@@ -7,22 +7,22 @@ interface Response {
   accessTicket: string;
 }
 
-export const serverData = async (type: ServerType) => {
+export const serverData = async () => {
   // console.log("ServerData type:", type); // debug
 
   try {
-    const data = await fetchServerData(type);
+    const data = await fetchServerData();
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug
-    // throw new Error("Error in serverData: ", { cause: error });
+    throw new Error("Error in serverData: ", { cause: error });
   }
 };
 
-const fetchServerData = async (type: ServerType) => {
+const fetchServerData = async () => {
   // console.log("fetchServerData type:", type); // debug
 
-  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}`;
+  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/lxc`;
   const res = (await fetchAccessTicket()) as Response;
 
   const myHeaders = new Headers();
@@ -78,7 +78,7 @@ const fetchServerData = async (type: ServerType) => {
     return { serverDataList, formatUptime };
   } catch (error) {
     console.error("Error in fetchServerData: ", error); // debug
-    // throw new Error("Error in fetchServerData: ", { cause: error });
+    throw new Error("Error in fetchServerData: ", { cause: error });
   }
 };
 
