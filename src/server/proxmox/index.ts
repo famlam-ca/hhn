@@ -8,19 +8,6 @@ interface Response {
 }
 
 export const serverData = async (type: serverType = "lxc") => {
-  if (type !== "lxc" && type !== "qemu") {
-    throw new Error(
-      "An invalid server type was used; either LXC or QEMU should be used.",
-      {
-        cause: "Invalid server type.",
-      },
-    );
-  }
-
-  if (type === undefined) {
-    type = "lxc";
-  }
-
   try {
     const data = await fetchServerData(type);
     return data;
@@ -31,6 +18,15 @@ export const serverData = async (type: serverType = "lxc") => {
 };
 
 const fetchServerData = async (type: serverType = "lxc") => {
+  if (type !== "lxc" && type !== "qemu") {
+    throw new Error(
+      "An invalid server type was used; either LXC or QEMU should be used.",
+      {
+        cause: "Invalid server type.",
+      },
+    );
+  }
+
   const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}`;
   const res = (await fetchAccessTicket()) as Response;
 
