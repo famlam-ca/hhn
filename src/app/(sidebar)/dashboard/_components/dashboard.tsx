@@ -13,7 +13,13 @@ interface DashboardProps {
 export const Dashboard = async ({ type }: DashboardProps) => {
   // console.log("Dashboard type:", type); // debug
 
-  const { serverDataList: data } = await serverData(type);
+  const dataRes = await serverData(type);
+
+  if (!dataRes) {
+    return <DashboardSkeleton />;
+  }
+
+  const { serverDataList: data } = dataRes;
 
   return (
     <MaxWidthWrapper className="max-w-full">

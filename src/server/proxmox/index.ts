@@ -15,7 +15,7 @@ export const serverData = async (type: ServerType) => {
     return data;
   } catch (error) {
     console.error("Error in serverData: ", error); // debug
-    throw new Error("Error in serverData: ", { cause: error });
+    // throw new Error("Error in serverData: ", { cause: error });
   }
 };
 
@@ -78,7 +78,7 @@ const fetchServerData = async (type: ServerType) => {
     return { serverDataList, formatUptime };
   } catch (error) {
     console.error("Error in fetchServerData: ", error); // debug
-    throw new Error("Error in fetchServerData: ", { cause: error });
+    // throw new Error("Error in fetchServerData: ", { cause: error });
   }
 };
 
@@ -104,9 +104,9 @@ const fetchHostData = async () => {
     return hostDataList;
   } catch (error) {
     console.error("Error in fetchHostData: ", error); // debug
-    throw new Error("Error whilst trying to run fetchHostData: ", {
-      cause: error,
-    });
+    // throw new Error("Error whilst trying to run fetchHostData: ", {
+    //   cause: error,
+    // });
   }
 };
 
@@ -117,11 +117,8 @@ export const hostData = async () => {
     return data;
   } catch (error) {
     console.error("Error in hostData: ", error); // debug
-    throw new Error("Error whilst trying to run hostData", {
-      cause: error,
-    });
+    // throw new Error("Error whilst trying to run hostData", {
+    //   cause: error,
+    // });
   }
 };
-function ifelse() {
-  throw new Error("Function not implemented.");
-}

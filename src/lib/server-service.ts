@@ -8,9 +8,13 @@ export const getServerById = async (id: number | string, type: ServerType) => {
     throw new Error("No id provided");
   }
 
-  const { serverDataList } = await serverData(type);
+  const data = await serverData(type);
 
-  const server = serverDataList.find(
+  if (!data || !data.serverDataList) {
+    throw new Error("Unable to fetch server data");
+  }
+
+  const server = data.serverDataList.find(
     (server) => server.vmid === (type === "lxc" ? String(id) : Number(id)),
   );
 
