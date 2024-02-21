@@ -1,9 +1,9 @@
 "use server";
 
 import { serverData } from "@/server/proxmox";
-import { serverType } from "@/types/types";
+import { ServerType } from "@/types/types";
 
-export const getServerById = async (id: number | string, type: serverType) => {
+export const getServerById = async (id: number | string, type: ServerType) => {
   if (id === undefined) {
     throw new Error("No id provided");
   }
