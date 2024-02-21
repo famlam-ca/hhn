@@ -18,7 +18,7 @@ export const serverData = async (type: serverType = "lxc") => {
   }
 
   if (type === undefined) {
-    return (type = "lxc");
+    type = "lxc";
   }
 
   try {
