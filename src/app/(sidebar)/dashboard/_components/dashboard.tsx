@@ -1,19 +1,18 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { serverData } from "@/server/proxmox";
-import { serverType } from "@/types/types";
+import { ServerType } from "@/types/types";
 
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
 
-type DashboardProps = {
-  searchParams: {
-    type: serverType;
-  };
-};
+interface DashboardProps {
+  type: ServerType;
+}
 
-export const Dashboard = async (searchParams: DashboardProps) => {
-  const type = searchParams.searchParams.type;
+export const Dashboard = async ({ type }: DashboardProps) => {
+  // console.log("Dashboard type:", type); // debug
+
   const { serverDataList: data } = await serverData(type);
 
   return (

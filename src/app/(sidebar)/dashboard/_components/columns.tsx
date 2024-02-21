@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 import { ServerActions } from "./server-actions";
 
@@ -196,7 +196,7 @@ export const columns: ColumnDef<ServerData>[] = [
       const server = row.original;
 
       const searchParams = useSearchParams();
-      const type = searchParams.get("type") as serverType;
+      const type = searchParams.get("type") as ServerType;
 
       return <ServerActions server={server} type={type} />;
     },

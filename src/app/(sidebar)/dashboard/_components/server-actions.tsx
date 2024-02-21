@@ -23,11 +23,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 interface ServerActionsProps {
   server: ServerData;
-  type: serverType;
+  type: ServerType;
 }
 
 export const ServerActions = ({ server, type }: ServerActionsProps) => {

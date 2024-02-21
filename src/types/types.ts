@@ -23,7 +23,7 @@ export type ServerData = {
   vmid: number;
 };
 
-export type serverType = "lxc" | "qemu";
+export type ServerType = "lxc" | "qemu";
 
 export type HostData = {
   loadavg: string[];

@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { serverType } from "@/types/types";
+import { ServerType } from "@/types/types";
 
 export const ServerSelector = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ export const ServerSelector = () => {
 
   const label = params === "qemu" ? "Virtual Machines" : "Containers";
 
-  const [type, setType] = useState<serverType>("lxc");
+  const [type, setType] = useState<ServerType>("lxc");
 
   useEffect(() => {
     if (!params) {
@@ -30,7 +30,7 @@ export const ServerSelector = () => {
     }
   }, [params, router, type]);
 
-  const onSelect = async (newType: serverType) => {
+  const onSelect = async (newType: ServerType) => {
     setType(newType);
 
     if (!newType) {

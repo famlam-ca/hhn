@@ -1,10 +1,10 @@
 "use server";
 
-import { serverType } from "@/types/types";
+import { ServerType } from "@/types/types";
 import { fetchAccessTicket } from "./request-access-ticket";
 
 interface ServerActionProps {
-  type: serverType;
+  type: ServerType;
   vmid: number;
   action: "start" | "shutdown" | "stop" | "reboot" | string;
 }

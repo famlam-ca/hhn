@@ -1,4 +1,4 @@
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 import { fetchAccessTicket } from "./request-access-ticket";
 
@@ -7,7 +7,9 @@ interface Response {
   accessTicket: string;
 }
 
-export const serverData = async (type: serverType = "lxc") => {
+export const serverData = async (type: ServerType) => {
+  // console.log("ServerData type:", type); // debug
+
   try {
     const data = await fetchServerData(type);
     return data;
@@ -17,15 +19,8 @@ export const serverData = async (type: serverType = "lxc") => {
   }
 };
 
-const fetchServerData = async (type: serverType = "lxc") => {
-  if (type !== "lxc" && type !== "qemu") {
-    throw new Error(
-      "An invalid server type was used; either LXC or QEMU should be used.",
-      {
-        cause: "Invalid server type.",
-      },
-    );
-  }
+const fetchServerData = async (type: ServerType) => {
+  // console.log("fetchServerData type:", type); // debug
 
   const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}`;
   const res = (await fetchAccessTicket()) as Response;

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { authOptions } from "@/lib/auth-options";
 import { getServerById } from "@/lib/server-service";
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 import { Console } from "./_components/console";
 import { Header } from "./_components/header";
@@ -14,7 +14,7 @@ interface ServerPageProps {
     serverId: number;
   };
   searchParams: {
-    type: serverType;
+    type: ServerType;
   };
 }
 

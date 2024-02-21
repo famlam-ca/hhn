@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 interface ActionButtonProps {
   label: string;
@@ -15,7 +15,7 @@ interface ActionButtonProps {
   color: string;
   fill?: boolean;
   server: ServerData;
-  type: serverType;
+  type: ServerType;
 }
 
 export const ActionButton = ({

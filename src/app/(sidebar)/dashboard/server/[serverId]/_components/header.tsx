@@ -11,14 +11,14 @@ import {
 
 import { RefreshButton } from "@/components/refresh-button";
 import { cn } from "@/lib/utils";
-import { ServerData, serverType } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 import { ActionButton } from "./action-buttons";
 import { HeaderCard } from "./header-card";
 
 interface HeaderProps {
   server: ServerData;
-  type: serverType;
+  type: ServerType;
 }
 
 export const Header = ({ server, type }: HeaderProps) => {

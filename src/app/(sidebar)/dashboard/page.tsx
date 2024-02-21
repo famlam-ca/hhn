@@ -1,22 +1,30 @@
 import { Suspense } from "react";
 
-import { serverType } from "@/types/types";
+import { ServerType } from "@/types/types";
 
 import { Dashboard } from "./_components/dashboard";
 import DashboardLoading from "./loading";
 
-type PageProps = {
+interface PageProps {
   searchParams: {
-    type: serverType;
+    type: ServerType;
   };
-};
+}
 
-const Page = (searchParams: PageProps) => {
-  const type = searchParams.searchParams;
+const Page = ({ searchParams }: PageProps) => {
+  if (!searchParams.type) {
+    searchParams.type = "lxc";
+  }
+
+  if (searchParams.type !== "lxc" && searchParams.type !== "qemu") {
+    throw new Error("Invalid server type. Type must be 'lxc' or 'qemu'.");
+  }
+
+  // console.log("Page type:", searchParams.type); // debug
 
   return (
     <Suspense fallback={<DashboardLoading />}>
-      <Dashboard searchParams={type} />
+      <Dashboard type={searchParams.type} />
     </Suspense>
   );
 };
