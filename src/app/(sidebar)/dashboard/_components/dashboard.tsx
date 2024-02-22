@@ -1,21 +1,37 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { serverData } from "@/server/proxmox";
+import { getNodeData, getServerData } from "@/server/proxmox";
+import { NodeData, ServerData } from "@/types/types";
 
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
 
-export const Dashboard = async () => {
-  // console.log("Dashboard type:", type); // debug
+export const Dashboard = () => {
+  const [data, setData] = useState<ServerData[]>([]);
+  const [nodeData, setNodeData] = useState<NodeData[]>([]);
 
-  const { serverDataList: data } = await serverData();
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getServerData();
+      const nodeData = await getNodeData();
+
+      setData(data);
+      setNodeData(nodeData);
+    };
+
+    getData();
+  }, []);
 
   return (
     <MaxWidthWrapper className="max-w-full">
       <h2 className="text-2xl font-semibold">Hardware</h2>
 
       <div className="flex flex-col gap-2 sm:gap-4 xl:flex-row">
-        <ServerCards />
+        <ServerCards nodeData={nodeData} />
       </div>
 
       <div className="my-4">

@@ -1,37 +1,32 @@
 "use server";
 
-const username = process.env.PROXMOX_API_USERNAME!;
-const password = process.env.PROXMOX_API_PASSWORD!;
+import axios from "axios";
+import qs from "qs";
 
-const urlencoded = new URLSearchParams();
-urlencoded.append("username", username);
-urlencoded.append("password", password);
+const credentials = qs.stringify({
+  username: process.env.PROXMOX_API_USERNAME,
+  password: process.env.PROXMOX_API_PASSWORD,
+});
 
-const requestOptions = {
-  method: "POST",
-  body: urlencoded,
-  redirect: "follow" as RequestRedirect,
+const config = {
+  method: "post",
+  maxBodyLength: Infinity,
+  url: `${process.env.PROXMOX_API_URL}/access/ticket`,
+  data: credentials,
 };
 
-export const fetchAccessTicket = async () => {
-  const url = `${process.env.PROXMOX_API_URL}/access/ticket`;
-
-  try {
-    const res = await fetch(url, requestOptions);
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch access ticket:", {
-        cause: `${data.message}`,
-      });
-    }
-
-    const csrfToken = data.data.CSRFPreventionToken;
-    const accessTicket = data.data.ticket;
-
-    return { csrfToken, accessTicket };
-  } catch (error) {
-    console.error("Error in fetchAccessTicket: ", error); // debug
-    throw new Error("Error in fetchAccessTicket: ", { cause: error });
-  }
+export const getAccessTicket = () => {
+  return axios
+    .request(config)
+    .then((res) => {
+      const { CSRFPreventionToken, ticket } = res.data.data;
+      return {
+        csrfToken: CSRFPreventionToken,
+        accessTicket: ticket,
+      };
+    })
+    .catch((error: any) => {
+      console.error("Failed to retrieve access ticket: ", error); // debug
+      throw new Error("Failed to retrieve access ticket", { cause: error });
+    });
 };

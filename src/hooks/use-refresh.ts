@@ -1,15 +1,22 @@
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export const useRefresh = () => {
+export const useRefresh = (interval = 30000) => {
   const router = useRouter();
   const [isDisabled, setIsDisabled] = useState(false);
 
-  const refresh = () => {
+  const timeout = interval / 10;
+
+  const refresh = useCallback(() => {
     setIsDisabled(true);
     router.refresh();
-    setTimeout(() => setIsDisabled(false), 3000); // 3 sec = 3000
-  };
+    setTimeout(() => setIsDisabled(false), timeout);
+  }, [router, timeout]);
+
+  useEffect(() => {
+    const id = setInterval(refresh, interval);
+    return () => clearInterval(id);
+  }, [interval, refresh]);
 
   return { isDisabled, refresh };
 };

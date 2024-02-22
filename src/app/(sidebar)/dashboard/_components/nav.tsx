@@ -6,7 +6,7 @@ import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserNav } from "@/components/navigation/user-nav";
 import { authOptions } from "@/lib/auth-options";
 import { getUserByUsername } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { CustomUser, ServerType } from "@/types/types";
 
 import { MobileNav } from "./mobile-nav";
 import { NavItem } from "./nav-item";

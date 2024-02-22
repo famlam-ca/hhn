@@ -1,18 +1,27 @@
 import { Cpu, Database, MemoryStick } from "lucide-react";
 
-import { hostData } from "@/server/proxmox";
+import { NodeData } from "@/types/types";
 
 import { ServerCardItem } from "./server-card-item";
 
-export const ServerCards = async () => {
-  const { cpuinfo, loadavg, memory, rootfs } = await hostData();
+interface ServerCardsProps {
+  nodeData: NodeData[];
+}
 
-  const cpus = cpuinfo.cpus;
-  const cpuUsage = parseFloat(loadavg[0]).toFixed(2);
-  const maxMem = (memory.total / 1024 ** 3).toFixed(2);
-  const memoryUsage = ((memory.used / memory.total) * 100).toFixed(2);
-  const maxDisk = (rootfs.total / 1024 ** 3).toFixed(2);
-  const diskUsage = ((rootfs.used / rootfs.total) * 100).toFixed(2);
+export const ServerCards = ({ nodeData }: ServerCardsProps) => {
+  // TODO: Fix potiential bug here, nodeData is an array, so it will never be undefined
+  if (!nodeData || nodeData.length === 0) {
+    return;
+  }
+
+  const { cpu, maxcpu, mem, maxmem, disk, maxdisk } = nodeData[0];
+
+  const cpus = maxcpu;
+  const cpuUsage = (cpu * 100).toFixed(2);
+  const maxMem = (maxmem / 1024 ** 3).toFixed(2);
+  const memoryUsage = ((mem / maxmem) * 100).toFixed(2);
+  const maxDisk = (maxdisk / 1024 ** 3).toFixed(2);
+  const diskUsage = ((disk / maxdisk) * 100).toFixed(2);
 
   const cards = [
     {
@@ -47,7 +56,7 @@ export const ServerCards = async () => {
           icon={card.icon}
           bgColor={card.bgColor}
           value={card.value}
-          maxValue={card.maxValue}
+          maxValue={card.maxValue || "100"}
         />
       ))}
     </>

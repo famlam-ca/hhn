@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useRefresh } from "@/hooks/use-refresh";
 
-export const RefreshButton = () => {
-  const { isDisabled, refresh } = useRefresh();
+export const RefreshButton = ({ interval = 30000 }) => {
+  const { isDisabled, refresh } = useRefresh(interval);
 
   const handleClick = () => {
     toast({
@@ -20,11 +20,11 @@ export const RefreshButton = () => {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const id = setInterval(() => {
       refresh();
-    }, 30000); // 30 sec = 30000 // 5 min = 300000
+    }, interval);
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(id);
   });
 
   return (

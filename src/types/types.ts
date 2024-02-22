@@ -1,6 +1,6 @@
 export type CustomUser = {
   id: string;
-  // display_name: string;
+  display_name: string;
   username: string;
   first_name: string | null;
   last_name: string | null;
@@ -12,7 +12,9 @@ export type CustomUser = {
   theme: string;
 };
 
-export type ServerData = {
+export type ServerType = "lxc" | "qemu";
+
+export interface ServerData {
   name: string;
   status: string;
   cpu: number;
@@ -21,45 +23,19 @@ export type ServerData = {
   maxmem: number;
   uptime: number;
   vmid: number;
-};
+  type?: ServerType;
+}
 
-export type ServerType = "lxc" | "qemu";
-
-export type HostData = {
-  loadavg: string[];
+export type NodeData = {
+  id: string;
+  node: string;
+  type: string;
+  status: string;
   cpu: number;
-  wait: number;
-  swap: {
-    total: number;
-    used: number;
-    free: number;
-  };
-  kversion: string;
-  idle: number;
-  memory: {
-    total: number;
-    used: number;
-    free: number;
-  };
+  maxcpu: number;
+  mem: number;
+  maxmem: number;
+  disk: number;
+  maxdisk: number;
   uptime: number;
-  ksm: {
-    shared: number;
-  };
-  cpuinfo: {
-    user_hz: number;
-    cores: number;
-    mhz: string;
-    model: string;
-    cpus: number;
-    flags: string;
-    hvm: string;
-    sockets: number;
-  };
-  pveversion: string;
-  rootfs: {
-    used: number;
-    total: number;
-    avail: number;
-    free: number;
-  };
 };

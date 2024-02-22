@@ -1,8 +1,8 @@
 "use client";
 
 import { ChevronsUpDown, Container, Monitor } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,32 +17,32 @@ import { ServerType } from "@/types/types";
 
 export const ServerSelector = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const params = searchParams.get("type");
+  const pathname = usePathname();
 
-  const label = params === "qemu" ? "Virtual Machines" : "Containers";
+  const serverTypeLabels: Record<ServerType, string> = {
+    lxc: "Containers",
+    qemu: "Virtual Machines",
+  };
 
   const [type, setType] = useState<ServerType>("lxc");
+  const label = serverTypeLabels[type];
 
-  // useEffect(() => {
-  //   if (!params) {
-  //     router.push(`/dashboard?type=${type}`);
-  //   }
-  // }, [params, router, type]);
+  useEffect(() => {
+    const url = new URL(window.location.href);
 
-  const onSelect = async (newType: ServerType) => {
-    setType(newType);
+    if (pathname === "/dashboard" && !url.searchParams.has("type")) {
+      router.push(`${pathname}?type=${type}`);
+    }
+  }, [pathname, router, type]);
 
-    // if (!newType) {
-    //   router.push("/dashboard");
-    // } else {
-    //   router.push(`/dashboard?type=${newType}`);
-    // }
+  const onSelect = (selectedType: ServerType) => {
+    setType(selectedType);
+    router.push(`${pathname}?type=${selectedType}`);
   };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger disabled asChild>
+      <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
           className="text-2xl font-semibold data-[state=open]:bg-accent"
@@ -53,7 +53,7 @@ export const ServerSelector = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <DropdownMenuLabel className="text-muted-foreground">
-          Server Type: ({type})
+          Server Type: ({label})
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />

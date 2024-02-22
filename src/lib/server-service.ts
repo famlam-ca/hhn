@@ -1,19 +1,20 @@
 "use server";
 
-import { serverData } from "@/server/proxmox";
+import { getServerData } from "@/server/proxmox";
 
-export const getServerById = async (id: number | string) => {
+export const getServerById = async (id: number) => {
   if (id === undefined) {
     throw new Error("No id provided");
   }
 
-  const data = await serverData();
+  const data = await getServerData();
 
-  if (!data || !data.serverDataList) {
-    throw new Error("Unable to fetch server data");
-  }
-
-  const server = data.serverDataList.find((server) => server.vmid === id);
+  const server = data.find((server) => {
+    if (server.type !== "lxc") {
+      return server.vmid.toString() === id.toString();
+    }
+    return server.vmid === id;
+  });
 
   if (!server) {
     throw new Error(`Server with id ${id} not found`);
