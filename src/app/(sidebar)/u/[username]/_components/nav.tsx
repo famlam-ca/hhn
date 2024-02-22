@@ -42,7 +42,7 @@ export const Navbar = ({ user }: NavbarProps) => {
             className="z-40 flex items-center gap-2"
           >
             <h2 className="text-xl font-semibold text-muted-foreground hover:text-text">
-              {user.username}
+              {user.display_name}
             </h2>
           </Link>
 

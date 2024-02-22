@@ -1,7 +1,7 @@
 "use server";
 
 import { User } from "@prisma/client";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/db";
@@ -26,7 +26,6 @@ export const updateUser = async (values: Partial<User>) => {
     last_name: values.last_name,
     email: values.email,
     password: hashedPassword,
-
     image: values.image,
     role: values.role,
     bio: values.bio,
@@ -48,4 +47,15 @@ export const getAllUsers = async () => {
   const dbUser = await db.user.findMany();
 
   return dbUser;
+};
+
+export const validatePassword = async (userId: string, password: string) => {
+  const dbUser = await db.user.findUnique({
+    where: { id: userId },
+    select: { password: true },
+  });
+
+  const isValid = await compare(password, dbUser?.password!);
+
+  return isValid;
 };

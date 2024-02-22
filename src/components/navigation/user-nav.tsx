@@ -69,7 +69,9 @@ export const UserNav = ({ user }: UserNavProps) => {
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-0.5 leading-none">
             <div className="flex justify-between">
-              <p className="text-sm font-medium text-text">{user.username}</p>
+              <p className="text-sm font-medium text-text">
+                {user.display_name}
+              </p>
               {full_name && (
                 <p className="truncate text-xs font-medium text-muted">
                   {full_name}

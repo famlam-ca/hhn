@@ -1,9 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { ElementRef, useRef, useState, useTransition } from "react";
+import { ElementRef, useRef, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,10 +17,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { updateUser } from "@/server/user";
 import { CustomUser } from "@/types/types";
 
@@ -30,24 +41,90 @@ interface ProfileProps {
 export const EditProfile = ({ user }: ProfileProps) => {
   const pathname = usePathname();
   const closeRef = useRef<ElementRef<"button">>(null);
+  const { toast } = useToast();
 
-  const [displayName, setDisplayName] = useState<string>(user.username);
-  const [email, setEmail] = useState<string>(user.email);
-  const [bio, setBio] = useState(user.bio || "");
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const schema = z.object({
+    display_name: z
+      .string()
+      .refine(
+        (v) => /.{8,}/.test(v),
+        "Display name must be at least 8 characters long",
+      )
+      .refine(
+        (v) => /^[a-zA-Z0-9_.]+$/i.test(v),
+        "Display Name must contain only letters, numbers, underscores, and periods",
+      )
+      .refine(
+        (v) => /^.{1,20}$/.test(v),
+        "Display name must be at most 20 characters long",
+      )
+      .refine(
+        (v) => /^(?!.*[_.]{2,})[^._].*[^._]$/.test(v),
+        "Display name cannot contain consecutive, leadning or trailing underscores or periods",
+      ),
+    email: z
+      .string()
+      .email()
+      .refine(
+        (v) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(v),
+        "Must be a valid email address",
+      ),
+    bio: z
+      .string()
+      .refine((v) =>
+        /^.{0,200}$/.test("Bio must be at most 200 characters long"),
+      ),
+    image: z
+      .string()
+      .url()
+      .refine(
+        (v) =>
+          /^https:\/\/(utfs.io\/f\/[^\/]+\.png|www.famlam.ca\/logo\/[^\/]+\.png)$/.test(
+            v,
+          ),
+        "Invalid image URL",
+      ),
+  });
+
+  const defaultValues = {
+    display_name: user.username,
+    email: user.email,
+    bio: user.bio,
+    image: user.image,
+  };
+
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues,
+  });
+
+  const onSubmit = (values: z.infer<typeof schema>) => {
+    // console.log("Form values:", values); // debug
+
+    const allValuesUnchanged = Object.entries(values).every(
+      ([key, value]) =>
+        defaultValues[key as keyof typeof defaultValues] === value,
+    );
+
+    if (allValuesUnchanged) {
+      toast({
+        title: "No changes have been submitted.",
+        description: "Becuase no changes have been made.",
+      });
+      return;
+    }
 
     startTransition(() => {
       updateUser({
         id: user.id,
-        email: email,
-        display_name: displayName,
-        bio: bio,
+        email: values.email,
+        display_name: values.display_name,
+        bio: values.bio,
+        image: values.image,
       })
         .then(() => {
-          // TODO: Dynamically render updated info
           toast({ title: "Profile updated" });
           closeRef?.current?.click?.();
         })
@@ -59,7 +136,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
           }),
         );
 
-      if (email !== user.email) {
+      if (values.email !== user.email) {
         if (self) {
           signOut();
         }
@@ -82,49 +159,85 @@ export const EditProfile = ({ user }: ProfileProps) => {
           )}
         </CardDescription>
       </CardHeader>
-      <form onSubmit={onSubmit}>
-        <CardContent className="space-y-2">
-          <div className="space-y-2">
-            <Label>Display Name</Label>
-            <Input
-              placeholder="Display Name"
-              onChange={(e) => setDisplayName(e.target.value)}
-              defaultValue={displayName}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="space-y-6">
+            <FormField
+              control={form.control}
+              name="display_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Display Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Display Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className="space-y-2">
-            <Label>Email</Label>
-            <Input
-              disabled={isPending}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    You&apos;ll be logged out once you change your email.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className="space-y-2">
-            <Label>Bio</Label>
-            <Textarea
-              disabled={isPending}
-              placeholder="User bio"
-              onChange={(e) => setBio(e.target.value)}
-              defaultValue={user.bio}
-              className="resize-none"
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bio</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={isPending}
+                      placeholder="User bio"
+                      {...field}
+                      className="resize-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className="space-y-2">
-            <Label>Edit your profile image</Label>
-            <EditImage userId={user.id} initialImage={user.image} />
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col items-end">
-          <Button disabled={isPending} type="submit" variant="outline">
-            {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Save"}
-          </Button>
-        </CardFooter>
-      </form>
+            <FormField
+              control={form.control}
+              name="image"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Edit your profile image</FormLabel>
+                  <FormControl>
+                    <EditImage userId={user.id} initialImage={user.image} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+
+          <CardFooter className="flex flex-col items-end">
+            <Button disabled={isPending} type="submit" variant="outline">
+              {isPending ? (
+                <Loader2 className="h-5 w-5 animate-spin" />
+              ) : (
+                "Save"
+              )}
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 };

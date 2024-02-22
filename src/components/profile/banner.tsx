@@ -6,10 +6,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 interface BannerProps {
-  username: string;
+  display_name: string;
 }
 
-export const Banner = ({ username }: BannerProps) => {
+export const Banner = ({ display_name }: BannerProps) => {
   return (
     <div className={cn("relative -mb-6 lg:-mb-10")}>
       <div className="h-40 blur-sm lg:h-60">
@@ -22,7 +22,7 @@ export const Banner = ({ username }: BannerProps) => {
       </div>
       <div className="absolute left-[50%] right-[50%] top-0 flex h-full flex-col items-center justify-center text-center font-bold tracking-widest">
         <h1 className="text-shadow text-6xl text-white lg:text-8xl">
-          {username}
+          {display_name}
         </h1>
       </div>
     </div>
