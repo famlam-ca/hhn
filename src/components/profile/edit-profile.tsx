@@ -89,7 +89,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
   });
 
   const defaultValues = {
-    display_name: user.username,
+    display_name: user.display_name,
     email: user.email,
     bio: user.bio,
     image: user.image,
