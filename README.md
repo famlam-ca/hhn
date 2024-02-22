@@ -40,6 +40,7 @@ A hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends
 - [Node.js](https://nodejs.org/en/ "Node JS")
 - [TypeScript](https://www.typescriptlang.org/ "TypeScript")
 - [NextAuth.js](https://next-auth.js.org "NextAuth JS")
+- [Axios](https://axios-http.com/ "Axios")
 - [Prisma](https://prisma.io "Prisma")
 - [MySQL](https://www.mysql.com/ "MySQL")
 - [shadcn/ui](https://ui.shadcn.com/ "shadcn/ui")
