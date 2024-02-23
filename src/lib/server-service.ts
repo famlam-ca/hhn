@@ -10,10 +10,8 @@ export const getServerById = async (id: number) => {
   const data = await getServerData();
 
   const server = data.find((server) => {
-    if (server.type !== "lxc") {
-      return server.vmid.toString() === id.toString();
-    }
-    return server.vmid === id;
+    // TODO: Compatibility with qemu type servers
+    return server.vmid.toString() === id.toString();
   });
 
   if (!server) {

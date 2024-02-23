@@ -2,17 +2,19 @@
 
 import axios from "axios";
 
-import { NodeData, ServerData } from "@/types/types";
+import { NodeData, ServerData, ServerType } from "@/types/types";
 
 import { getAccessTicket } from "./request-access-ticket";
 
-export const getServerData = async (): Promise<ServerData[]> => {
+export const getServerData = async (
+  type: ServerType = "lxc",
+): Promise<ServerData[]> => {
   const { accessTicket, csrfToken } = await getAccessTicket();
 
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: `${process.env.PROXMOX_API_URL}/nodes/pve/lxc`,
+    url: `${process.env.PROXMOX_API_URL}/nodes/pve/${type}`,
     headers: {
       CSRFPreventionToken: csrfToken,
       Cookie: `PVEAuthCookie=${accessTicket}`,

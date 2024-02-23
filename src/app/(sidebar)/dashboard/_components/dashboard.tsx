@@ -4,27 +4,37 @@ import { useEffect, useState } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { getNodeData, getServerData } from "@/server/proxmox";
-import { NodeData, ServerData } from "@/types/types";
+import { NodeData, ServerData, ServerType } from "@/types/types";
 
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
+import { useSearchParams } from "next/navigation";
 
 export const Dashboard = () => {
-  const [data, setData] = useState<ServerData[]>([]);
+  const params = useSearchParams();
+  const type = params.get("type");
+
+  const [serverData, setServerData] = useState<ServerData[]>([]);
   const [nodeData, setNodeData] = useState<NodeData[]>([]);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getServerData();
+      const serverTypeMap: { [key: string]: ServerType } = {
+        lxc: "lxc",
+        qemu: "qemu",
+      };
+      const serverType = type ? serverTypeMap[type] : undefined;
+
+      const serverData = await getServerData(serverType);
       const nodeData = await getNodeData();
 
-      setData(data);
+      setServerData(serverData);
       setNodeData(nodeData);
     };
 
     getData();
-  }, []);
+  }, [type]);
 
   return (
     <MaxWidthWrapper className="max-w-full">
@@ -35,7 +45,7 @@ export const Dashboard = () => {
       </div>
 
       <div className="my-4">
-        <ServerTable columns={columns} data={data} />
+        <ServerTable columns={columns} data={serverData} />
       </div>
     </MaxWidthWrapper>
   );

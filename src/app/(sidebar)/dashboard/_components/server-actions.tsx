@@ -30,8 +30,8 @@ interface ServerActionsProps {
 }
 
 export const ServerActions = ({ server }: ServerActionsProps) => {
-  let role = "user";
   const { data: session } = useSession();
+  let role = "user";
   role = session?.user.role!;
 
   return (

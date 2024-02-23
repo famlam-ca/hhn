@@ -67,7 +67,7 @@ export function ServerTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center gap-x-2 py-4">
+      <div className="flex items-center gap-x-2 py-2">
         <ServerSelector />
 
         <Input

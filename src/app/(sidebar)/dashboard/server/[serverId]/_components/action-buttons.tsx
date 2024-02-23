@@ -1,12 +1,13 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 interface ActionButtonProps {
   label: string;
@@ -25,6 +26,9 @@ export const ActionButton = ({
   fill,
   server,
 }: ActionButtonProps) => {
+  const params = useSearchParams();
+  const type = params.get("type") as ServerType;
+
   let isDisabled = false;
   if (
     (action === "start" && server.status === "running") ||
