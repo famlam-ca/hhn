@@ -38,9 +38,12 @@ interface IconProps {
 }
 
 const Icon = ({ icon: Icon, color, fill }: IconProps) => {
+  console.log("IconProps", { color, fill });
+
   return (
     <Icon
-      className={`mr-2 h-4 w-4 text-${color} fill-${fill ? color : ""} transition-all group-hover:fill-${fill ? "text" : ""} group-hover:text-text`}
+      style={{ fill: fill ? "currentcolor" : "none" }}
+      className={`mr-2 h-4 w-4 text-${color} transition-all group-hover:text-text`}
     />
   );
 };
