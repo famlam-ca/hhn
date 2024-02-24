@@ -17,14 +17,14 @@ export const main = async () => {
       password,
     },
   });
-  console.log({ user }); // debug
+  // console.log({ user }); // debug
 };
 main()
   .then(async () => {
     await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e); // debug
+    // console.error(e); // debug
     await prisma.$disconnect();
     process.exit(1);
   });

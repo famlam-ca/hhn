@@ -26,7 +26,7 @@ export const getAccessTicket = () => {
       };
     })
     .catch((error: any) => {
-      console.error("Failed to retrieve access ticket: ", error); // debug
+      // console.error("Failed to retrieve access ticket: ", error); // debug
       throw new Error("Failed to retrieve access ticket", { cause: error });
     });
 };

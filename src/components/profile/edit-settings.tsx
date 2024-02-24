@@ -64,7 +64,7 @@ export const EditSettings = ({ user }: SettingsProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof schema>) => {
-    console.log("Form values:", values); // debug
+    // console.log("Form values:", values); // debug
 
     const allValuesUnchanged = Object.entries(values).every(
       ([key, value]) =>

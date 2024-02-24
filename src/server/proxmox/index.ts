@@ -40,7 +40,7 @@ export const getServerData = async (
 
     return data;
   } catch (error) {
-    console.error("Error in getServerData: ", error); // debug
+    // console.error("Error in getServerData: ", error); // debug
     throw new Error("Error in getServerData: ", { cause: error });
   }
 };
@@ -64,7 +64,7 @@ export const getNodeData = async (): Promise<NodeData[]> => {
 
     return data;
   } catch (error) {
-    console.error("Error in getNodeData: ", error); // debug
+    // console.error("Error in getNodeData: ", error); // debug
     throw new Error("Error in getNodeData: ", { cause: error });
   }
 };

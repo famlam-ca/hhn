@@ -1,7 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import axios from "axios";
+import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -111,8 +112,8 @@ export const SignUpForm = () => {
         ),
     })
     .refine((data) => data.password === data.passwordConfirm, {
-      message: "Passwords must match.",
-      path: ["confirmPassword"],
+      message: "Passwords do not match.",
+      path: ["passwordConfirm"],
     });
 
   type FormValues = z.infer<typeof firstStepSchema> &
@@ -148,24 +149,55 @@ export const SignUpForm = () => {
 
       const allValues = { ...firstStepValues, ...values };
 
-      const res = await fetch(`/api/auth/register`, {
-        method: "POST",
-        body: JSON.stringify(allValues),
-      });
-      // console.log(res); // debug
-      if (!res.ok) {
-        toast({
-          title: "There was a problem creating your account.",
-          variant: "destructive",
-        });
-        setIsLoading(false);
-      } else {
+      const config = {
+        method: "post",
+        url: "/api/auth/register",
+        data: allValues,
+      };
+
+      try {
+        const res = await axios.request(config);
+        // console.log("Res:", { res }); // debug
+
+        if (res.status !== 200) {
+          throw new Error("Unexpected status code");
+        }
+
         toast({
           title: "Successfully created your account.",
-          description: `Welcome to our humble home network, ${values["display_name"]}.`,
+          description: `Welcome to our humble home network, ${values.display_name}.`,
         });
         setIsLoading(false);
         router.push("/auth/sign-in");
+      } catch (error: any) {
+        // console.error("Error:", error); // debug
+
+        let errorMessage = "There was a problem creating your account.";
+
+        // console.log("Error Response:", error.response); // debug
+
+        if (error.response && error.response.status === 400) {
+          errorMessage = error.response.data;
+        } else if (error.response && error.response.status === 500) {
+          errorMessage =
+            "There was an internal server error. Please try again later.";
+        }
+
+        toast({
+          title: errorMessage,
+          description: "Sign in instead?",
+          variant: "destructive",
+          action: (
+            <Button
+              onClick={() => router.push("/auth/sign-in")}
+              variant="ghost"
+              className="uppercase"
+            >
+              Sign In
+            </Button>
+          ),
+        });
+        setIsLoading(false);
       }
     }
   };
@@ -175,7 +207,7 @@ export const SignUpForm = () => {
 
   return (
     <MaxWidthWrapper className="flex min-h-screen w-full items-center justify-center">
-      <Wrapper>
+      <Wrapper className="relative">
         <div className="mx-auto mb-10 flex flex-col items-center justify-center space-y-4">
           <Link href="/" className="z-40 flex items-center gap-2">
             <Icons.logo className="h-8 w-8 fill-text" />
@@ -239,6 +271,15 @@ export const SignUpForm = () => {
               {step === 2 && (
                 <>
                   <div className="flex justify-between gap-4">
+                    <Button
+                      onClick={() => setstep(1)}
+                      variant="ghost"
+                      className="absolute left-10 top-10 text-muted-foreground"
+                    >
+                      <ChevronLeft className="-ml-2 h-5 w-5" />
+                      Back
+                    </Button>
+
                     <FormField
                       control={form.control}
                       name="first_name"

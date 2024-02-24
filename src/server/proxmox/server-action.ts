@@ -1,5 +1,7 @@
 "use server";
 
+import axios from "axios";
+
 import { ServerType } from "@/types/types";
 
 import { getAccessTicket } from "./request-access-ticket";
@@ -15,19 +17,17 @@ export const serverAction = async ({
   vmid,
   action,
 }: ServerActionProps) => {
-  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}/${vmid}/status/${action}`;
-
   const access = await getAccessTicket();
 
-  const myHeaders = new Headers();
-  myHeaders.append("CSRFPreventionToken", access.csrfToken);
-  myHeaders.append("Cookie", `PVEAuthCookie=${access.accessTicket}`);
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    redirect: "follow" as RequestRedirect,
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${process.env.PROXMOX_API_URL}/nodes/pve/${type}/${vmid}/status/${action}`,
+    headers: {
+      CSRFPreventionToken: access.csrfToken,
+      Cookie: `PVEAuthCookie=${access.accessTicket}`,
+    },
   };
 
-  await fetch(url, requestOptions);
+  await axios.request(config);
 };
