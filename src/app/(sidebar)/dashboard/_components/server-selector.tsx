@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronsUpDown, Container, Monitor } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,7 @@ import { ServerType } from "@/types/types";
 export const ServerSelector = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const serverTypeLabels: Record<ServerType, string> = {
     lxc: "Containers",
@@ -28,12 +29,14 @@ export const ServerSelector = () => {
   const label = serverTypeLabels[type];
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-
-    if (pathname === "/dashboard" && !url.searchParams.has("type")) {
+    if (pathname === "/dashboard" && !searchParams.get("type")) {
       router.push(`${pathname}?type=${type}`);
     }
-  }, [pathname, router, type]);
+    const urlType = searchParams.get("type") as ServerType;
+    if (urlType && urlType !== type) {
+      setType(urlType);
+    }
+  }, [pathname, searchParams, router, type]);
 
   const onSelect = (selectedType: ServerType) => {
     setType(selectedType);

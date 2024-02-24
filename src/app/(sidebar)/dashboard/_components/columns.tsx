@@ -1,11 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { useSearchParams } from "next/navigation";
 
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ServerData } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 import { ServerActions } from "./server-actions";
 
@@ -194,7 +195,10 @@ export const columns: ColumnDef<ServerData>[] = [
     cell: function Cell({ row }) {
       const server = row.original;
 
-      return <ServerActions server={server} />;
+      const searchParams = useSearchParams();
+      const type = searchParams.get("type") as ServerType;
+
+      return <ServerActions server={server} type={type} />;
     },
   },
 ];

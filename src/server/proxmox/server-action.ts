@@ -1,14 +1,21 @@
 "use server";
 
+import { ServerType } from "@/types/types";
+
 import { getAccessTicket } from "./request-access-ticket";
 
 interface ServerActionProps {
   vmid: number;
   action: "start" | "shutdown" | "stop" | "reboot" | string;
+  type: ServerType;
 }
 
-export const serverAction = async ({ vmid, action }: ServerActionProps) => {
-  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/lxc/${vmid}/status/${action}`;
+export const serverAction = async ({
+  type,
+  vmid,
+  action,
+}: ServerActionProps) => {
+  const url = `${process.env.PROXMOX_API_URL}/nodes/pve/${type}/${vmid}/status/${action}`;
 
   const access = await getAccessTicket();
 

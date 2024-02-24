@@ -11,16 +11,17 @@ import {
 
 import { RefreshButton } from "@/components/refresh-button";
 import { cn } from "@/lib/utils";
-import { ServerData } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
-import { ActionButton } from "./action-buttons";
+import { ServerActionButtons } from "@/components/server-action-buttons";
 import { HeaderCard } from "./header-card";
 
 interface HeaderProps {
   server: ServerData;
+  type: ServerType;
 }
 
-export const Header = ({ server }: HeaderProps) => {
+export const Header = ({ server, type }: HeaderProps) => {
   const serverInfo = [
     {
       label: "CPU Usage",
@@ -84,7 +85,7 @@ export const Header = ({ server }: HeaderProps) => {
 
         <div className="flex items-center space-x-2">
           {serverAction.map((action) => (
-            <ActionButton
+            <ServerActionButtons
               key={action.label}
               label={action.label}
               action={action.action}
@@ -92,6 +93,8 @@ export const Header = ({ server }: HeaderProps) => {
               color={action.color}
               fill={action.fill}
               server={server}
+              type={type}
+              trigger="button"
             />
           ))}
 

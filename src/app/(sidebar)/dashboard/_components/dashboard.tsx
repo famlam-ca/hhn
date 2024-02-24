@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
@@ -9,7 +10,6 @@ import { NodeData, ServerData, ServerType } from "@/types/types";
 import { columns } from "./columns";
 import { ServerCards } from "./server-card";
 import { ServerTable } from "./server-table";
-import { useSearchParams } from "next/navigation";
 
 export const Dashboard = () => {
   const params = useSearchParams();
@@ -34,6 +34,9 @@ export const Dashboard = () => {
     };
 
     getData();
+
+    const interval = setInterval(getData, 30000);
+    return () => clearInterval(interval);
   }, [type]);
 
   return (

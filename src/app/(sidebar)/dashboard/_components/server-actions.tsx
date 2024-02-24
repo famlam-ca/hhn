@@ -12,6 +12,7 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+import { ServerActionButtons } from "@/components/server-action-buttons";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,18 +22,46 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { toast } from "@/components/ui/use-toast";
-import { serverAction } from "@/server/proxmox/server-action";
-import { ServerData } from "@/types/types";
+import { ServerData, ServerType } from "@/types/types";
 
 interface ServerActionsProps {
   server: ServerData;
+  type: ServerType;
 }
 
-export const ServerActions = ({ server }: ServerActionsProps) => {
+export const ServerActions = ({ server, type }: ServerActionsProps) => {
   const { data: session } = useSession();
   let role = "user";
   role = session?.user.role!;
+
+  const serverActions = [
+    {
+      label: "Start",
+      action: "start",
+      icon: Play,
+      color: "success",
+      fill: true,
+    },
+    {
+      label: "Shutdown",
+      action: "shutdown",
+      icon: Power,
+      color: "alert",
+    },
+    {
+      label: "Stop",
+      action: "stop",
+      icon: Square,
+      color: "alert",
+      fill: true,
+    },
+    {
+      label: "Reboot",
+      action: "reboot",
+      icon: RefreshCcw,
+      color: "warning",
+    },
+  ];
 
   return (
     <DropdownMenu>
@@ -58,7 +87,7 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href={`/dashboard/server/${server.vmid}`}>
+          <Link href={`/dashboard/server/${type}/${server.vmid}`}>
             <Terminal className="mr-2 h-4 w-4" />
             View server
           </Link>
@@ -66,65 +95,19 @@ export const ServerActions = ({ server }: ServerActionsProps) => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          disabled={server.status === "running" || role !== "admin"}
-          onClick={() => {
-            serverAction({ action: "start", vmid: server.vmid });
-            toast({
-              title: `Starting server: ${server.name}`,
-              duration: 2000,
-            });
-          }}
-          className="group flex items-center text-success"
-        >
-          <Play className="mr-2 h-4 w-4 fill-success text-success transition-all group-hover:fill-text group-hover:text-text" />
-          Start
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          disabled={server.status === "stopped" || role !== "admin"}
-          onClick={() => {
-            serverAction({ action: "shutdown", vmid: server.vmid });
-            toast({
-              title: `Shutting down server: ${server.name}`,
-              duration: 2000,
-            });
-          }}
-          className="flex items-center text-alert"
-        >
-          <Power className="mr-2 h-4 w-4" />
-          Shutdown
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          disabled={server.status === "stopped" || role !== "admin"}
-          onClick={() => {
-            serverAction({ action: "stop", vmid: server.vmid });
-            toast({
-              title: `Stopping server: ${server.name}`,
-              duration: 2000,
-            });
-          }}
-          className="group flex items-center text-alert"
-        >
-          <Square className="mr-2 h-4 w-4 fill-alert text-alert transition-all group-hover:fill-text group-hover:text-text" />
-          Stop
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          disabled={server.status === "stopped" || role !== "admin"}
-          onClick={() => {
-            serverAction({ action: "reboot", vmid: server.vmid });
-            toast({
-              title: `Rebooting server: ${server.name}`,
-              duration: 2000,
-            });
-          }}
-          className="flex items-center text-warning"
-        >
-          <RefreshCcw className="mr-2 h-4 w-4" />
-          Reboot
-        </DropdownMenuItem>
+        {serverActions.map((action) => (
+          <ServerActionButtons
+            key={action.label}
+            label={action.label}
+            action={action.action}
+            icon={action.icon}
+            color={action.color}
+            fill={action.fill}
+            server={server}
+            type={type}
+            trigger="dropdown"
+          />
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

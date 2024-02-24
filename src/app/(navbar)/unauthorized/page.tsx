@@ -10,9 +10,8 @@ import { SignIn } from "@/components/auth-button";
 
 const Unauthorized = async () => {
   const session = await getServerSession(authOptions);
-  const user = session?.user;
 
-  if (!user) redirect("/");
+  if (!session) redirect("/");
 
   return (
     <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center">
@@ -20,8 +19,8 @@ const Unauthorized = async () => {
         <div className="rounded-xl bg-background/80 p-10 text-center shadow-xl ring-1 ring-ring/10 sm:p-8 md:p-20">
           <h1 className="text-5xl font-bold">Oops!</h1>
           <p className="my-4 text-lg">
-            Looks like you you are not signed in, or do not have permission to
-            view this page.
+            Looks like you do not have permission to view this page, or are not
+            signed in.
           </p>
           <p className="my-4 flex flex-row items-center justify-center text-muted">
             If you thing this is a mistake please contact support!
@@ -30,7 +29,7 @@ const Unauthorized = async () => {
           <div className="my-8 h-px self-center rounded bg-ring/10" />
 
           <div className="mt-8 flex items-center justify-center gap-2">
-            {user ? (
+            {session ? (
               <>
                 <Link
                   href="/"

@@ -28,7 +28,8 @@ export const RefreshButton = ({ interval = 30000 }) => {
   });
 
   return (
-    <Hint label="Refresh" asChild>
+    // TODO: Fix the hint label
+    <Hint label="Refresh - currently not working" asChild>
       <Button
         disabled={isDisabled}
         onClick={handleClick}
