@@ -2,7 +2,7 @@
 
 import { LucideIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { ElementRef, useRef, useTransition } from "react";
+import { ElementRef, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -59,19 +59,18 @@ export const ServerActionButtons = ({
   trigger,
 }: ServerActionButtonsProps) => {
   const { data: session } = useSession();
-  const role = session?.user.role;
+  let role = "user";
+  role = session?.user.role as string;
 
   const { toast } = useToast();
   const closeRef = useRef<ElementRef<"button">>(null);
-  const [isPending] = useTransition();
 
   let isDisabled = false;
   if (
     (action === "start" && server.status === "running") ||
     (["shutdown", "stop", "reboot"].includes(action) &&
       server.status === "stopped") ||
-    role !== "admin" ||
-    isPending
+    role !== "admin"
   ) {
     isDisabled = true;
   }

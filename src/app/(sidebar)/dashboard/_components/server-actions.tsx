@@ -9,7 +9,6 @@ import {
   Square,
   Terminal,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 import { ServerActionButtons } from "@/components/server-action-buttons";
@@ -30,10 +29,6 @@ interface ServerActionsProps {
 }
 
 export const ServerActions = ({ server, type }: ServerActionsProps) => {
-  const { data: session } = useSession();
-  let role = "user";
-  role = session?.user.role!;
-
   const serverActions = [
     {
       label: "Start",
