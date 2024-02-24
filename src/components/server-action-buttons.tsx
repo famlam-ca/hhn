@@ -38,8 +38,6 @@ interface IconProps {
 }
 
 const Icon = ({ icon: Icon, color, fill }: IconProps) => {
-  console.log("IconProps", { color, fill });
-
   return (
     <Icon
       style={{ fill: fill ? "currentcolor" : "none" }}
