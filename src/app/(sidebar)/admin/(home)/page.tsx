@@ -16,12 +16,12 @@ const AdminPage = () => {
   const [data, setData] = useState<Users[]>([]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const getUserData = async () => {
       const userData = await getData();
       setData(userData);
     };
 
-    fetchUserData();
+    getUserData();
   }, []);
 
   return <Admin data={data} />;

@@ -2,7 +2,7 @@
 
 import { LucideIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { ElementRef, useRef } from "react";
+import { ElementRef, useRef, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -62,24 +62,27 @@ export const ServerActionButtons = ({
 
   const { toast } = useToast();
   const closeRef = useRef<ElementRef<"button">>(null);
+  const [isPending, startTransition] = useTransition();
 
   let isDisabled = false;
   if (
     (action === "start" && server.status === "running") ||
     (["shutdown", "stop", "reboot"].includes(action) &&
       server.status === "stopped") ||
-    role !== "admin"
+    role !== "admin" ||
+    isPending
   ) {
     isDisabled = true;
   }
 
   const onClick = () => {
-    serverAction({ type: type, action: action, vmid: server.vmid });
-    toast({
-      title: `${label}ing server: ${server.name}`,
+    startTransition(() => {
+      serverAction({ type: type, action: action, vmid: server.vmid });
+      toast({
+        title: `${label}ing server: ${server.name}`,
+      });
+      closeRef?.current?.click?.();
     });
-    // TODO: Fix for dialog closing when dropdown item is clicked
-    closeRef?.current?.click?.();
   };
 
   return action !== "start" ? (
@@ -96,13 +99,15 @@ export const ServerActionButtons = ({
               {label}
             </Button>
           ) : trigger === "dropdown" ? (
-            <DropdownMenuItem
+            <Button
               disabled={isDisabled}
-              className={`group flex items-center text-${color}`}
+              variant="ghost"
+              size="sm"
+              className={`group relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-${color}`}
             >
               <Icon icon={icon} color={color} fill={fill} label={label} />
-              {label}
-            </DropdownMenuItem>
+              <p className="w-full text-left">{label}</p>
+            </Button>
           ) : null}
         </DialogTrigger>
         <DialogContent>

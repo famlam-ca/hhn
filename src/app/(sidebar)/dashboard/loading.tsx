@@ -1,8 +1,7 @@
-import { DashboardSkeleton } from "./_components/dashboard";
+import { LoadingSkeletong } from "@/components/loading-skeleton";
 
-// TODO: Fix loading state when waiting for axios response
 const DashboardLoading = () => {
-  return <DashboardSkeleton />;
+  return <LoadingSkeletong />;
 };
 
 export default DashboardLoading;

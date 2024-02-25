@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { LoadingSkeletong } from "@/components/loading-skeleton";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { getNodeData, getServerData } from "@/server/proxmox";
 import { NodeData, ServerData, ServerType } from "@/types/types";
@@ -15,11 +16,15 @@ export const Dashboard = () => {
   const params = useSearchParams();
   const type = params.get("type");
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [serverData, setServerData] = useState<ServerData[]>([]);
   const [nodeData, setNodeData] = useState<NodeData[]>([]);
 
   useEffect(() => {
     const getData = async () => {
+      if (isFirstLoad) setIsLoading(true);
+
       const serverTypeMap: { [key: string]: ServerType } = {
         lxc: "lxc",
         qemu: "qemu",
@@ -31,13 +36,21 @@ export const Dashboard = () => {
 
       setServerData(serverData);
       setNodeData(nodeData);
-    };
 
+      if (isFirstLoad) {
+        setIsLoading(false);
+        setIsFirstLoad(false);
+      }
+    };
     getData();
 
     const interval = setInterval(getData, 30000);
     return () => clearInterval(interval);
-  }, [type]);
+  }, [type, isFirstLoad]);
+
+  if (isLoading) {
+    return <LoadingSkeletong />;
+  }
 
   return (
     <MaxWidthWrapper className="max-w-full">
@@ -51,18 +64,5 @@ export const Dashboard = () => {
         <ServerTable columns={columns} data={serverData} />
       </div>
     </MaxWidthWrapper>
-  );
-};
-
-export const DashboardSkeleton = () => {
-  return (
-    <div className="flex h-screen flex-col items-center justify-center space-y-4">
-      <div className="flex space-x-2">
-        <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.3s]" />
-        <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.15s]" />
-        <div className="h-8 w-8 animate-bounce rounded-full bg-text" />
-      </div>
-      <p className="text-4xl">Loading data... Please wait!</p>
-    </div>
   );
 };

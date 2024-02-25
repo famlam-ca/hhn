@@ -80,8 +80,6 @@ export function ServerTable<TData, TValue>({
         />
 
         <TableViewOptions table={table} />
-
-        <RefreshButton />
       </div>
       <div className="rounded-md border">
         <Table>
