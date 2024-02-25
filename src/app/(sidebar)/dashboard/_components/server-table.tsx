@@ -15,7 +15,6 @@ import {
 import * as React from "react";
 
 import { TableViewOptions } from "@/components/column-toggle";
-import { RefreshButton } from "@/components/refresh-button";
 import { TablePagination } from "@/components/table-pagination";
 import { Input } from "@/components/ui/input";
 import {
