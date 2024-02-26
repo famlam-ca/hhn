@@ -70,7 +70,7 @@ export const Header = ({ server, type }: HeaderProps) => {
 
   return (
     <div className="space-y-1">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col justify-between sm:flex-row sm:items-center">
         <div>
           <h2 className="text-2xl font-semibold">{server.name}</h2>
           <small
@@ -83,20 +83,22 @@ export const Header = ({ server, type }: HeaderProps) => {
           </small>
         </div>
 
-        <div className="flex items-center space-x-2">
-          {actions.map((action) => (
-            <ServerActionButtons
-              key={action.label}
-              label={action.label}
-              action={action.action}
-              icon={action.icon}
-              color={action.color}
-              fill={action.fill}
-              server={server}
-              type={type}
-              trigger="button"
-            />
-          ))}
+        <div className="flex items-center max-sm:justify-between sm:space-x-2">
+          <div className="space-x-2">
+            {actions.map((action) => (
+              <ServerActionButtons
+                key={action.label}
+                label={action.label}
+                action={action.action}
+                icon={action.icon}
+                color={action.color}
+                fill={action.fill}
+                server={server}
+                type={type}
+                trigger="button"
+              />
+            ))}
+          </div>
 
           <RefreshButton />
         </div>

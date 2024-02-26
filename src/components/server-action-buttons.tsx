@@ -41,7 +41,7 @@ const Icon = ({ icon: Icon, color, fill }: IconProps) => {
   return (
     <Icon
       style={{ fill: fill ? "currentcolor" : "none" }}
-      className={`mr-2 h-4 w-4 text-${color} transition-all group-hover:text-text`}
+      className={`h-4 w-4 sm:mr-2 text-${color} transition-all group-hover:text-text`}
     />
   );
 };
@@ -96,7 +96,7 @@ export const ServerActionButtons = ({
               className={`text-${color} group`}
             >
               <Icon icon={icon} color={color} fill={fill} label={label} />
-              {label}
+              <p className="hidden sm:block">{label}</p>
             </Button>
           ) : trigger === "dropdown" ? (
             <Button
@@ -146,7 +146,7 @@ export const ServerActionButtons = ({
           className={`text-${color} group`}
         >
           <Icon icon={icon} color={color} fill={fill} label={label} />
-          {label}
+          <p className="hidden sm:block">{label}</p>
         </Button>
       ) : trigger === "dropdown" ? (
         <DropdownMenuItem
