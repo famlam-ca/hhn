@@ -3,7 +3,6 @@
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Button } from "@/components/ui/button";
@@ -17,10 +16,6 @@ const ErrorPage = ({
   reset: () => void;
 }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    // console.log(error); // debug
-  });
 
   return (
     <>

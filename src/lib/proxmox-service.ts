@@ -1,10 +1,37 @@
 "use server";
 
 import axios from "axios";
+import qs from "qs";
 
 import { NodeData, ServerData, ServerType } from "@/types/types";
 
-import { getAccessTicket } from "./request-access-ticket";
+export const getAccessTicket = () => {
+  const credentials = qs.stringify({
+    username: process.env.PROXMOX_API_USERNAME,
+    password: process.env.PROXMOX_API_PASSWORD,
+  });
+
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${process.env.PROXMOX_API_URL}/access/ticket`,
+    data: credentials,
+  };
+
+  return axios
+    .request(config)
+    .then((res) => {
+      const { CSRFPreventionToken, ticket } = res.data.data;
+      return {
+        csrfToken: CSRFPreventionToken,
+        accessTicket: ticket,
+      };
+    })
+    .catch((error: any) => {
+      // console.error("Failed to retrieve access ticket: ", error); // debug
+      throw new Error("Failed to retrieve access ticket", { cause: error });
+    });
+};
 
 export const getServerData = async (
   type: ServerType = "lxc",
@@ -40,7 +67,6 @@ export const getServerData = async (
 
     return data;
   } catch (error) {
-    // console.error("Error in getServerData: ", error); // debug
     throw new Error("Error in getServerData: ", { cause: error });
   }
 };

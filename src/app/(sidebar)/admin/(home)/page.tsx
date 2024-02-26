@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { getAllUsers } from "@/server/user";
+import { getAllUsers } from "@/lib/user-service";
 
 import { Admin } from "./_components/admin";
 import { Users } from "./_components/columns";

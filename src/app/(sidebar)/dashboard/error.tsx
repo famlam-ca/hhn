@@ -3,7 +3,6 @@
 import { RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -15,10 +14,6 @@ const DashboardErrorPage = ({
   reset: () => void;
 }) => {
   const router = useRouter();
-
-  useEffect(() => {
-    // console.log(error); // debug
-  });
 
   return (
     <div className="flex h-screen flex-col items-center justify-center space-y-4">

@@ -39,7 +39,7 @@ export const Header = ({ server, type }: HeaderProps) => {
     },
   ];
 
-  const serverAction = [
+  const actions = [
     {
       label: "Start",
       action: "start",
@@ -84,7 +84,7 @@ export const Header = ({ server, type }: HeaderProps) => {
         </div>
 
         <div className="flex items-center space-x-2">
-          {serverAction.map((action) => (
+          {actions.map((action) => (
             <ServerActionButtons
               key={action.label}
               label={action.label}

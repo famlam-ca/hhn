@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { serverAction } from "@/server/proxmox/server-action";
+import { serverAction } from "@/lib/server-service";
 import { ServerData, ServerType } from "@/types/types";
 
 interface ServerActionButtonsProps {

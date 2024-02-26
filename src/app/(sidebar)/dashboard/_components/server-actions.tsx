@@ -29,7 +29,7 @@ interface ServerActionsProps {
 }
 
 export const ServerActions = ({ server, type }: ServerActionsProps) => {
-  const serverActions = [
+  const actions = [
     {
       label: "Start",
       action: "start",
@@ -90,7 +90,7 @@ export const ServerActions = ({ server, type }: ServerActionsProps) => {
 
         <DropdownMenuSeparator />
 
-        {serverActions.map((action) => (
+        {actions.map((action) => (
           <ServerActionButtons
             key={action.label}
             label={action.label}

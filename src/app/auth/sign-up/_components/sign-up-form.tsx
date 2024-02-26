@@ -157,7 +157,6 @@ export const SignUpForm = () => {
 
       try {
         const res = await axios.request(config);
-        // console.log("Res:", { res }); // debug
 
         if (res.status !== 200) {
           throw new Error("Unexpected status code");
@@ -170,11 +169,7 @@ export const SignUpForm = () => {
         setIsLoading(false);
         router.push("/auth/sign-in");
       } catch (error: any) {
-        // console.error("Error:", error); // debug
-
         let errorMessage = "There was a problem creating your account.";
-
-        // console.log("Error Response:", error.response); // debug
 
         if (error.response && error.response.status === 400) {
           errorMessage = error.response.data;

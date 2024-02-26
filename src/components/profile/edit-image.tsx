@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
 import { UploadDropzone } from "@/lib/upload-thing";
-import { updateUser } from "@/server/user";
+import { updateUser } from "@/lib/user-service";
 
 interface EditImageProps {
   userId?: string;

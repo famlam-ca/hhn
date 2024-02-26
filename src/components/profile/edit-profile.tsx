@@ -29,7 +29,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { updateUser } from "@/server/user";
+import { updateUser } from "@/lib/user-service";
 import { CustomUser } from "@/types/types";
 
 import { EditImage } from "./edit-image";
@@ -101,8 +101,6 @@ export const EditProfile = ({ user }: ProfileProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof schema>) => {
-    // console.log("Form values:", values); // debug
-
     const allValuesUnchanged = Object.entries(values).every(
       ([key, value]) =>
         defaultValues[key as keyof typeof defaultValues] === value,

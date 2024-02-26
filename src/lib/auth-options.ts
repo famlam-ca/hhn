@@ -64,8 +64,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    session: async ({ session, token, user }) => {
-      // console.log("Session User:", user); // debug
+    session: async ({ session, token }) => {
       return {
         ...session,
         user: {
@@ -80,7 +79,6 @@ export const authOptions: NextAuthOptions = {
       };
     },
     jwt: async ({ token, user }) => {
-      // console.log("JWT User:", user); // debug
       if (user) {
         const u = user as unknown as User;
         return {

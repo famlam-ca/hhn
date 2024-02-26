@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { LoadingSkeletong } from "@/components/loading-skeleton";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { getNodeData, getServerData } from "@/server/proxmox";
+import { getNodeData, getServerData } from "@/lib/proxmox-service";
 import { NodeData, ServerData, ServerType } from "@/types/types";
 
 import { columns } from "./columns";

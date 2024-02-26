@@ -1,5 +1,6 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
@@ -35,9 +36,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { updateUser, validatePassword } from "@/server/user";
+import { updateUser, validatePassword } from "@/lib/user-service";
 import { CustomUser } from "@/types/types";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 type Role = "admin" | "superuser" | "user";
 
@@ -144,8 +144,6 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    // console.log("Form values:", values); // debug
-
     const allValuesUnchanged = Object.entries(values).every(
       ([key, value]) =>
         defaultValues[key as keyof typeof defaultValues] === value,

@@ -32,7 +32,8 @@ model User {
     bio   String? @db.Text
     theme Theme   @default(dark)
 
-    file File[]
+    file    File[]
+    socials Socials[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -53,6 +54,26 @@ model File {
 
     url String
     key String
+
+    createdAt DateTime @default(now())
+    updateAt  DateTime @updatedAt
+
+    User   User?   @relation(fields: [userId], references: [id])
+    userId String?
+}
+
+model Socials {
+    id String @id @default(cuid())
+
+    instagram String?
+    twitter   String?
+    facebook  String?
+    linkedin  String?
+    github    String?
+    google    String?
+    youtube   String?
+    twitch    String?
+    tiktok    String?
 
     createdAt DateTime @default(now())
     updateAt  DateTime @updatedAt
