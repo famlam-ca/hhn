@@ -1,5 +1,5 @@
-const Page = () => {
-  return <div>API</div>;
+const ApiDocsPage = () => {
+  return <i>Work in progress</i>;
 };
 
-export default Page;
+export default ApiDocsPage;

@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 
-import { getSelfByUsername } from "@/lib/auth-service";
-import { CustomUser } from "@/types/types";
+import { getSelf } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
-import { Navbar } from "./_components/nav";
+import { Navbar } from "./_components/navbar";
 
 interface ProfileLayoutProps {
   params: { username: string };
@@ -11,7 +11,7 @@ interface ProfileLayoutProps {
 }
 
 const ProfileLayout = async ({ params, children }: ProfileLayoutProps) => {
-  const self = (await getSelfByUsername(params.username)) as CustomUser;
+  const self = (await getSelf(params.username)) as CustomUser;
 
   if (!self) {
     redirect("/");

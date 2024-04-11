@@ -34,8 +34,8 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { updateUser } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { updateUser } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
 type Theme = "dark" | "light";
 
@@ -72,7 +72,6 @@ export const EditSettings = ({ user }: SettingsProps) => {
     if (allValuesUnchanged) {
       toast({
         title: "No changes have been submitted.",
-        description: "Becuase no changes have been made.",
       });
       return;
     }
@@ -83,8 +82,17 @@ export const EditSettings = ({ user }: SettingsProps) => {
         theme: values.theme,
       })
         .then(() => {
-          // TODO: Dynamically render updated info
-          toast({ title: "Profile settings updated." });
+          const updatedFields = [];
+          if (values.theme !== user.theme) {
+            updatedFields.push("Theme");
+          }
+
+          let updatedFieldsString = "";
+          if (updatedFields.length === 1) {
+            updatedFieldsString = updatedFields[0];
+          }
+
+          toast({ title: `${updatedFieldsString} updated.` });
           setTheme(values.theme as Theme);
         })
         .catch(() =>

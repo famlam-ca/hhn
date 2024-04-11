@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
 
 import { toast } from "@/components/ui/use-toast";
-import { createUserToken } from "@/lib/token-service";
+import { createUserToken } from "@/lib/services/token-service";
 
 export const useUserToken = (ownerIdentity: string) => {
   const [token, setToken] = useState<string>("");

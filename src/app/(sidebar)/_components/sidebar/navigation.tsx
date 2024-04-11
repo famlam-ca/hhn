@@ -1,7 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
 import {
   File,
   Gamepad2,
@@ -14,15 +12,31 @@ import {
   User,
   UserCog,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
+import { getFakeUser } from "@/lib/services/user-service";
+import { useSession } from "@/providers/session-provider";
+
+import { useEffect, useState } from "react";
 import { NavItem, NavItemSkeleton } from "./nav-item";
+import { FakeUser } from "@/types";
 
 export const Navigation = () => {
-  const { data: session } = useSession();
-  const user = session?.user;
-
+  const { user, session } = useSession();
   const pathname = usePathname();
-  const callbackUrl = `?callbackUrl=${encodeURIComponent(pathname)}` ?? "/";
+
+  const [fakeUser, setFakeUser] = useState(null as FakeUser | null);
+
+  if (!user) {
+    useEffect(() => {
+      const fetchFakeUser = async () => {
+        const fakeUser = await getFakeUser();
+        setFakeUser(fakeUser);
+      };
+
+      fetchFakeUser();
+    }, []);
+  }
 
   const routes = [
     {
@@ -60,6 +74,7 @@ export const Navigation = () => {
       label: "Profile",
       href: `/u/${user?.username}`,
       icon: User,
+      isFakeUser: !user,
     },
     {
       label: "Admin",
@@ -69,49 +84,49 @@ export const Navigation = () => {
     },
   ];
 
-  if (!user) {
-    return (
-      <ul className="space-y-2">
-        {[...Array(8)].map((_, i) => (
-          <NavItemSkeleton key={i} />
-        ))}
-      </ul>
-    );
-  }
-
   return (
     <>
-      <ul className="space-y-2 px-2 pt-4 lg:pt-0">
-        {routes.map((route) => (
-          <NavItem
-            key={route.href}
-            label={route.label}
-            icon={route.icon}
-            href={route.href}
-            target={route.target}
-            isActive={
-              route.href === "/"
-                ? pathname === route.href
-                : pathname.startsWith(route.href)
-            }
-            isNotAdmin={route.isNotAdmin}
-          />
-        ))}
-      </ul>
+      {!session && !fakeUser ? (
+        <ul className="space-y-2">
+          {[...Array(8)].map((_, i) => (
+            <NavItemSkeleton key={i} />
+          ))}
+        </ul>
+      ) : (
+        <>
+          <ul className="space-y-2 px-2 pt-4 lg:pt-0">
+            {routes.map((route) => (
+              <NavItem
+                key={route.href}
+                label={route.label}
+                icon={route.icon}
+                href={route.href}
+                target={route.target}
+                isNotAdmin={route.isNotAdmin}
+                isFakeUser={route.isFakeUser}
+                isActive={
+                  route.href === "/"
+                    ? pathname === route.href
+                    : pathname.startsWith(route.href)
+                }
+              />
+            ))}
+          </ul>
+          <div className="my-8 h-1 w-4/5 self-center rounded bg-primary" />
 
-      <div className="my-8 h-1 w-4/5 self-center rounded bg-primary" />
-
-      <ul className="px-2">
-        <NavItem
-          label={user ? "Sign Out" : "Sign In"}
-          icon={user ? LogOut : LogIn}
-          href={
-            user
-              ? `/auth/sign-out${callbackUrl}`
-              : `/auth/sign-in${callbackUrl}`
-          }
-        />
-      </ul>
+          <ul className="px-2">
+            <NavItem
+              label={session ? "Sign Out" : "Sign In"}
+              icon={session ? LogOut : LogIn}
+              href={
+                session
+                  ? `/auth/sign-out?callbackUrl=${pathname}`
+                  : "/auth/sign-in"
+              }
+            />
+          </ul>
+        </>
+      )}
     </>
   );
 };

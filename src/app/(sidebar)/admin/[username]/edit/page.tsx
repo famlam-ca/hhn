@@ -1,11 +1,9 @@
-import { getServerSession } from "next-auth";
-
-import { getUserByUsername } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
-import { authOptions } from "@/lib/auth-options";
-import { getSelfByUsername } from "@/lib/auth-service";
+import { getUser } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
+import { getSelf } from "@/lib/services/user-service";
 
 import { AdminEditUserProfile } from "./_components/admin-edit-user-profile";
+import { validateSession } from "@/lib/auth";
 
 interface EditUserPageProps {
   params: {
@@ -14,11 +12,11 @@ interface EditUserPageProps {
 }
 
 const EditUserPage = async ({ params }: EditUserPageProps) => {
-  const session = await getServerSession(authOptions);
-  const self = (await getSelfByUsername(session?.user.username!)) as CustomUser;
-  const user = (await getUserByUsername(params.username)) as CustomUser;
+  const { user } = await validateSession();
+  const self = (await getSelf(user?.username!)) as CustomUser;
+  const dbUser = (await getUser({ username: params.username })) as CustomUser;
 
-  return <AdminEditUserProfile user={user} self={self} />;
+  return <AdminEditUserProfile user={dbUser} self={self} />;
 };
 
 export default EditUserPage;

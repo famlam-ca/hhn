@@ -1,20 +1,27 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+
+import { validateSession } from "@/lib/auth";
 
 import { SignInForm } from "./_components/sign-in-form";
 import SignInLoading from "./loading";
 
-const Page = () => {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+const SignInPage = async ({
+  searchParams,
+}: {
+  searchParams: { callbackUrl: string };
+}) => {
+  const { user } = await validateSession();
+
+  if (user) {
+    return redirect("/");
+  }
 
   return (
     <Suspense fallback={<SignInLoading />}>
-      <SignInForm callbackUrl={callbackUrl} />
+      <SignInForm callbackUrl={searchParams.callbackUrl} />
     </Suspense>
   );
 };
 
-export default Page;
+export default SignInPage;

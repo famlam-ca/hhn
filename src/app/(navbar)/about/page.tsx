@@ -1,7 +1,7 @@
 import AboutContent from "./_components/about-content";
 
-const Page = () => {
+const AboutPage = () => {
   return <AboutContent />;
 };
 
-export default Page;
+export default AboutPage;

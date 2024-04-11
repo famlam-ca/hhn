@@ -1,8 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# depricated files
-/deprecated
-
 # dependencies
 /node_modules
 /.pnp
@@ -29,7 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*
+.env
 
 # vercel
 .vercel

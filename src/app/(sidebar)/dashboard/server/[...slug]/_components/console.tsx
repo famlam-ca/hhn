@@ -1,7 +1,7 @@
 import { TerminalIcon } from "lucide-react";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ServerData } from "@/types/types";
+import { ServerData } from "@/types";
 
 interface TerminalProps {
   server: ServerData;

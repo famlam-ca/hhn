@@ -1,17 +1,28 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { LogIn } from "lucide-react";
+"use client";
 
-import { authOptions } from "@/lib/auth-options";
+import { LogIn } from "lucide-react";
+import Link from "next/link";
+import { redirect, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+import { SignIn } from "@/components/auth-buttons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
-import { SignIn } from "@/components/auth-button";
+import { useSession } from "@/providers/session-provider";
 
-const Unauthorized = async () => {
-  const session = await getServerSession(authOptions);
+const Unauthorized = () => {
+  const router = useRouter();
+  const { session } = useSession();
 
-  if (!session) redirect("/");
+  useEffect(() => {
+    if (window.document.referrer === "") {
+      router.push("/");
+    }
+  });
+
+  if (!session) {
+    router.push("/");
+  }
 
   return (
     <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center">

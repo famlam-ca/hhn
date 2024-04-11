@@ -1,14 +1,23 @@
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import { SignUpForm } from "./_components/sign-up-form";
-import SignOutLoading from "./loading";
+import { validateSession } from "@/lib/auth";
 
-const Page = () => {
+import { SignUpForm } from "./_components/sign-up-form";
+import SignUpLoading from "./loading";
+
+const SignUpPage = async () => {
+  const { user } = await validateSession();
+
+  if (user) {
+    return redirect("/");
+  }
+
   return (
-    <Suspense fallback={<SignOutLoading />}>
+    <Suspense fallback={<SignUpLoading />}>
       <SignUpForm />
     </Suspense>
   );
 };
 
-export default Page;
+export default SignUpPage;

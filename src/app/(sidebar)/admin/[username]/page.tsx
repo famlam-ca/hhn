@@ -7,7 +7,7 @@ interface PageProps {
   };
 }
 
-const Page = ({ params }: PageProps) => {
+const AdminUsernamePage = ({ params }: PageProps) => {
   return (
     <div className="h-[calc(100vh-3rem)]">
       <div className="flex h-full flex-col items-center justify-center space-y-4">
@@ -28,4 +28,4 @@ const Page = ({ params }: PageProps) => {
   );
 };
 
-export default Page;
+export default AdminUsernamePage;

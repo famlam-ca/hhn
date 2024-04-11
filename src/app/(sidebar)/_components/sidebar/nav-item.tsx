@@ -5,16 +5,17 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "@/store/use-profile-sidebar";
 
 interface NavItemProps {
   icon: LucideIcon;
   label: string;
   href: string;
   target?: string;
-  isActive?: boolean;
   isNotAdmin?: boolean;
+  isFakeUser?: boolean;
+  isActive?: boolean;
 }
 
 export const NavItem = ({
@@ -22,8 +23,9 @@ export const NavItem = ({
   label,
   href,
   target,
-  isActive,
   isNotAdmin,
+  isFakeUser,
+  isActive,
 }: NavItemProps) => {
   const { collapsed } = useSidebar();
 
@@ -34,7 +36,7 @@ export const NavItem = ({
         "h-12 w-full text-muted",
         collapsed ? "justify-center" : "justify-start",
         isActive && "bg-accent text-text",
-        isNotAdmin && "hidden",
+        (isNotAdmin || isFakeUser) && "hidden",
       )}
       asChild
     >

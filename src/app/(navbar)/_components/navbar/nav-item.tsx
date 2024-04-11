@@ -15,12 +15,8 @@ const style =
 export const NavItem = ({ label, href, target }: NavItemProps) => {
   return (
     <li>
-      <Link
-        href={href}
-        target={target}
-        className={cn(style, target && "-mr-2 flex")}
-      >
-        {label}
+      <Link href={href} target={target} className={cn(target && "-mr-2 flex")}>
+        <span className={style}>{label}</span>
         {target && <ArrowUpRight className="h-3 w-3" />}
       </Link>
     </li>

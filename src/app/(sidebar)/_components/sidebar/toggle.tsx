@@ -1,13 +1,13 @@
 "use client";
 
+import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
 
 import { Hint } from "@/components/hint";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { useSidebar } from "@/store/use-profile-sidebar";
+import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
 
 export const Toggle = () => {

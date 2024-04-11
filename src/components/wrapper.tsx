@@ -15,13 +15,13 @@ export const Wrapper = ({
         <div
           className={cn(
             "-m-2 rounded-xl bg-foreground/5 p-2 ring-1 ring-inset ring-ring/10 lg:-m-4 lg:rounded-2xl lg:p-4",
-            className,
+            className
           )}
         >
           <div
             className={cn(
               "rounded-md bg-background/80 p-4 shadow-2xl ring-1 ring-ring/10 sm:p-8 md:p-20",
-              className,
+              className
             )}
           >
             {children}

@@ -1,17 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { Profile } from "@/components/profile";
-import { getUserByUsername } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { getUser } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
-interface UserPageProps {
-  params: {
-    username: string;
-  };
-}
-
-const UserPage = async ({ params }: UserPageProps) => {
-  const user = (await getUserByUsername(params.username)) as CustomUser;
+const UserPage = async ({ params }: { params: { username: string } }) => {
+  const user = (await getUser({ username: params.username })) as CustomUser;
 
   if (!user) {
     notFound();

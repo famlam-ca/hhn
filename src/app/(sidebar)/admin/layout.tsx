@@ -1,14 +1,12 @@
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
-import { authOptions } from "@/lib/auth-options";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { validateSession } from "@/lib/auth";
 
-import { Navbar } from "./_components/nav";
+import { Navbar } from "./_components/navbar";
 
 const AdminLayout = async ({ children }: React.PropsWithChildren) => {
-  const session = await getServerSession(authOptions);
-  const user = session?.user;
+  const { user } = await validateSession();
 
   if (user?.role !== "admin") {
     redirect("/");

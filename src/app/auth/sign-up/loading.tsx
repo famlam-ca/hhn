@@ -1,7 +1,7 @@
 import { SignUpSkeleton } from "./_components/sign-up-form";
 
-const SignOutLoading = () => {
+const SignUpLoading = () => {
   return <SignUpSkeleton />;
 };
 
-export default SignOutLoading;
+export default SignUpLoading;

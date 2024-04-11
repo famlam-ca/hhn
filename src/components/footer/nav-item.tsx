@@ -9,11 +9,7 @@ interface NavItemProps {
 export const NavItem = ({ label, href, target }: NavItemProps) => {
   return (
     <li>
-      <Link
-        href={href}
-        target={target}
-        className="hover:text-text/80"
-      >
+      <Link href={href} target={target} className="hover:text-text/80">
         {label}
       </Link>
     </li>

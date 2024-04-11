@@ -1,83 +1,64 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
-    user
-    superuser
-    admin
+  user
+  superuser
+  admin
 }
 
 enum Theme {
-    dark
-    light
+  dark
+  light
 }
 
-model User {
-    id           String  @id @default(cuid())
-    display_name String
-    username     String  @unique
-    first_name   String?
-    last_name    String?
-    email        String  @unique
-    password     String
+model user {
+  id              String  @id
+  display_name    String
+  username        String  @unique
+  first_name      String?
+  last_name       String?
+  email           String  @unique()
+  isEmailVerified Boolean @default(false)
+  password        String
 
-    image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
-    role  Role    @default(user)
-    bio   String? @db.Text
-    theme Theme   @default(dark)
+  image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
+  role  Role    @default(user)
+  bio   String? @db.Text
+  theme Theme   @default(dark)
 
-    file    File[]
-    socials Socials[]
+  emailVerification emailVerification[]
+  session           session[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-enum UploadStatus {
-    PENDING
-    PROCESSING
-    FAILED
-    SUCCESSS
+model session {
+  id String @id
+
+  userId String
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime @db.Timestamp(0)
 }
 
-model File {
-    id   String @id @default(cuid())
-    name String
+model emailVerification {
+  id   String @id
+  code String
 
-    uploadStatus UploadStatus @default(PENDING)
+  userId String
+  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-    url String
-    key String
-
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    User   User?   @relation(fields: [userId], references: [id])
-    userId String?
-}
-
-model Socials {
-    id String @id @default(cuid())
-
-    instagram String?
-    twitter   String?
-    facebook  String?
-    linkedin  String?
-    github    String?
-    google    String?
-    youtube   String?
-    twitch    String?
-    tiktok    String?
-
-    createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    User   User?   @relation(fields: [userId], references: [id])
-    userId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  sentAt    DateTime @db.Timestamp(0)
 }

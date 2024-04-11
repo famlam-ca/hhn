@@ -1,10 +1,10 @@
 "use client";
 
-import { PropsWithChildren, useState, useEffect } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { ThemeProvider as ThemeContext } from "next-themes";
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
     setIsMounted(true);

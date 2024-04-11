@@ -1,7 +1,7 @@
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { EditSettings } from "@/components/profile/edit-settings";
-import { getSelfByUsername } from "@/lib/auth-service";
-import { CustomUser } from "@/types/types";
+import { getSelf } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
 interface SettingsPageProps {
   params: {
@@ -10,7 +10,7 @@ interface SettingsPageProps {
 }
 
 const SettingsPage = async ({ params }: SettingsPageProps) => {
-  const user = (await getSelfByUsername(params.username)) as CustomUser;
+  const user = (await getSelf(params.username)) as CustomUser;
 
   return (
     <MaxWidthWrapper className="mt-5">

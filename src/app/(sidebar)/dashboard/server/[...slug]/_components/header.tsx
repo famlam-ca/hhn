@@ -11,7 +11,7 @@ import {
 
 import { RefreshButton } from "@/components/refresh-button";
 import { cn } from "@/lib/utils";
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData, ServerType } from "@/types";
 
 import { ServerActionButtons } from "@/components/server-action-buttons";
 import { HeaderCard } from "./header-card";

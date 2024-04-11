@@ -1,4 +1,4 @@
-import { Navbar } from "./_components/nav";
+import { Navbar } from "./_components/navbar";
 
 const DashboardLayout = ({ children }: React.PropsWithChildren) => {
   return (

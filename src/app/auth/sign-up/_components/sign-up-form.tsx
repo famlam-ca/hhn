@@ -1,14 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { signUp } from "@/lib/services/auth-service";
 import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Button } from "@/components/ui/button";
@@ -22,18 +21,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
+import { firstStepSchema, secondStepSchema } from "@/types/sign-up";
+import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 
 export const SignUpForm = () => {
   const router = useRouter();
-  const { toast } = useToast();
 
-  const [step, setstep] = useState<number>(1);
+  const [step, setStep] = useState<number>(1); // change to 1 for prod
   const [firstStepValues, setFirstStepValues] = useState<
     Partial<z.infer<typeof firstStepSchema>>
   >({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfPassword, setShowConfPassword] = useState<boolean>(false);
 
@@ -43,78 +43,6 @@ export const SignUpForm = () => {
   const toggleConfPassword = () => {
     setShowConfPassword((prev) => !prev);
   };
-
-  const firstStepSchema = z.object({
-    display_name: z
-      .string()
-      .refine(
-        (v) => /.{8,}/.test(v),
-        "Display name must be at least 8 characters long",
-      )
-      .refine(
-        (v) => /^[a-zA-Z0-9_.]+$/i.test(v),
-        "Display Name must contain only letters, numbers, underscores, and periods",
-      )
-      .refine(
-        (v) => /^.{1,20}$/.test(v),
-        "Display name must be at most 20 characters long",
-      )
-      .refine(
-        (v) => /^(?!.*[_.]{2,})[^._].*[^._]$/.test(v),
-        "Display name cannot contain consecutive, leadning or trailing underscores or periods",
-      ),
-    username: z.string(),
-  });
-  const secondStepSchema = z
-    .object({
-      first_name: z
-        .string()
-        .transform((v) => v.trim())
-        .refine(
-          (v) => /^[A-Za-z]*$/i.test(v),
-          "First Name may only contain letters",
-        )
-        .optional(),
-      last_name: z
-        .string()
-        .transform((v) => v.trim())
-        .refine(
-          (v) => /^[A-Za-z]*$/i.test(v),
-          "Last Name may only contain letters",
-        )
-        .optional(),
-      email: z
-        .string()
-        .email()
-        .refine(
-          (v) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(v),
-          "Must be a valid email address",
-        ),
-      password: z
-        .string()
-        .refine(
-          (v) => /.{8,}/.test(v),
-          "Password must be at least 8 characters long",
-        )
-        .refine(
-          (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$/.test(v),
-          "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
-        ),
-      passwordConfirm: z
-        .string()
-        .refine(
-          (v) => /.{8,}/.test(v),
-          "Password must be at least 8 characters long",
-        )
-        .refine(
-          (v) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$/.test(v),
-          "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
-        ),
-    })
-    .refine((data) => data.password === data.passwordConfirm, {
-      message: "Passwords do not match.",
-      path: ["passwordConfirm"],
-    });
 
   type FormValues = z.infer<typeof firstStepSchema> &
     z.infer<typeof secondStepSchema>;
@@ -134,67 +62,33 @@ export const SignUpForm = () => {
 
   const username = form.watch("display_name").toLowerCase();
 
-  const onSubmit = async (values: FormValues) => {
-    if (step === 1) {
-      values.username = values.display_name.toLowerCase();
+  const onSubmit = (values: FormValues) => {
+    startTransition(async () => {
+      if (step === 1) {
+        values.username = values.display_name.toLowerCase();
 
-      setIsLoading(true);
+        setFirstStepValues(values);
+        setStep(2);
+      } else {
+        const allValues = { ...firstStepValues, ...values };
 
-      setFirstStepValues(values);
-      setstep(2);
+        const res = await signUp(allValues);
+        if (res.error) {
+          toast({
+            title: "Error creating account!",
+            description: res.error,
+            variant: "destructive",
+          });
+        } else if (res.success) {
+          toast({
+            title: "Account created successfully!",
+            description: "Please check your email to verify your account.",
+          });
 
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-
-      const allValues = { ...firstStepValues, ...values };
-
-      const config = {
-        method: "post",
-        url: "/api/auth/register",
-        data: allValues,
-      };
-
-      try {
-        const res = await axios.request(config);
-
-        if (res.status !== 200) {
-          throw new Error("Unexpected status code");
+          router.push("/auth/verify-email?email=" + values.email);
         }
-
-        toast({
-          title: "Successfully created your account.",
-          description: `Welcome to our humble home network, ${values.display_name}.`,
-        });
-        setIsLoading(false);
-        router.push("/auth/sign-in");
-      } catch (error: any) {
-        let errorMessage = "There was a problem creating your account.";
-
-        if (error.response && error.response.status === 400) {
-          errorMessage = error.response.data;
-        } else if (error.response && error.response.status === 500) {
-          errorMessage =
-            "There was an internal server error. Please try again later.";
-        }
-
-        toast({
-          title: errorMessage,
-          description: "Sign in instead?",
-          variant: "destructive",
-          action: (
-            <Button
-              onClick={() => router.push("/auth/sign-in")}
-              variant="ghost"
-              className="uppercase"
-            >
-              Sign In
-            </Button>
-          ),
-        });
-        setIsLoading(false);
       }
-    }
+    });
   };
 
   const input_style =
@@ -225,11 +119,11 @@ export const SignUpForm = () => {
                     name="display_name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Display name*</FormLabel>
+                        <FormLabel>Display Name</FormLabel>
                         <FormControl>
                           <Input
                             type="text"
-                            placeholder="Display name"
+                            placeholder="Display Name"
                             {...field}
                             className={`${input_style}`}
                           />
@@ -265,9 +159,9 @@ export const SignUpForm = () => {
 
               {step === 2 && (
                 <>
-                  <div className="flex justify-between gap-4">
+                  <div className="flex justify-center gap-4">
                     <Button
-                      onClick={() => setstep(1)}
+                      onClick={() => setStep(1)}
                       variant="ghost"
                       className="absolute left-10 top-10 text-muted-foreground"
                     >
@@ -401,10 +295,10 @@ export const SignUpForm = () => {
 
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={isPending}
                 className="w-full uppercase shadow-md"
               >
-                {isLoading ? (
+                {isPending ? (
                   <div className="flex">
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                     Loading...

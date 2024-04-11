@@ -1,7 +1,7 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
-import { db } from "@/db";
-import { getSelf } from "@/lib/auth-service";
+import { db } from "@/lib/db";
+import { getSelf } from "@/lib/services/user-service";
 
 const f = createUploadthing();
 

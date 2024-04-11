@@ -1,37 +1,53 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
-import { useEffect } from "react";
+import { signOut } from "@/lib/services/auth-service";
+import { useSession } from "@/providers/session-provider";
 
 const SignOutPage = () => {
+  const searchPrams = useSearchParams();
+  const callbackUrl = (searchPrams.get("callbackUrl") || "/").startsWith("/u/")
+    ? "/"
+    : searchPrams.get("callbackUrl") || "/";
+
   const router = useRouter();
-  const { data: session } = useSession();
+  const { session } = useSession();
+
+  if (!session) {
+    router.back();
+  }
 
   useEffect(() => {
-    if (session) {
-      signOut({ callbackUrl: "/" });
-    } else {
-      toast({
-        title: "Something went wrong!",
-        description:
-          "Please try again later, or contact support if the issue persists.",
-        variant: "destructive",
-        action: (
-          <Button variant="outline" className="text-text" asChild>
-            <Link href="/support">Support</Link>
-          </Button>
-        ),
-      });
-      router.push("/");
-    }
+    (async () => {
+      const res = await signOut({ callbackUrl });
+      if (res) {
+        if (res.error) {
+          toast({
+            title: res.error,
+            description:
+              "Please try again later, or contact support if the issue persists.",
+            variant: "destructive",
+            action: (
+              <Button variant="outline" className="text-text" asChild>
+                <Link href="/support">Support</Link>
+              </Button>
+            ),
+          });
+        } else if (res.success) {
+          toast({
+            title: res.success,
+          });
+        }
+      }
+    })();
   });
 
   return (

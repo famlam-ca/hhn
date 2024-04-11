@@ -2,8 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { signOut } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,8 +35,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { updateUser, validatePassword } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { updateUser, validatePassword } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
 type Role = "admin" | "superuser" | "user";
 
@@ -47,6 +46,7 @@ interface ProfileProps {
 }
 
 export const EditAccount = ({ user, self }: ProfileProps) => {
+  const router = useRouter();
   const pathname = usePathname();
 
   const [role, setRole] = useState<string>();
@@ -62,20 +62,20 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
     setShowNewPassword((prev) => !prev);
   };
 
-  const schema = z
+  const EditAccountSchema = z
     .object({
       first_name: z
         .string()
         .refine(
-          (v) => /^[A-Za-z]*$/i.test(v),
-          "First Name may only contain letters",
+          (v) => /^[A-Za-z0-9]*$/i.test(v),
+          "First name may only contain letters",
         )
         .optional(),
       last_name: z
         .string()
         .refine(
-          (v) => /^[A-Za-z]*$/i.test(v),
-          "Last Name may only contain letters",
+          (v) => /^[A-Za-z0-9]*$/i.test(v),
+          "Last name may only contain letters",
         )
         .optional(),
       oldPassword: z
@@ -138,12 +138,12 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
     role: user.role as Role,
   };
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof EditAccountSchema>>({
+    resolver: zodResolver(EditAccountSchema),
     defaultValues,
   });
 
-  const onSubmit = async (values: z.infer<typeof schema>) => {
+  const onSubmit = async (values: z.infer<typeof EditAccountSchema>) => {
     const allValuesUnchanged = Object.entries(values).every(
       ([key, value]) =>
         defaultValues[key as keyof typeof defaultValues] === value,
@@ -152,7 +152,6 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
     if (allValuesUnchanged) {
       toast({
         title: "No changes have been submitted.",
-        description: "Becuase no changes have been made.",
       });
       return;
     }
@@ -168,8 +167,34 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
         .then(() => {
           setShowOldPassword(false);
           setShowNewPassword(false);
-          // TODO: Dynamically render updated info
-          toast({ title: "Account updated" });
+
+          const updatedFields = [];
+          if (values.first_name !== user.first_name) {
+            updatedFields.push("First name");
+          }
+          if (values.last_name !== user.last_name) {
+            updatedFields.push("Last name");
+          }
+          if (values.newPassword) {
+            updatedFields.push("Password");
+          }
+
+          let updatedFieldsString = "";
+          if (updatedFields.length === 1) {
+            updatedFieldsString = updatedFields[0];
+          } else if (
+            updatedFields.length === 2 &&
+            updatedFields.includes("First name") &&
+            updatedFields.includes("Last name")
+          ) {
+            updatedFieldsString = "First and Last name";
+          } else if (updatedFields.length === 2) {
+            updatedFieldsString = updatedFields.join(" and ");
+          } else if (updatedFields.length > 2) {
+            updatedFieldsString = `${updatedFields.slice(0, -1).join(", ")} and ${updatedFields[updatedFields.length - 1]}`;
+          }
+
+          toast({ title: `${updatedFieldsString} updated.` });
         })
         .catch(() => {
           toast({
@@ -185,7 +210,7 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
         values.newPassword
       ) {
         if (self) {
-          signOut();
+          router.push(`/auth/sign-out?callbackUrl=${pathname}`);
         }
       }
     });

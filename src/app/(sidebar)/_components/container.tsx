@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-import { useSidebar } from "@/store/use-profile-sidebar";
+import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
 
 export const Container = ({ children }: React.PropsWithChildren) => {

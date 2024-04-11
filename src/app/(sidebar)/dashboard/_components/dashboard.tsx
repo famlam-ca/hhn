@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 
 import { LoadingSkeletong } from "@/components/loading-skeleton";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { getNodeData, getServerData } from "@/lib/proxmox-service";
-import { NodeData, ServerData, ServerType } from "@/types/types";
+import { getNodeData, getServerData } from "@/lib/services/proxmox-service";
+import { NodeData, ServerData, ServerType } from "@/types";
 
 import { columns } from "./columns";
-import { ServerCards } from "./server-card";
-import { ServerTable } from "./server-table";
+import { ServerCards } from "./server/server-card";
+import { ServerTable } from "./server/server-table";
 
 export const Dashboard = () => {
   const params = useSearchParams();

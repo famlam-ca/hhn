@@ -1,7 +1,7 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
+
 import { ElementRef, useRef, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,9 @@ import {
 } from "@/components/ui/dialog";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { serverAction } from "@/lib/server-service";
-import { ServerData, ServerType } from "@/types/types";
+import { serverAction } from "@/lib/services/server-service";
+import { useSession } from "@/providers/session-provider";
+import { ServerData, ServerType } from "@/types";
 
 interface ServerActionButtonsProps {
   label: string;
@@ -56,9 +57,9 @@ export const ServerActionButtons = ({
   type,
   trigger,
 }: ServerActionButtonsProps) => {
-  const { data: session } = useSession();
+  const { user } = useSession();
   let role = "user";
-  role = session?.user.role as string;
+  role = user?.role as string;
 
   const { toast } = useToast();
   const closeRef = useRef<ElementRef<"button">>(null);

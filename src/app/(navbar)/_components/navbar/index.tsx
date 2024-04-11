@@ -1,22 +1,18 @@
 import { LogIn } from "lucide-react";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
 
-import { SignIn } from "@/components/auth-button";
+import { SignIn } from "@/components/auth-buttons";
 import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { MobileNav } from "@/components/navigation/mobile-nav";
-import { UserNav } from "@/components/navigation/user-nav";
+import { MobileNav } from "@/components/mobile-nav";
 import { buttonVariants } from "@/components/ui/button";
-import { authOptions } from "@/lib/auth-options";
-import { getUserByUsername } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { UserNav } from "@/components/user-nav";
+import { validateSession } from "@/lib/auth";
 
 import { NavItem } from "./nav-item";
 
 const Navbar = async () => {
-  const session = await getServerSession(authOptions);
-  const user = (await getUserByUsername(session?.user.username!)) as CustomUser;
+  const { user, session } = await validateSession();
 
   const routes = [
     {
@@ -53,7 +49,7 @@ const Navbar = async () => {
             </h2>
           </Link>
 
-          <MobileNav username={user.username} isAuth={!!user} />
+          <MobileNav username={user?.username} isAuth={!!user} />
 
           <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
             {routes.map((route) => (
@@ -66,14 +62,16 @@ const Navbar = async () => {
             ))}
 
             {!session ? (
-              <SignIn
-                className={buttonVariants({
-                  variant: "secondary",
-                })}
-              >
-                Sign In
-                <LogIn className="h-5 w-5" />
-              </SignIn>
+              <>
+                <SignIn
+                  className={buttonVariants({
+                    variant: "secondary",
+                  })}
+                >
+                  Sign In
+                  <LogIn className="h-5 w-5" />
+                </SignIn>
+              </>
             ) : (
               <UserNav user={user} />
             )}

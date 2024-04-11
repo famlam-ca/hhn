@@ -1,7 +1,7 @@
 "use client";
 
+import { useSidebar } from "@/hooks/use-sidebar";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "@/store/use-profile-sidebar";
 
 export const Wrapper = ({ children }: React.PropsWithChildren) => {
   const { collapsed } = useSidebar((state) => state);

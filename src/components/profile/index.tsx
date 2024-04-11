@@ -2,17 +2,13 @@
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { useUserToken } from "@/hooks/use-user-token";
-import { CustomUser } from "@/types/types";
+import { CustomUser } from "@/types";
 
 import { Banner, BannerSkeleton } from "./banner";
 import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
 
-interface ProfileProps {
-  user: CustomUser;
-}
-
-export const Profile = ({ user }: ProfileProps) => {
+export const Profile = ({ user }: { user: CustomUser }) => {
   const { identity } = useUserToken(user.id);
 
   if (!identity) {

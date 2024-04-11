@@ -6,9 +6,9 @@ import { useSearchParams } from "next/navigation";
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { ServerData, ServerType } from "@/types/types";
+import { ServerData, ServerType } from "@/types";
 
-import { ServerActions } from "./server-actions";
+import { ServerActions } from "./server/server-actions";
 
 export const columns: ColumnDef<ServerData>[] = [
   {

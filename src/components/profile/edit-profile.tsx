@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { BadgeCheck, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,9 +28,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import { updateUser } from "@/lib/user-service";
-import { CustomUser } from "@/types/types";
+import { toast } from "@/components/ui/use-toast";
+import {
+  invalidateAllUserSessions,
+  sendNewVerificationEmail,
+  signOut,
+} from "@/lib/services/auth-service";
+import { getSelf, updateUser } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
+import { EditProfileSchema } from "@/types/edit-user-schema";
 
 import { EditImage } from "./edit-image";
 
@@ -41,52 +47,9 @@ interface ProfileProps {
 export const EditProfile = ({ user }: ProfileProps) => {
   const pathname = usePathname();
   const closeRef = useRef<ElementRef<"button">>(null);
-  const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
-
-  const schema = z.object({
-    display_name: z
-      .string()
-      .refine(
-        (v) => /.{8,}/.test(v),
-        "Display name must be at least 8 characters long",
-      )
-      .refine(
-        (v) => /^[a-zA-Z0-9_.]+$/i.test(v),
-        "Display Name must contain only letters, numbers, underscores, and periods",
-      )
-      .refine(
-        (v) => /^.{1,20}$/.test(v),
-        "Display name must be at most 20 characters long",
-      )
-      .refine(
-        (v) => /^(?!.*[_.]{2,})[^._].*[^._]$/.test(v),
-        "Display name cannot contain consecutive, leadning or trailing underscores or periods",
-      ),
-    email: z
-      .string()
-      .email()
-      .refine(
-        (v) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(v),
-        "Must be a valid email address",
-      ),
-    bio: z
-      .string()
-      .refine((v) =>
-        /^.{0,200}$/.test("Bio must be at most 200 characters long"),
-      ),
-    image: z
-      .string()
-      .url()
-      .refine(
-        (v) =>
-          /^https:\/\/(utfs.io\/f\/[^\/]+\.png|www.famlam.ca\/logo\/[^\/]+\.png)$/.test(
-            v,
-          ),
-        "Invalid image URL",
-      ),
-  });
+  const isEmailVerified = user.isEmailVerified;
 
   const defaultValues = {
     display_name: user.display_name,
@@ -95,12 +58,12 @@ export const EditProfile = ({ user }: ProfileProps) => {
     image: user.image,
   };
 
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof EditProfileSchema>>({
+    resolver: zodResolver(EditProfileSchema),
     defaultValues,
   });
 
-  const onSubmit = (values: z.infer<typeof schema>) => {
+  const onSubmit = (values: z.infer<typeof EditProfileSchema>) => {
     const allValuesUnchanged = Object.entries(values).every(
       ([key, value]) =>
         defaultValues[key as keyof typeof defaultValues] === value,
@@ -109,12 +72,13 @@ export const EditProfile = ({ user }: ProfileProps) => {
     if (allValuesUnchanged) {
       toast({
         title: "No changes have been submitted.",
-        description: "Becuase no changes have been made.",
       });
       return;
     }
 
-    startTransition(() => {
+    startTransition(async () => {
+      const self = await getSelf();
+
       updateUser({
         id: user.id,
         email: values.email,
@@ -123,7 +87,29 @@ export const EditProfile = ({ user }: ProfileProps) => {
         image: values.image,
       })
         .then(() => {
-          toast({ title: "Profile updated" });
+          const updatedFields = [];
+          if (values.display_name !== user.display_name) {
+            updatedFields.push("Display name");
+          }
+          if (values.email !== user.email) {
+            updatedFields.push("Email");
+          }
+          if (values.bio !== user.bio) {
+            updatedFields.push("Bio");
+          }
+
+          let updatedFieldsStr = updatedFields.join(", ");
+          if (updatedFields.length > 1) {
+            const lastComma = updatedFieldsStr.lastIndexOf(",");
+            updatedFieldsStr = `${updatedFieldsStr.substring(0, lastComma)} and${updatedFieldsStr.substring(lastComma + 1)}`;
+          }
+
+          toast({
+            title: `${updatedFieldsStr} updated.`,
+            description:
+              values.email !== user.email &&
+              `A new verification email was sent to ${values.email}.`,
+          });
           closeRef?.current?.click?.();
         })
         .catch(() =>
@@ -135,11 +121,28 @@ export const EditProfile = ({ user }: ProfileProps) => {
         );
 
       if (values.email !== user.email) {
-        if (self) {
-          signOut();
+        await sendNewVerificationEmail(values.email);
+        invalidateAllUserSessions(user.id);
+        if (self.id === user.id) {
+          signOut({ callbackUrl: "/auth/sign-in" });
         }
       }
     });
+  };
+
+  const onClick = async () => {
+    const res = await sendNewVerificationEmail(user.email);
+
+    if (res.error) {
+      toast({
+        title: res.error,
+        variant: "destructive",
+      });
+    } else if (res.success) {
+      toast({
+        title: res.success,
+      });
+    }
   };
 
   return (
@@ -181,10 +184,29 @@ export const EditProfile = ({ user }: ProfileProps) => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Email" {...field} />
+                    <div className="relative">
+                      <Input placeholder="Email" {...field} />
+                      {isEmailVerified === true && (
+                        <Hint label="Verified" side="left" asChild>
+                          <BadgeCheck className="absolute right-2 top-1/4 h-5 w-5 text-primary" />
+                        </Hint>
+                      )}
+                    </div>
                   </FormControl>
                   <FormDescription>
-                    You&apos;ll be logged out once you change your email.
+                    <span className="flex justify-between">
+                      You&apos;ll be logged out once you change your email.
+                      {isEmailVerified === false && (
+                        <Button
+                          type="button"
+                          variant="link"
+                          onClick={() => onClick()}
+                          className="h-4 p-0 text-sm"
+                        >
+                          Send new verification email
+                        </Button>
+                      )}
+                    </span>
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

@@ -1,7 +1,7 @@
 import { EditAccount } from "@/components/profile/edit-account";
 import { EditProfile } from "@/components/profile/edit-profile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CustomUser } from "@/types/types";
+import { CustomUser } from "@/types";
 
 interface AdminEditUserProfileProps {
   user: CustomUser;
