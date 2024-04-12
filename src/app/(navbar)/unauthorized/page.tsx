@@ -2,10 +2,9 @@
 
 import { LogIn } from "lucide-react";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-import { SignIn } from "@/components/auth-buttons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { useSession } from "@/providers/session-provider";
@@ -14,6 +13,7 @@ const Unauthorized = () => {
   const router = useRouter();
   const { session } = useSession();
 
+  // Redirect if address was user provided.
   useEffect(() => {
     if (window.document.referrer === "") {
       router.push("/");
@@ -51,23 +51,25 @@ const Unauthorized = () => {
                   Home
                 </Link>
                 <p className="text-muted">|</p>
-                <SignIn
+                <Link
+                  href="/contact"
                   className={buttonVariants({
                     variant: "secondary",
                   })}
                 >
                   Contact Support
-                </SignIn>
+                </Link>
               </>
             ) : (
-              <SignIn
+              <Link
+                href="/auth/sign-in"
                 className={buttonVariants({
                   variant: "secondary",
                 })}
               >
                 Sign In
                 <LogIn className="mr-1 h-5 w-5" />
-              </SignIn>
+              </Link>
             )}
           </div>
         </div>

@@ -121,7 +121,7 @@ export const Navigation = () => {
               href={
                 session
                   ? `/auth/sign-out?callbackUrl=${pathname}`
-                  : "/auth/sign-in"
+                  : `/auth/sign-in?callbackUrl=${pathname}`
               }
             />
           </ul>

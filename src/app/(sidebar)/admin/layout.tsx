@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { validateSession } from "@/lib/auth";
+import { validateSession } from "@/lib/lucia";
 
 import { Navbar } from "./_components/navbar";
 

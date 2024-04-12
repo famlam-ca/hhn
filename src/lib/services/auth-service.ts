@@ -5,12 +5,11 @@ import jwt from "jsonwebtoken";
 import { generateId } from "lucia";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { string, z } from "zod";
+import { z } from "zod";
 
-import { lucia, validateSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
+import { lucia, validateSession } from "@/lib/lucia";
 import { getUser } from "@/lib/services/user-service";
 import { SignInSchema } from "@/types/sign-in";
 import { firstStepSchema, secondStepSchema } from "@/types/sign-up";
@@ -27,6 +26,8 @@ export const signUp = async (
         id: userId,
         display_name: values.display_name,
         username: values.username,
+        first_name: values.first_name,
+        last_name: values.last_name,
         email: values.email,
         password: hashedPassword,
       },
@@ -73,14 +74,7 @@ export const signUp = async (
   }
 };
 
-interface SignInOptions {
-  callbackUrl?: string;
-}
-
-export const signIn = async (
-  values: z.infer<typeof SignInSchema>,
-  options: SignInOptions = {},
-) => {
+export const signIn = async (values: z.infer<typeof SignInSchema>) => {
   try {
     SignInSchema.parse(values);
   } catch (error: any) {
@@ -124,31 +118,19 @@ export const signIn = async (
       sessionCookie.value,
       sessionCookie.attributes,
     );
+
+    return {
+      success: "Signed in successfully",
+    };
   } catch (error: any) {
     console.error("Error creating session: ", error);
     return {
       error: error?.message,
     };
-  } finally {
-    if (options.callbackUrl) {
-      redirect(options.callbackUrl);
-    }
   }
-
-  return {
-    success: "Signed in successfully",
-  };
 };
 
-export const signOut = async ({
-  userId,
-  pathname,
-  callbackUrl,
-}: {
-  userId?: string;
-  pathname?: string;
-  callbackUrl?: string;
-} = {}) => {
+export const signOut = async ({ userId }: { userId?: string } = {}) => {
   try {
     let session;
 
@@ -178,17 +160,12 @@ export const signOut = async ({
 
     await lucia.invalidateSession(session.id);
 
-    revalidatePath(pathname || "/admin");
+    return {
+      success: "Signed out successfully",
+    };
   } catch (error: any) {
     return {
       error: error?.message,
-    };
-  } finally {
-    if (callbackUrl) {
-      redirect(callbackUrl);
-    }
-    return {
-      success: "Signed out successfully!",
     };
   }
 };

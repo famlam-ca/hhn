@@ -1,4 +1,9 @@
+import Link from "next/link";
+
+import { Icons } from "@/components/icons";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { VerifyEmail } from "@/components/verify-email";
+import { Wrapper } from "@/components/wrapper";
 
 interface VerifyEmailPageProps {
   searchParams: {
@@ -8,22 +13,29 @@ interface VerifyEmailPageProps {
 
 const VerifyEmailPage = ({ searchParams }: VerifyEmailPageProps) => {
   return (
-    <div className="pt:mt-0 mx-auto flex flex-col items-center justify-center px-6 pt-8 md:h-screen">
-      <a
-        href="/"
-        className="mb-8 flex items-center justify-center text-2xl font-semibold text-zinc-200 lg:mb-10"
-      >
-        <img src="/vercel.svg" className="mr-4 h-11" />
-      </a>
-      <div className="w-full max-w-xl space-y-8 rounded-lg p-6 shadow bg-zinc-800 sm:p-8">
-        <h2 className="text-2xl font-bold text-zinc-200">Verify Your Email</h2>
-        <div>
-          <p>Check your email for a verification link.</p>
-          <p>You can close this window after verifing your email.</p>
+    <MaxWidthWrapper className="flex min-h-screen w-full items-center justify-center">
+      <Wrapper className="relative">
+        <div className="mx-auto mb-10 flex flex-col items-center justify-center space-y-4">
+          <Link href="/" className="z-40 flex items-center gap-2">
+            <Icons.logo className="h-8 w-8 fill-text" />
+            <h2 className="text-xl font-bold">
+              H<span className="text-primary">HN</span>
+            </h2>
+          </Link>
+          <h1 className="text-center text-3xl font-bold leading-9 tracking-tight md:text-4xl lg:text-5xl">
+            Verify Your Email
+          </h1>
         </div>
-        <VerifyEmail email={searchParams.email} />
-      </div>
-    </div>
+
+        <div className="space-y-8 text-center sm:mx-auto sm:w-full sm:max-w-md">
+          <div>
+            <p>Check your email for a verification link.</p>
+            <p>After verifing you can close this window.</p>
+          </div>
+          <VerifyEmail email={searchParams.email} />
+        </div>
+      </Wrapper>
+    </MaxWidthWrapper>
   );
 };
 

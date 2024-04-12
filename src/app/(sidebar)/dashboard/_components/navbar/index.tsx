@@ -3,9 +3,7 @@ import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { UserNav } from "@/components/user-nav";
-import { validateSession } from "@/lib/auth";
-import { getUser } from "@/lib/services/user-service";
-import { CustomUser } from "@/types";
+import { validateSession } from "@/lib/lucia";
 
 import { MobileNav } from "./mobile-nav";
 import { NavItem } from "./nav-item";
@@ -18,6 +16,7 @@ export const Navbar = async () => {
       label: "Bulk Actions",
       icon: Image,
       href: "/dashboard",
+      isNotAdmin: user?.role !== "admin",
     },
   ];
 
@@ -43,6 +42,7 @@ export const Navbar = async () => {
                     label={route.label}
                     icon={route.icon}
                     href={route.href}
+                    isNotAdmin={route.isNotAdmin}
                   />
                 ))}
               </ul>

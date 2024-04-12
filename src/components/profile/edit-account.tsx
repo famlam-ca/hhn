@@ -210,7 +210,7 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
         values.newPassword
       ) {
         if (self) {
-          router.push(`/auth/sign-out?callbackUrl=${pathname}`);
+          router.push("/auth/sign-out");
         }
       }
     });

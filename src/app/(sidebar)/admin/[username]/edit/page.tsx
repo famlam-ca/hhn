@@ -3,7 +3,7 @@ import { CustomUser } from "@/types";
 import { getSelf } from "@/lib/services/user-service";
 
 import { AdminEditUserProfile } from "./_components/admin-edit-user-profile";
-import { validateSession } from "@/lib/auth";
+import { validateSession } from "@/lib/lucia";
 
 interface EditUserPageProps {
   params: {

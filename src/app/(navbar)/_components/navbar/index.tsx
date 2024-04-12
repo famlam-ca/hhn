@@ -1,18 +1,21 @@
+"use client";
+
 import { LogIn } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { SignIn } from "@/components/auth-buttons";
 import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { MobileNav } from "@/components/mobile-nav";
 import { buttonVariants } from "@/components/ui/button";
 import { UserNav } from "@/components/user-nav";
-import { validateSession } from "@/lib/auth";
+import { useSession } from "@/providers/session-provider";
 
 import { NavItem } from "./nav-item";
 
-const Navbar = async () => {
-  const { user, session } = await validateSession();
+const Navbar = () => {
+  const pathname = usePathname();
+  const { user } = useSession();
 
   const routes = [
     {
@@ -61,16 +64,17 @@ const Navbar = async () => {
               />
             ))}
 
-            {!session ? (
+            {!user ? (
               <>
-                <SignIn
+                <Link
+                  href={`/auth/sign-in?callbackUrl=${pathname}`}
                   className={buttonVariants({
                     variant: "secondary",
                   })}
                 >
                   Sign In
-                  <LogIn className="h-5 w-5" />
-                </SignIn>
+                  <LogIn className="ml-1 h-5 w-5" />
+                </Link>
               </>
             ) : (
               <UserNav user={user} />

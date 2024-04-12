@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { useSession } from "@/providers/session-provider";
 import { ServerData, ServerType } from "@/types";
 
 import { ServerActions } from "./server/server-actions";
@@ -13,23 +14,41 @@ import { ServerActions } from "./server/server-actions";
 export const columns: ColumnDef<ServerData>[] = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
+    header: ({ table }) => {
+      const { user, session } = useSession();
+
+      return (
+        <>
+          {user?.role === "admin" && session && (
+            <Checkbox
+              checked={
+                table.getIsAllPageRowsSelected() ||
+                (table.getIsSomePageRowsSelected() && "indeterminate")
+              }
+              onCheckedChange={(value) =>
+                table.toggleAllPageRowsSelected(!!value)
+              }
+              aria-label="Select all"
+            />
+          )}
+        </>
+      );
+    },
+    cell: function Cell({ row }) {
+      const { user, session } = useSession();
+
+      return (
+        <>
+          {user?.role === "admin" && session && (
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={(value) => row.toggleSelected(!!value)}
+              aria-label="Select row"
+            />
+          )}
+        </>
+      );
+    },
     enableSorting: false,
     enableHiding: false,
   },
@@ -193,12 +212,19 @@ export const columns: ColumnDef<ServerData>[] = [
   {
     id: "actions",
     cell: function Cell({ row }) {
+      const { user, session } = useSession();
       const server = row.original;
 
       const searchParams = useSearchParams();
       const type = searchParams.get("type") as ServerType;
 
-      return <ServerActions server={server} type={type} />;
+      return (
+        <>
+          {user?.role === "admin" && session && (
+            <ServerActions server={server} type={type} />
+          )}
+        </>
+      );
     },
   },
 ];

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import { validateSession } from "@/lib/auth";
+import { validateSession } from "@/lib/lucia";
 
 import { SignUpForm } from "./_components/sign-up-form";
 import SignUpLoading from "./loading";

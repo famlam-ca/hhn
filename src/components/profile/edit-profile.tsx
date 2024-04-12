@@ -124,7 +124,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
         await sendNewVerificationEmail(values.email);
         invalidateAllUserSessions(user.id);
         if (self.id === user.id) {
-          signOut({ callbackUrl: "/auth/sign-in" });
+          signOut();
         }
       }
     });

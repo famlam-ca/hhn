@@ -27,10 +27,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CustomUser } from "@/types";
-import { usePathname } from "next/navigation";
 
 export const UserNav = ({ user }: { user: CustomUser }) => {
-  const pathname = usePathname();
   const full_name = `${user.first_name} ${user.last_name}`;
 
   return (
@@ -174,7 +172,7 @@ export const UserNav = ({ user }: { user: CustomUser }) => {
         )}
 
         <DropdownMenuItem asChild>
-          <Link href={`/auth/sign-out?callbackUrl=${pathname}`}>
+          <Link href="/auth/sign-out">
             <LogOut className="mr-1 h-5 w-5" />
             Sign Out
           </Link>

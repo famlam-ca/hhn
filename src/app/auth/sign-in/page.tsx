@@ -1,7 +1,7 @@
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
-import { validateSession } from "@/lib/auth";
+import { validateSession } from "@/lib/lucia";
 
 import { SignInForm } from "./_components/sign-in-form";
 import SignInLoading from "./loading";
@@ -11,9 +11,9 @@ const SignInPage = async ({
 }: {
   searchParams: { callbackUrl: string };
 }) => {
-  const { user } = await validateSession();
+  const { session } = await validateSession();
 
-  if (user) {
+  if (session) {
     return redirect("/");
   }
 

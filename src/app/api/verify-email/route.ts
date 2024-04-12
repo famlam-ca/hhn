@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-import { lucia } from "@/lib/auth";
+import { lucia } from "@/lib/lucia";
 import { db } from "@/lib/db";
 
 export const GET = async (req: NextRequest) => {

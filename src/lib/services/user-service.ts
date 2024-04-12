@@ -4,7 +4,7 @@ import { user } from "@prisma/client";
 import { compare, hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
 
-import { validateSession } from "@/lib/auth";
+import { validateSession } from "@/lib/lucia";
 import { db } from "@/lib/db";
 
 type UserIdentifier =

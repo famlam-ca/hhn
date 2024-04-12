@@ -174,10 +174,7 @@ export const columns: ColumnDef<Users>[] = [
 
             <DropdownMenuItem
               onClick={async () => {
-                const res = await signOut({
-                  userId: user.id,
-                  pathname: pathname,
-                });
+                const res = await signOut({ userId: user.id });
                 if (res?.error) {
                   toast({
                     title: res.error,

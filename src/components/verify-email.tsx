@@ -68,14 +68,14 @@ export const VerifyEmail = ({ email }: VerifyEmailProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-center">
-      <p className="text-sm">Didn&apos;t receive an email?</p>
+    <div className="flex items-center justify-center">
+      <p className="mr-1 text-sm">Didn&apos;t receive an email?</p>
       <div>
         <Button
           disabled={count > 0 && count < 60}
           onClick={() => onResendVerificationEmail()}
           variant="link"
-          className="px-0 text-zinc-200"
+          className="px-0"
         >
           Resend verification email {count > 0 && count < 60 && `in ${count}s`}
         </Button>

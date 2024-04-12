@@ -3,12 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useCountdown } from "usehooks-ts";
 import { z } from "zod";
 
-import { resendVerificationEmail, signIn } from "@/lib/services/auth-service";
 import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Button } from "@/components/ui/button";
@@ -23,9 +23,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
+import { resendVerificationEmail, signIn } from "@/lib/services/auth-service";
 import { SignInSchema } from "@/types/sign-in";
 
 export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
+  const router = useRouter();
+
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const togglePassword = () => {
@@ -56,7 +59,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
 
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(async () => {
-      const res = await signIn(values, { callbackUrl: callbackUrl });
+      const res = await signIn(values);
       if (res.error) {
         toast({
           title: res.error,
@@ -67,6 +70,8 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
           setShowResendVerificationEmail(true);
         }
       }
+
+      router.push(callbackUrl);
     });
   };
 
