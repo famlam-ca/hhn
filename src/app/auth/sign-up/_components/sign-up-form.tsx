@@ -7,7 +7,6 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { signUp } from "@/lib/services/auth-service";
 import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Button } from "@/components/ui/button";
@@ -23,7 +22,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
-import { firstStepSchema, secondStepSchema } from "@/types/sign-up";
+import { signUp } from "@/lib/services/auth-service";
+
+import { FirstStepSchema, SecondStepSchema } from "@/types/auth-schema";
 import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 
 export const SignUpForm = () => {
@@ -31,7 +32,7 @@ export const SignUpForm = () => {
 
   const [step, setStep] = useState<number>(1); // change to 1 for prod
   const [firstStepValues, setFirstStepValues] = useState<
-    Partial<z.infer<typeof firstStepSchema>>
+    Partial<z.infer<typeof FirstStepSchema>>
   >({});
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -44,11 +45,11 @@ export const SignUpForm = () => {
     setShowConfPassword((prev) => !prev);
   };
 
-  type FormValues = z.infer<typeof firstStepSchema> &
-    z.infer<typeof secondStepSchema>;
+  type FormValues = z.infer<typeof FirstStepSchema> &
+    z.infer<typeof SecondStepSchema>;
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(step === 1 ? firstStepSchema : secondStepSchema),
+    resolver: zodResolver(step === 1 ? FirstStepSchema : SecondStepSchema),
     defaultValues: {
       display_name: "",
       username: "",
@@ -73,18 +74,12 @@ export const SignUpForm = () => {
         const allValues = { ...firstStepValues, ...values };
 
         const res = await signUp(allValues);
-        if (res.error) {
-          toast({
-            title: "Error creating account!",
-            description: res.error,
-            variant: "destructive",
-          });
-        } else if (res.success) {
-          toast({
-            title: "Account created successfully!",
-            description: "Please check your email to verify your account.",
-          });
-
+        toast({
+          title: res.message,
+          description: res.description,
+          variant: res.success ? "default" : "destructive",
+        });
+        if (res.success) {
           router.push("/auth/verify-email?email=" + values.email);
         }
       }
@@ -237,13 +232,14 @@ export const SignUpForm = () => {
                             <div className="relative">
                               <input
                                 type={showPassword ? "text" : "password"}
-                                placeholder="Password..."
+                                placeholder="********"
                                 {...field}
                                 className={`${input_style}`}
                               />
                               <button
                                 onClick={togglePassword}
                                 type="button"
+                                tabIndex={-1}
                                 className="absolute right-2 top-[25%]"
                               >
                                 {showPassword ? (
@@ -268,13 +264,14 @@ export const SignUpForm = () => {
                             <div className="relative">
                               <input
                                 type={showConfPassword ? "text" : "password"}
-                                placeholder="Confirm Password..."
+                                placeholder="********"
                                 {...field}
                                 className={`${input_style}`}
                               />
                               <button
                                 onClick={toggleConfPassword}
                                 type="button"
+                                tabIndex={-1}
                                 className="absolute right-2 top-[25%]"
                               >
                                 {showConfPassword ? (

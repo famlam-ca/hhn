@@ -9,7 +9,7 @@ import { Users } from "./_components/columns";
 
 async function getData(): Promise<Users[]> {
   const userData = await getAllUsers();
-  return userData;
+  return userData as Users[];
 }
 
 const AdminPage = () => {

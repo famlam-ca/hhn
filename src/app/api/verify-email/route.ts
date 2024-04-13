@@ -2,15 +2,14 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
-import { lucia } from "@/lib/lucia";
 import { db } from "@/lib/db";
+import { lucia } from "@/lib/lucia";
 
 export const GET = async (req: NextRequest) => {
   try {
     const url = new URL(req.url);
     const searchParams = url.searchParams;
     const token = searchParams.get("token");
-
     if (!token) {
       return Response.json({ error: "Token does not exist." }, { status: 400 });
     }
@@ -27,7 +26,6 @@ export const GET = async (req: NextRequest) => {
         code: decoded.code,
       },
     });
-
     if (!emailVerificationQueryResult) {
       return Response.json({ error: "Invalid token" }, { status: 400 });
     }
@@ -56,11 +54,11 @@ export const GET = async (req: NextRequest) => {
     cookies().set(
       sessionCookie.name,
       sessionCookie.value,
-      sessionCookie.attributes
+      sessionCookie.attributes,
     );
 
     return Response.redirect(new URL(process.env.NEXT_URL!), 302);
   } catch (error: any) {
-    return Response.json({ error: error?.message }, { status: 400 });
+    return Response.json({ error: error.message }, { status: 400 });
   }
 };

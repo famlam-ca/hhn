@@ -3,16 +3,19 @@
 import { user } from "@prisma/client";
 import { compare, hash } from "bcrypt";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
-import { validateSession } from "@/lib/lucia";
 import { db } from "@/lib/db";
+import { validateSession } from "@/lib/lucia";
+import { createUserSession } from "@/lib/services/auth-service";
+import {
+  EditAccountSchema,
+  ResetPasswordSchemaStep2,
+} from "@/types/user-schema";
 
-type UserIdentifier =
-  | { email: string }
-  | { username: string }
-  | { userId: string };
-
-export const getUser = async (identifier: UserIdentifier) => {
+export const getUser = async (
+  identifier: { email: string } | { username: string } | { userId: string },
+) => {
   const dbUser = await db.user.findUnique({
     where:
       "email" in identifier
@@ -39,10 +42,15 @@ export const getUser = async (identifier: UserIdentifier) => {
   });
 
   if (!dbUser) {
-    throw new Error("No user found");
+    return {
+      success: false,
+      message: "User not found",
+    };
   }
 
-  return dbUser;
+  return {
+    user: dbUser,
+  };
 };
 
 export const getFakeUser = async () => {
@@ -59,14 +67,17 @@ export const getFakeUser = async () => {
 
 export const getAllUsers = async () => {
   const dbUser = await db.user.findMany();
-
   if (!dbUser) {
-    throw new Error("No users found");
+    return {
+      success: false,
+      message: "No users found",
+    };
   }
 
   return dbUser;
 };
 
+// TODO: implement user socials
 // export const getUserSocials = async (id: string) => {
 //   const dbUser = await getUser({userId: id});
 
@@ -78,17 +89,17 @@ export const getAllUsers = async () => {
 // };
 
 export const updateUser = async (values: Partial<user>) => {
-  const user = await getUser({ userId: values.id! });
-
+  const { user } = await getUser({ userId: values.id! });
   if (!user) {
-    throw new Error("User not found");
+    return {
+      success: false,
+      message: "User not found",
+    };
   }
 
-  let hashedPassword = user.password;
+  let hashedPassword: string;
 
-  if (values.password) {
-    hashedPassword = await hash(values.password, 12);
-  }
+  hashedPassword = user.password;
 
   const validData = {
     display_name: values.display_name,
@@ -106,28 +117,206 @@ export const updateUser = async (values: Partial<user>) => {
     where: { id: user.id },
     data: { ...validData },
   });
+  if (!dbUser) {
+    return {
+      success: false,
+      message: "There was an error updating the user.",
+      description: "Please try again later.",
+    };
+  }
 
   revalidatePath(`/u/${dbUser.username}`);
   revalidatePath(`/${dbUser.username}`);
 
-  return dbUser;
+  return {
+    success: true,
+    data: dbUser,
+  };
+};
+
+// TODO: Add to sign up process
+export const isUsernameAvailable = async (username: string) => {
+  const dbUser = await getUser({ username });
+
+  if (!dbUser) {
+    return {
+      success: false,
+      message: "Username is already taken",
+    };
+  }
 };
 
 export const validatePassword = async (userId: string, password: string) => {
-  const dbUser = await db.user.findUnique({
-    where: { id: userId },
-    select: { password: true },
+  const { user } = await getUser({ userId });
+  if (!user) {
+    return {
+      success: false,
+      message: "User not found",
+    };
+  }
+
+  const isValid = await compare(password, user.password);
+  if (!isValid) {
+    return {
+      success: false,
+      message: "Password is invalid",
+    };
+  }
+
+  return {
+    success: true,
+  };
+};
+
+export const changePassword = async (
+  values: z.infer<typeof EditAccountSchema>,
+) => {
+  try {
+    try {
+      EditAccountSchema.parse(values);
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+
+    const { user } = await validateSession();
+    if (!user) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    const dbUser = await getUser({ userId: user.id });
+    if (!dbUser) {
+      return {
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    const isValidPassword = await validatePassword(
+      user.id,
+      values.oldPassword!,
+    );
+    if (!isValidPassword.success) {
+      return {
+        success: false,
+        message: "Old password is invalid",
+      };
+    }
+
+    await updateUser({
+      id: user.id,
+      password: values.newPassword,
+    });
+
+    if (values.logoutFromOtherDevices === true) {
+      await db.session.deleteMany({
+        where: { userId: user.id },
+      });
+
+      await createUserSession(user.id);
+    }
+
+    return {
+      success: true,
+      message: "Password updated.",
+      description:
+        values.logoutFromOtherDevices === true &&
+        "All other devices have been logged out.",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+export const resetPassword = async (
+  values: z.infer<typeof ResetPasswordSchemaStep2>,
+  email: string,
+) => {
+  try {
+    try {
+      ResetPasswordSchemaStep2.parse(values);
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+
+    const { user } = await getUser({ email });
+    if (!user) {
+      return {
+        success: false,
+        message: "No account with that email found",
+      };
+    }
+
+    const hashedPassword = await hash(values.newPassword, 12);
+
+    await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    if (values.logoutFromOtherDevices === true) {
+      await db.session.deleteMany({
+        where: { userId: user.id },
+      });
+    }
+
+    await createUserSession(user.id);
+
+    return {
+      success: true,
+      message: "Password reset",
+      description:
+        values.logoutFromOtherDevices &&
+        "All other devices have been logged out.",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
+
+export const validateResetPasswordCode = async (
+  code: string,
+  email: string,
+) => {
+  const resetPasswordQueryResult = await db.resetPassword.findFirst({
+    where: {
+      code,
+      userEmail: email,
+    },
   });
+  if (!resetPasswordQueryResult) {
+    return {
+      success: false,
+      message: "Invalid token",
+    };
+  }
 
-  const isValid = await compare(password, dbUser?.password!);
-
-  return isValid;
+  return {
+    success: true,
+  };
 };
 
 export const isEmailVerified = async (email: string) => {
   try {
-    const user = await getUser({ email });
-
+    const { user } = await getUser({ email });
     if (!user) {
       return {
         error: "Account not found",
@@ -152,15 +341,16 @@ export const isEmailVerified = async (email: string) => {
     };
   } catch (error: any) {
     return {
-      error: error?.message,
+      success: false,
+      message: error.message,
     };
   }
 };
 
+// Error required for user identify
 export const getSelf = async (username?: string) => {
   const { user } = await validateSession();
   const self = user;
-
   if (!self || !self.username) {
     throw new Error("Unauthorized");
   }
@@ -168,7 +358,6 @@ export const getSelf = async (username?: string) => {
   const dbUser = await db.user.findUnique({
     where: username ? { username } : { id: self.id },
   });
-
   if (!dbUser) {
     throw new Error("User not found");
   }

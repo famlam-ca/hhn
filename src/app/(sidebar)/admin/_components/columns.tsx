@@ -175,16 +175,10 @@ export const columns: ColumnDef<Users>[] = [
             <DropdownMenuItem
               onClick={async () => {
                 const res = await signOut({ userId: user.id });
-                if (res?.error) {
-                  toast({
-                    title: res.error,
-                    variant: "destructive",
-                  });
-                } else if (res?.success) {
-                  toast({
-                    title: res.success,
-                  });
-                }
+                toast({
+                  title: res.message,
+                  variant: res.success ? "default" : "destructive",
+                });
               }}
             >
               Sign out user
@@ -192,16 +186,10 @@ export const columns: ColumnDef<Users>[] = [
             <DropdownMenuItem
               onClick={async () => {
                 const res = await invalidateAllUserSessions(user.id);
-                if (res?.error) {
-                  toast({
-                    title: res.error,
-                    variant: "destructive",
-                  });
-                } else if (res?.success) {
-                  toast({
-                    title: res.success,
-                  });
-                }
+                toast({
+                  title: res.message,
+                  variant: res.success ? "default" : "destructive",
+                });
               }}
             >
               Clear sessions

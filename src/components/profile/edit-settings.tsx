@@ -35,9 +35,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { updateUser } from "@/lib/services/user-service";
-import { CustomUser } from "@/types";
-
-type Theme = "dark" | "light";
+import { CustomUser, Theme } from "@/types";
 
 interface SettingsProps {
   user: CustomUser;
@@ -55,7 +53,7 @@ export const EditSettings = ({ user }: SettingsProps) => {
   });
 
   const defaultValues = {
-    theme: user.theme as Theme,
+    theme: user.theme,
   };
 
   const form = useForm<z.infer<typeof schema>>({

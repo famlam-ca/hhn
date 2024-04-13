@@ -28,7 +28,6 @@ export const getAccessTicket = () => {
       };
     })
     .catch((error: any) => {
-      // console.error("Failed to retrieve access ticket: ", error); // debug
       throw new Error("Failed to retrieve access ticket", { cause: error });
     });
 };
@@ -90,7 +89,6 @@ export const getNodeData = async (): Promise<NodeData[]> => {
 
     return data;
   } catch (error) {
-    // console.error("Error in getNodeData: ", error); // debug
     throw new Error("Error in getNodeData: ", { cause: error });
   }
 };

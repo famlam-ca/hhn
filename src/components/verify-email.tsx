@@ -6,7 +6,7 @@ import { useCountdown } from "usehooks-ts";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { resendVerificationEmail } from "@/lib/services/auth-service";
+import { resendVerificationEmail } from "@/lib/services/email-service";
 import { isEmailVerified } from "@/lib/services/user-service";
 
 interface VerifyEmailProps {
@@ -23,11 +23,12 @@ export const VerifyEmail = ({ email }: VerifyEmailProps) => {
   useEffect(() => {
     const verifiedEmail = async () => {
       const res = await isEmailVerified(email);
-      if (res.success) {
-        toast({
-          title: res.success,
-        });
+      toast({
+        title: res.message,
+        variant: res.success ? "default" : "destructive",
+      });
 
+      if (res.success) {
         router.push("/");
       }
     };
@@ -53,18 +54,10 @@ export const VerifyEmail = ({ email }: VerifyEmailProps) => {
 
   const onResendVerificationEmail = async () => {
     const res = await resendVerificationEmail(email);
-    if (res.error) {
-      toast({
-        title: res.error,
-        variant: "destructive",
-      });
-    } else if (res.success) {
-      toast({
-        title: res.success,
-        variant: "default",
-      });
-      startCountdown();
-    }
+    toast({
+      title: res.message,
+      variant: res.success ? "default" : "destructive",
+    });
   };
 
   return (

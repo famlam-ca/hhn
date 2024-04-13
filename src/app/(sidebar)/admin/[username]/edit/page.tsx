@@ -14,9 +14,9 @@ interface EditUserPageProps {
 const EditUserPage = async ({ params }: EditUserPageProps) => {
   const { user } = await validateSession();
   const self = (await getSelf(user?.username!)) as CustomUser;
-  const dbUser = (await getUser({ username: params.username })) as CustomUser;
+  const { user: dbUser } = await getUser({ username: params.username });
 
-  return <AdminEditUserProfile user={dbUser} self={self} />;
+  return <AdminEditUserProfile user={dbUser as CustomUser} self={self} />;
 };
 
 export default EditUserPage;

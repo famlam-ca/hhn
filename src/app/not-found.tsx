@@ -14,7 +14,7 @@ const NotFoundPage = () => {
           We couldn&apos;t find the page you were looking for.
         </p>
         <Button variant="secondary" asChild>
-          <Link href="/">Go back home</Link>
+          <Link href="/">Go home</Link>
         </Button>
       </div>
     </MaxWidthWrapper>

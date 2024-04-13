@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
 import { signOut } from "@/lib/services/auth-service";
 import { useSession } from "@/providers/session-provider";
@@ -14,8 +13,9 @@ const SignOutPage = () => {
   const router = useRouter();
   const { session } = useSession();
 
+  // TODO: Redirect to last page after sign out
   if (!session) {
-    router.back();
+    router.push("/");
   }
 
   useEffect(() => {

@@ -1,27 +1,29 @@
 import nodemailer from "nodemailer";
 
+const { SENDGRID_USERNAME, SENDGRID_PASSWORD, EMAIL_USER } = process.env;
+
 const transporter = nodemailer.createTransport({
   host: "smtp.sendgrid.net",
   port: 587,
   auth: {
-    user: process.env.SENDGRID_USERNAME,
-    pass: process.env.SENDGRID_PASSWORD,
+    user: SENDGRID_USERNAME,
+    pass: SENDGRID_PASSWORD,
   },
 });
 
 export const sendEmail = async ({
   to,
   subject,
-  html,
+  body,
 }: {
   to: string;
   subject: string;
-  html: string;
+  body: string;
 }) => {
   transporter.sendMail({
-    from: `"Humble Home Network" <${process.env.EMAIL_USER}>`,
+    from: `"Humble Home Network" <${EMAIL_USER}>`,
     to,
     subject,
-    html,
+    html: body,
   });
 };

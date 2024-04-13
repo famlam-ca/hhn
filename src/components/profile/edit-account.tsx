@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -35,10 +36,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { updateUser, validatePassword } from "@/lib/services/user-service";
+import { changePassword, updateUser } from "@/lib/services/user-service";
 import { CustomUser } from "@/types";
-
-type Role = "admin" | "superuser" | "user";
+import { EditAccountSchema } from "@/types/user-schema";
 
 interface ProfileProps {
   user: CustomUser;
@@ -46,7 +46,6 @@ interface ProfileProps {
 }
 
 export const EditAccount = ({ user, self }: ProfileProps) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   const [role, setRole] = useState<string>();
@@ -62,80 +61,13 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
     setShowNewPassword((prev) => !prev);
   };
 
-  const EditAccountSchema = z
-    .object({
-      first_name: z
-        .string()
-        .refine(
-          (v) => /^[A-Za-z0-9]*$/i.test(v),
-          "First name may only contain letters",
-        )
-        .optional(),
-      last_name: z
-        .string()
-        .refine(
-          (v) => /^[A-Za-z0-9]*$/i.test(v),
-          "Last name may only contain letters",
-        )
-        .optional(),
-      oldPassword: z
-        .string()
-        .refine(
-          async (v) => {
-            if (v) {
-              const isValid = await validatePassword(user.id, v);
-              return isValid;
-            }
-            return true;
-          },
-          { message: "Old password is incorrect." },
-        )
-        .optional(),
-      newPassword: z
-        .string()
-        .refine(
-          (v) => (v ? /.{8,}/.test(v) : true),
-          "Password must be at least 8 characters long",
-        )
-        .refine(
-          (v) =>
-            v ? /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).+$/.test(v) : true,
-          "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character",
-        )
-        .optional(),
-      role: z.enum(["user", "superuser", "admin"]).optional(),
-    })
-    .refine(
-      (data) => {
-        if (data.oldPassword === data.newPassword && data.oldPassword) {
-          return false;
-        }
-        return true;
-      },
-      {
-        message: "New passwords cannot be the same as old password.",
-        path: ["newPassword"],
-      },
-    )
-    .refine(
-      (data) => {
-        if (data.oldPassword && !data.newPassword) {
-          return false;
-        }
-        return true;
-      },
-      {
-        message: "New password is required to change your password.",
-        path: ["newPassword"],
-      },
-    );
-
   const defaultValues = {
     first_name: user.first_name as string,
     last_name: user.last_name as string,
     oldPassword: "",
     newPassword: "",
-    role: user.role as Role,
+    logoutFromOtherDevices: false,
+    role: user.role,
   };
 
   const form = useForm<z.infer<typeof EditAccountSchema>>({
@@ -156,62 +88,64 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
       return;
     }
 
-    startTransition(() => {
-      updateUser({
-        id: user.id,
-        first_name: values.first_name,
-        last_name: values.last_name,
-        password: values.newPassword,
-        role: values.role,
-      })
-        .then(() => {
-          setShowOldPassword(false);
-          setShowNewPassword(false);
-
-          const updatedFields = [];
-          if (values.first_name !== user.first_name) {
-            updatedFields.push("First name");
-          }
-          if (values.last_name !== user.last_name) {
-            updatedFields.push("Last name");
-          }
-          if (values.newPassword) {
-            updatedFields.push("Password");
-          }
-
-          let updatedFieldsString = "";
-          if (updatedFields.length === 1) {
-            updatedFieldsString = updatedFields[0];
-          } else if (
-            updatedFields.length === 2 &&
-            updatedFields.includes("First name") &&
-            updatedFields.includes("Last name")
-          ) {
-            updatedFieldsString = "First and Last name";
-          } else if (updatedFields.length === 2) {
-            updatedFieldsString = updatedFields.join(" and ");
-          } else if (updatedFields.length > 2) {
-            updatedFieldsString = `${updatedFields.slice(0, -1).join(", ")} and ${updatedFields[updatedFields.length - 1]}`;
-          }
-
-          toast({ title: `${updatedFieldsString} updated.` });
-        })
-        .catch(() => {
+    startTransition(async () => {
+      if (!values.newPassword && !values.oldPassword) {
+        const res = await updateUser({
+          id: user.id,
+          first_name: values.first_name,
+          last_name: values.last_name,
+          role: values.role,
+        });
+        if (!res.success) {
           toast({
-            title: "Something went wrong",
-            description: "Please try again later",
+            title: res.message,
+            description: res.description,
             variant: "destructive",
           });
+        }
+
+        const updatedFields = [];
+        if (values.first_name !== user.first_name) {
+          updatedFields.push("First name");
+        }
+        if (values.last_name !== user.last_name) {
+          updatedFields.push("Last name");
+        }
+        if (values.role !== user.role) {
+          updatedFields.push("Role");
+        }
+
+        let updatedFieldsString = "";
+        if (updatedFields.length === 1) {
+          updatedFieldsString = updatedFields[0];
+        } else if (
+          updatedFields.length === 2 &&
+          updatedFields.includes("First name") &&
+          updatedFields.includes("Last name") &&
+          updatedFields.includes("Role")
+        ) {
+          updatedFieldsString = "First and Last name";
+        } else if (updatedFields.length === 2) {
+          updatedFieldsString = updatedFields.join(" and ");
+        } else if (updatedFields.length > 2) {
+          updatedFieldsString = `${updatedFields.slice(0, -1).join(", ")} and ${updatedFields[updatedFields.length - 1]}`;
+        }
+
+        toast({ title: `${updatedFieldsString} updated.` });
+      } else if (values.oldPassword && values.newPassword) {
+        const res = await changePassword({
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+          logoutFromOtherDevices: values.logoutFromOtherDevices,
+        });
+        toast({
+          title: res.message,
+          description: res.description,
+          variant: res.success ? "default" : "destructive",
         });
 
-      if (
-        values.first_name !== user.first_name ||
-        values.last_name !== user.last_name ||
-        values.newPassword
-      ) {
-        if (self) {
-          router.push("/auth/sign-out");
-        }
+        setShowOldPassword(false);
+        setShowNewPassword(false);
       }
     });
   };
@@ -291,6 +225,7 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
                           <button
                             onClick={toggleOldPassword}
                             type="button"
+                            tabIndex={-1}
                             className="absolute right-2 top-[25%]"
                           >
                             {showOldPassword ? (
@@ -301,15 +236,23 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
                           </button>
                         </div>
                       </FormControl>
-                      <FormDescription>
-                        Your old password is required to change your password.
+                      <FormDescription className="flex items-center gap-x-1">
+                        <Checkbox
+                          tabIndex={-1}
+                          onCheckedChange={(v: boolean) => {
+                            form.setValue("logoutFromOtherDevices", v, {
+                              shouldValidate: true,
+                            });
+                          }}
+                        >
+                          Do you want to logout from other devices?
+                        </Checkbox>
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
-
               <div className="w-full">
                 <FormField
                   control={form.control}
@@ -327,6 +270,7 @@ export const EditAccount = ({ user, self }: ProfileProps) => {
                           <button
                             onClick={toggleNewPassword}
                             type="button"
+                            tabIndex={-1}
                             className="absolute right-2 top-[25%]"
                           >
                             {showNewPassword ? (

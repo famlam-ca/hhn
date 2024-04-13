@@ -1,3 +1,6 @@
+export type Role = "admin" | "superuser" | "user";
+export type Theme = "dark" | "light";
+
 export type CustomUser = {
   id: string;
   display_name: string;
@@ -8,9 +11,9 @@ export type CustomUser = {
   isEmailVerified: boolean;
 
   image: string;
-  role: string;
+  role: Role;
   bio: string;
-  theme: string;
+  theme: Theme;
 };
 
 export type FakeUser = {

@@ -5,13 +5,13 @@ import { getUser } from "@/lib/services/user-service";
 import { CustomUser } from "@/types";
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
-  const user = (await getUser({ username: params.username })) as CustomUser;
+  const { user } = await getUser({ username: params.username });
 
   if (!user) {
     notFound();
   }
 
-  return <Profile user={user} />;
+  return <Profile user={user as CustomUser} />;
 };
 
 export default UserPage;

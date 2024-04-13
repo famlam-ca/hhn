@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,8 +24,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
-import { resendVerificationEmail, signIn } from "@/lib/services/auth-service";
-import { SignInSchema } from "@/types/sign-in";
+import { signIn } from "@/lib/services/auth-service";
+import { resendVerificationEmail } from "@/lib/services/email-service";
+import { SignInSchema } from "@/types/auth-schema";
 
 export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const router = useRouter();
@@ -60,33 +62,29 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(async () => {
       const res = await signIn(values);
-      if (res.error) {
+      if (!res.success) {
         toast({
-          title: res.error,
+          title: res.message,
           variant: "destructive",
         });
-
-        if (res?.key === "email_not_verified") {
-          setShowResendVerificationEmail(true);
-        }
+      } else if (res.success) {
+        router.push(callbackUrl);
       }
 
-      router.push(callbackUrl);
+      if (res?.key === "email_not_verified") {
+        setShowResendVerificationEmail(true);
+      }
     });
   };
 
   const onResendVerificationEmail = async () => {
     const res = await resendVerificationEmail(form.getValues("email"));
-    if (res.error) {
-      toast({
-        title: res.error,
-        variant: "destructive",
-      });
-    } else if (res.success) {
-      toast({
-        title: res.success,
-        variant: "default",
-      });
+    toast({
+      title: res.message,
+      variant: res.success ? "default" : "destructive",
+    });
+
+    if (res.success) {
       startCountdown();
     }
   };
@@ -136,19 +134,20 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
                 name="password"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Password*</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <input
                           required
                           type={showPassword ? "text" : "password"}
-                          placeholder="Password..."
+                          placeholder="********"
                           {...field}
                           className={`${input_style}`}
                         />
                         <button
                           onClick={togglePassword}
                           type="button"
+                          tabIndex={-1}
                           className="absolute right-2 top-[25%]"
                         >
                           {showPassword ? (
@@ -159,6 +158,15 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
                         </button>
                       </div>
                     </FormControl>
+                    <FormDescription className="text-right">
+                      Forgot your password?{" "}
+                      <Link
+                        href="/auth/reset-password/request"
+                        className="font-semibold leading-6 text-primary underline-offset-2 hover:underline"
+                      >
+                        Reset password
+                      </Link>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

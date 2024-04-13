@@ -102,8 +102,8 @@ const ErrorPage = ({
             .
           </p>
           <div className="flex items-center justify-center gap-2">
-            <Button onClick={() => router.back()} variant="secondary">
-              Go back
+            <Button onClick={() => router.push("/")} variant="secondary">
+              Go home
             </Button>
             <Button
               onClick={

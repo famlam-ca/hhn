@@ -7,19 +7,17 @@ import { getSelf, getUser } from "@/lib/services/user-service";
 
 export const createUserToken = async (ownerIdentity: string) => {
   let self;
-
-  try {
-    self = await getSelf();
-  } catch {
+  self = await getSelf();
+  if (!self) {
     const id = v4();
     const username = `guest-${Math.floor(Math.random() * 1000000)}`;
     self = { id, username };
   }
 
-  const owner = await getUser({ userId: ownerIdentity });
-
+  // TODO: Change error to return statement
+  const { user: owner } = await getUser({ userId: ownerIdentity });
   if (!owner) {
-    throw new Error("User not found");
+    throw new Error("Owner not found");
   }
 
   const isOwner = self.id === owner.id;

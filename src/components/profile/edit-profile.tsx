@@ -29,14 +29,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import {
-  invalidateAllUserSessions,
-  sendNewVerificationEmail,
-  signOut,
-} from "@/lib/services/auth-service";
+import { signOut } from "@/lib/services/auth-service";
+import { sendNewVerificationEmail } from "@/lib/services/email-service";
 import { getSelf, updateUser } from "@/lib/services/user-service";
 import { CustomUser } from "@/types";
-import { EditProfileSchema } from "@/types/edit-user-schema";
+import { EditProfileSchema } from "@/types/user-schema";
 
 import { EditImage } from "./edit-image";
 
@@ -120,29 +117,18 @@ export const EditProfile = ({ user }: ProfileProps) => {
           }),
         );
 
-      if (values.email !== user.email) {
-        await sendNewVerificationEmail(values.email);
-        invalidateAllUserSessions(user.id);
-        if (self.id === user.id) {
-          signOut();
-        }
+      if ("id" in self && self.id === user.id) {
+        signOut();
       }
     });
   };
 
   const onClick = async () => {
     const res = await sendNewVerificationEmail(user.email);
-
-    if (res.error) {
-      toast({
-        title: res.error,
-        variant: "destructive",
-      });
-    } else if (res.success) {
-      toast({
-        title: res.success,
-      });
-    }
+    toast({
+      title: res.message,
+      variant: res.success ? "default" : "destructive",
+    });
   };
 
   return (
