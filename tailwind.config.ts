@@ -36,10 +36,6 @@ module.exports = {
           DEFAULT: "hsl(var(--text))",
           foreground: "hsl(var(--text-foreground))",
         },
-        textVariant: {
-          DEFAULT: "hsl(var(--textVariant))",
-          foreground: "hsl(var(--textVariant-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

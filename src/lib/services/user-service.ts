@@ -8,6 +8,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { validateSession } from "@/lib/lucia";
 import { createUserSession } from "@/lib/services/auth-service";
+import { sendPasswordWasResetEmail } from "@/lib/services/email-service";
 import {
   EditAccountSchema,
   ResetPasswordSchemaStep2,
@@ -276,6 +277,8 @@ export const resetPassword = async (
     }
 
     await createUserSession(user.id);
+
+    await sendPasswordWasResetEmail(email);
 
     return {
       success: true,

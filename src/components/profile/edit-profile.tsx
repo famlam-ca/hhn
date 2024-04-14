@@ -116,14 +116,11 @@ export const EditProfile = ({ user }: ProfileProps) => {
             variant: "destructive",
           }),
         );
-
-      if ("id" in self && self.id === user.id) {
-        signOut();
-      }
     });
   };
 
   const onClick = async () => {
+    // TODO: invalidate all user session and create a new one.
     const res = await sendNewVerificationEmail(user.email);
     toast({
       title: res.message,
@@ -149,88 +146,92 @@ export const EditProfile = ({ user }: ProfileProps) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-6">
-            <FormField
-              control={form.control}
-              name="display_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Display Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Display Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex flex-col max-md:space-y-6 md:flex-row md:space-x-6">
+              <div className="w-full space-y-6">
+                <FormField
+                  control={form.control}
+                  name="display_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Display Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Display Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input placeholder="Email" {...field} />
-                      {isEmailVerified === true && (
-                        <Hint label="Verified" side="left" asChild>
-                          <BadgeCheck className="absolute right-2 top-1/4 h-5 w-5 text-primary" />
-                        </Hint>
-                      )}
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    <span className="flex justify-between">
-                      You&apos;ll be logged out once you change your email.
-                      {isEmailVerified === false && (
-                        <Button
-                          type="button"
-                          variant="link"
-                          onClick={() => onClick()}
-                          className="h-4 p-0 text-sm"
-                        >
-                          Send new verification email
-                        </Button>
-                      )}
-                    </span>
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input placeholder="Email" {...field} />
+                          {isEmailVerified === true && (
+                            <Hint label="Verified" side="left" asChild>
+                              <BadgeCheck className="absolute right-2 top-1/4 h-5 w-5 text-primary" />
+                            </Hint>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormDescription>
+                        {isEmailVerified === false && (
+                          <span className="flex items-center justify-between">
+                            Email not verified.
+                            <Button
+                              type="button"
+                              variant="link"
+                              onClick={() => onClick()}
+                              className="h-4 p-0 text-sm"
+                            >
+                              Send new verification email
+                            </Button>
+                          </span>
+                        )}
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Bio</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={isPending}
-                      placeholder="User bio"
-                      {...field}
-                      className="resize-none"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="bio"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bio</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          disabled={isPending}
+                          placeholder="User bio"
+                          {...field}
+                          className="resize-none"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <FormField
-              control={form.control}
-              name="image"
-              render={() => (
-                <FormItem>
-                  <FormLabel>Edit your profile image</FormLabel>
-                  <FormControl>
-                    <EditImage userId={user.id} initialImage={user.image} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="image"
+                render={() => (
+                  <FormItem className="text-left md:text-center">
+                    <FormLabel>Edit your profile image</FormLabel>
+                    <FormControl>
+                      <EditImage userId={user.id} initialImage={user.image} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </CardContent>
 
           <CardFooter className="flex flex-col items-end">

@@ -55,7 +55,7 @@ export const EditImage = ({ userId, initialImage }: EditImageProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="group relative aspect-square h-52 w-52 overflow-hidden rounded-full border border-accent">
+        <div className="group relative aspect-square h-52 w-52 overflow-hidden rounded-full border border-accent md:h-[19rem] md:w-[19rem]">
           <div className="absolute right-[calc(50%-1rem)] top-[calc(50%-1rem)] z-[10] opacity-0 transition-opacity group-hover:opacity-100">
             <Hint label="Edit profile image" side="left" asChild>
               <Button

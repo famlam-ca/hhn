@@ -50,3 +50,9 @@ export type NodeData = {
   maxdisk: number;
   uptime: number;
 };
+
+export type EmailTemplates =
+  | "TestEmail"
+  | "VerifyEmail"
+  | "ResetPassword"
+  | "PasswordWasReset";

@@ -7,6 +7,8 @@ import { NavItem } from "./nav-item";
 import { SocialItem } from "./social-item";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+
   const routes = [
     {
       label: "About",
@@ -47,14 +49,14 @@ const Footer = () => {
     <footer className="relative bottom-0 w-full border-t-2 border-border bg-background/80">
       <MaxWidthWrapper className="h-20 items-center justify-between text-sm sm:flex">
         <div className="flex items-center sm:text-center">
-          <span>© 2023&nbsp;</span>
+          <span>© {year}&nbsp;</span>
           <Link
             href="/"
             className="text-primary underline-offset-2 hover:underline"
           >
             HHN
           </Link>
-          <span>™. All rights reserved.</span>
+          <span>™, All rights reserved.</span>
         </div>
 
         <div className="mt-3 flex items-center space-x-4 sm:mt-0">

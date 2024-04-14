@@ -8,8 +8,8 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { sendEmail } from "@/lib/email";
 import { lucia, validateSession } from "@/lib/lucia";
+import { sendEmail } from "@/lib/services/email-service";
 import { getUser } from "@/lib/services/user-service";
 import {
   FirstStepSchema,
@@ -58,10 +58,16 @@ export const signUp = async (
 
     const url = `${process.env.NEXT_URL}/api/verify-email?token=${token}`;
 
+    const data = {
+      username: values.username,
+      url,
+    };
+
     await sendEmail({
       to: values.email,
       subject: "Verify Email",
-      body: `<a href="${url}">Verify Email</a>`,
+      template: "VerifyEmail",
+      data: data,
     });
 
     return {
@@ -109,7 +115,8 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
 
   if (user.isEmailVerified === false) {
     return {
-      error: "Email not verified",
+      success: false,
+      message: "Email not verified",
       key: "email_not_verified",
     };
   }

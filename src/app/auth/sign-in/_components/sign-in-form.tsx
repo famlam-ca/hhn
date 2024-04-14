@@ -77,16 +77,18 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
     });
   };
 
-  const onResendVerificationEmail = async () => {
-    const res = await resendVerificationEmail(form.getValues("email"));
-    toast({
-      title: res.message,
-      variant: res.success ? "default" : "destructive",
-    });
+  const onResendVerificationEmail = () => {
+    startTransition(async () => {
+      const res = await resendVerificationEmail(form.getValues("email"));
+      toast({
+        title: res.message,
+        variant: res.success ? "default" : "destructive",
+      });
 
-    if (res.success) {
-      startCountdown();
-    }
+      if (res.success) {
+        startCountdown();
+      }
+    });
   };
 
   const input_style =

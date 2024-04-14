@@ -5,17 +5,74 @@ import { generateId } from "lucia";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { sendEmail } from "@/lib/email";
+import { transporter } from "@/lib/email-transporter";
 import { getUser } from "@/lib/services/user-service";
+import { EmailTemplates } from "@/types";
 import { ResetPasswordSchemaStep1 } from "@/types/user-schema";
 
-export const sendTestEmail = async (email: string) => {
-  const url = `${process.env.NEXT_URL}/api/verify-email?email=${email}`;
+import { render } from "@react-email/components";
 
+import { PasswordWasResetEmail } from "../../../emails/password-was-reset";
+import { ResetPasswordEmail } from "../../../emails/reset-password";
+import { TestEmail } from "../../../emails/test-email";
+import { VerifyEmailEmail } from "../../../emails/verify-email";
+
+export const sendEmail = async ({
+  to,
+  subject,
+  template,
+  data,
+}: {
+  to: string;
+  subject: string;
+  template?: EmailTemplates;
+  data: {};
+}) => {
+  const emailComponents = {
+    TestEmail: TestEmail,
+    VerifyEmail: VerifyEmailEmail,
+    ResetPassword: ResetPasswordEmail,
+    PasswordWasReset: PasswordWasResetEmail,
+  };
+
+  if (template && emailComponents[template]) {
+    const EmailComponents = emailComponents[template];
+    const body = render(<EmailComponents data={data} />);
+
+    transporter.sendMail({
+      from: `"Humble Home Network" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      html: body,
+    });
+
+    return {
+      success: true,
+    };
+  } else {
+    return {
+      success: false,
+      message: "Template not found",
+    };
+  }
+};
+
+export const sendTestEmail = async ({
+  email,
+  subject,
+  template,
+  data,
+}: {
+  email: string;
+  subject: string;
+  template?: EmailTemplates;
+  data: {};
+}) => {
   await sendEmail({
     to: email,
-    subject: "Test Email",
-    body: `<a href="${url}">Test Email</a>`,
+    subject: subject,
+    template: template,
+    data: data,
   });
 };
 
@@ -81,14 +138,25 @@ export const resendVerificationEmail = async (email: string) => {
 
     const url = `${process.env.NEXT_URL}/api/verify-email?token=${token}`;
 
+    const data = {
+      url,
+      username: user.display_name,
+    };
+
     await sendEmail({
       to: email,
       subject: "Verify Email",
-      body: `<a href="${url}">Verify Email</a>`,
+      template: "VerifyEmail",
+      data: data,
+    });
+
+    await db.session.deleteMany({
+      where: { userId: user.id },
     });
 
     return {
-      success: `Verification email send to ${email}!`,
+      success: true,
+      message: `Verification email send to ${email}!`,
     };
   } catch (error: any) {
     return {
@@ -103,7 +171,8 @@ export const sendNewVerificationEmail = async (email: string) => {
     const { user } = await getUser({ email });
     if (!user) {
       return {
-        error: "Account not found",
+        success: false,
+        message: "Account not found",
       };
     }
 
@@ -176,14 +245,25 @@ export const sendNewVerificationEmail = async (email: string) => {
 
     const url = `${process.env.NEXT_URL}/api/verify-email?token=${token}`;
 
+    const data = {
+      url,
+      username: user.display_name,
+    };
+
     await sendEmail({
       to: email,
       subject: "Verify Email",
-      body: `<a href="${url}">Verify Email</a>`,
+      template: "VerifyEmail",
+      data: data,
+    });
+
+    await db.session.deleteMany({
+      where: { userId: user.id },
     });
 
     return {
-      success: `Verification email send to ${email}!`,
+      success: true,
+      message: `Verification email send to ${email}!`,
     };
   } catch (error: any) {
     return {
@@ -225,10 +305,16 @@ export const sendResetPasswordEmail = async (
 
   const url = `${process.env.NEXT_URL}/api/reset-password?token=${token}`;
 
+  const data = {
+    url,
+    username: user.display_name,
+  };
+
   await sendEmail({
     to: values.email,
     subject: "Reset Password",
-    body: `<a href="${url}">Reset Password</a>`,
+    template: "ResetPassword",
+    data: data,
   });
 
   return {
@@ -236,4 +322,47 @@ export const sendResetPasswordEmail = async (
     message: "Password reset email sent.",
     description: "Please check your email to reset your password.",
   };
+};
+
+export const sendPasswordWasResetEmail = async (email: string) => {
+  const { user } = await getUser({ email });
+  if (!user) {
+    return {
+      success: false,
+      message: "No account with that email found.",
+    };
+  }
+
+  const resetRequest = await db.resetPassword.findFirst({
+    where: {
+      userEmail: email,
+    },
+    select: {
+      createdAt: true,
+    },
+  });
+  if (!resetRequest) {
+    return {
+      success: false,
+      message: "Not reset password request found",
+    };
+  }
+
+  await db.resetPassword.deleteMany({
+    where: {
+      userEmail: email,
+    },
+  });
+
+  const data = {
+    username: user.display_name,
+    updatedDate: resetRequest.createdAt,
+  };
+
+  await sendEmail({
+    to: email,
+    subject: "Password was reset",
+    template: "PasswordWasReset",
+    data: data,
+  });
 };

@@ -9,7 +9,6 @@ interface ServerCardsProps {
 }
 
 export const ServerCards = ({ nodeData }: ServerCardsProps) => {
-  // TODO: Fix potiential bug here, nodeData is an array, so it will never be undefined
   if (!nodeData || nodeData.length === 0) {
     return;
   }

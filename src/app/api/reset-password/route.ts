@@ -26,12 +26,6 @@ export const GET = async (req: NextRequest) => {
       return Response.json({ error: "Invalid token" }, { status: 400 });
     }
 
-    await db.resetPassword.deleteMany({
-      where: {
-        userEmail: decoded.email,
-      },
-    });
-
     return Response.redirect(
       new URL(
         `${process.env.NEXT_URL!}/auth/reset-password?email=${decoded.email}&code=${decoded.code}`,
