@@ -14,7 +14,7 @@ const SignInPage = async ({
   const { session } = await validateSession();
 
   if (session) {
-    return redirect("/");
+    return redirect(searchParams.callbackUrl ? searchParams.callbackUrl : "/");
   }
 
   return (

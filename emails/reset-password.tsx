@@ -15,8 +15,9 @@ import {
 } from "@react-email/components";
 
 const baseUrl = process.env.NEXT_URL
-  ? `https://${process.env.NEXT_URL}`
+  ? `${process.env.NEXT_URL}`
   : "http://localhost:3000";
+
 
 interface ResetPasswordEmailProps {
   data: {
@@ -238,7 +239,7 @@ const main = {
   backgroundColor: "#fffff",
   color: "#363949",
   fontWeight: 500,
-  fontFamily,
+    fontFamily,
 };
 
 const container = {

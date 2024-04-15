@@ -1,16 +1,10 @@
-import { CustomUser } from "@/types";
-import { getSelf } from "@/lib/services/user-service";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { EditAccount } from "@/components/profile/edit-account";
+import { getSelf } from "@/lib/services/user-service";
+import { CustomUser } from "@/types";
 
-interface AccountPageProps {
-  params: {
-    username: string;
-  };
-}
-
-const ProfilePage = async ({ params }: AccountPageProps) => {
-  const user = (await getSelf(params.username)) as CustomUser;
+const ProfilePage = async ({ params }: { params: { username: string } }) => {
+  const user = (await getSelf({ username: params.username })) as CustomUser;
 
   return (
     <MaxWidthWrapper className="mt-5">

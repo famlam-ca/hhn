@@ -15,7 +15,7 @@ import {
 } from "@react-email/components";
 
 const baseUrl = process.env.NEXT_URL
-  ? `https://${process.env.NEXT_URL}`
+  ? `${process.env.NEXT_URL}`
   : "http://localhost:3000";
 
 interface VerifyEmailProps {

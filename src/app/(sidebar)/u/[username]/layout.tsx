@@ -11,7 +11,7 @@ interface ProfileLayoutProps {
 }
 
 const ProfileLayout = async ({ params, children }: ProfileLayoutProps) => {
-  const self = (await getSelf(params.username)) as CustomUser;
+  const self = (await getSelf({ username: params.username })) as CustomUser;
 
   if (!self) {
     redirect("/");

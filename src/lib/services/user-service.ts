@@ -351,7 +351,7 @@ export const isEmailVerified = async (email: string) => {
 };
 
 // Error required for user identify
-export const getSelf = async (username?: string) => {
+export const getSelf = async ({ username }: { username?: string }) => {
   const { user } = await validateSession();
   const self = user;
   if (!self || !self.username) {

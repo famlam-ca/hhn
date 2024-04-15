@@ -91,7 +91,11 @@ export const MobileNav = ({ username, isAuth }: MobileNavProps) => {
 
             <MobileNavItem
               label={isAuth ? "Sign Out" : "Sign In"}
-              href={isAuth ? "/auth/sign-out" : "/auth/sign-in"}
+              href={
+                isAuth
+                  ? `/auth/sign-out?callbackUrl=${pathname}`
+                  : `/auth/sign-in?callbackUrl=${pathname}`
+              }
               icon={isAuth ? LogOut : LogIn}
               className="items-center gap-2"
               IconClassName="w-4 h-4"

@@ -2,26 +2,11 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { MoreHorizontal } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { TableColumnHeader } from "@/components/column-header";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  invalidateAllUserSessions,
-  signOut,
-} from "@/lib/services/auth-service";
-import { toast } from "@/components/ui/use-toast";
+
+import { AdminUserActions } from "./admin-user-actions";
 
 export type Users = {
   id: string;
@@ -140,69 +125,22 @@ export const columns: ColumnDef<Users>[] = [
       return <div className="font-medium">{formattedDate}</div>;
     },
   },
+  // TODO: Render user sessions
+  {
+    accessorKey: "sessions",
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Sessions" />
+    ),
+    cell: ({ row }) => {
+      const user = row.original;
+
+      return <div className="font-medium">0</div>;
+    },
+  },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original;
-      const pathname = usePathname();
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel className="text-muted-foreground">
-              Actions
-            </DropdownMenuLabel>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
-            >
-              Copy user ID
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href={`/admin/${user.username}/edit`}>Edit user</Link>
-            </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              onClick={async () => {
-                const res = await signOut({ userId: user.id });
-                toast({
-                  title: res.message,
-                  variant: res.success ? "default" : "destructive",
-                });
-              }}
-            >
-              Sign out user
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={async () => {
-                const res = await invalidateAllUserSessions(user.id);
-                toast({
-                  title: res.message,
-                  variant: res.success ? "default" : "destructive",
-                });
-              }}
-            >
-              Clear sessions
-            </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem asChild>
-              <Link href={`/${user.username}`}>View profile</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <AdminUserActions row={row} />;
     },
   },
 ];

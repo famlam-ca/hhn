@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
@@ -11,11 +11,11 @@ import { useSession } from "@/providers/session-provider";
 
 const SignOutPage = () => {
   const router = useRouter();
+  const callbackUrl = useSearchParams().get("callbackUrl");
   const { session } = useSession();
 
-  // TODO: Redirect to last page after sign out
   if (!session) {
-    router.push("/");
+    router.push(callbackUrl ? callbackUrl : "/");
   }
 
   useEffect(() => {

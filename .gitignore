@@ -17,6 +17,7 @@
 /build
 /changelogs
 /prisma/seed.ts
+deploy.sh
 
 # misc
 .DS_Store

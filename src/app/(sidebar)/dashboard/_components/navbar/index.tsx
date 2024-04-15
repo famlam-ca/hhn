@@ -46,7 +46,7 @@ export const Navbar = async () => {
                   />
                 ))}
               </ul>
-              <UserNav user={user} />
+              <UserNav user={user} pathname="/dashboard" />
             </div>
           )}
         </div>

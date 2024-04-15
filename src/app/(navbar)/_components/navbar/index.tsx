@@ -77,7 +77,7 @@ const Navbar = () => {
                 </Link>
               </>
             ) : (
-              <UserNav user={user} />
+              <UserNav user={user} pathname={pathname} />
             )}
           </ul>
         </div>

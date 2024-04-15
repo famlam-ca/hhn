@@ -7,7 +7,7 @@ import { getSelf, getUser } from "@/lib/services/user-service";
 
 export const createUserToken = async (ownerIdentity: string) => {
   let self;
-  self = await getSelf();
+  self = await getSelf({});
   if (!self) {
     const id = v4();
     const username = `guest-${Math.floor(Math.random() * 1000000)}`;

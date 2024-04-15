@@ -1,16 +1,9 @@
 import { Profile } from "@/components/profile";
 import { getSelf } from "@/lib/services/user-service";
 import { CustomUser } from "@/types";
-import { redirect } from "next/navigation";
 
-interface PageProps {
-  params: {
-    username: string;
-  };
-}
-
-const ProfilePage = async ({ params }: PageProps) => {
-  const user = (await getSelf(params.username)) as CustomUser;
+const ProfilePage = async ({ params }: { params: { username: string } }) => {
+  const user = (await getSelf({ username: params.username })) as CustomUser;
 
   return <Profile user={user} />;
 };

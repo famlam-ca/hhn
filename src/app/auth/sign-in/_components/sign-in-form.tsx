@@ -2,6 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
@@ -30,6 +32,7 @@ import { SignInSchema } from "@/types/auth-schema";
 
 export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
   const router = useRouter();
+  const { setTheme } = useTheme();
 
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -68,7 +71,14 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
           variant: "destructive",
         });
       } else if (res.success) {
+        revalidatePath(callbackUrl);
         router.push(callbackUrl);
+      }
+
+      if (res.data?.userTheme) {
+        setTheme(res.data.userTheme);
+      } else {
+        setTheme("system");
       }
 
       if (res?.key === "email_not_verified") {

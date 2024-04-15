@@ -74,8 +74,6 @@ export const EditProfile = ({ user }: ProfileProps) => {
     }
 
     startTransition(async () => {
-      const self = await getSelf();
-
       updateUser({
         id: user.id,
         email: values.email,

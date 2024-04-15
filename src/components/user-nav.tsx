@@ -28,7 +28,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CustomUser } from "@/types";
 
-export const UserNav = ({ user }: { user: CustomUser }) => {
+export const UserNav = ({
+  user,
+  pathname,
+}: {
+  user: CustomUser;
+  pathname: string | "/";
+}) => {
   const full_name = `${user.first_name} ${user.last_name}`;
 
   return (
@@ -172,7 +178,7 @@ export const UserNav = ({ user }: { user: CustomUser }) => {
         )}
 
         <DropdownMenuItem asChild>
-          <Link href="/auth/sign-out">
+          <Link href={`/auth/sign-out?callbackUrl=${pathname}`}>
             <LogOut className="mr-1 h-5 w-5" />
             Sign Out
           </Link>

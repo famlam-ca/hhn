@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowRightIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import { TableColumnHeader } from "@/components/column-header";
@@ -9,7 +10,9 @@ import { cn } from "@/lib/utils";
 import { useSession } from "@/providers/session-provider";
 import { ServerData, ServerType } from "@/types";
 
-import { ServerActions } from "./server/server-actions";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ServerActions } from "./server-actions";
 
 export const columns: ColumnDef<ServerData>[] = [
   {
@@ -210,13 +213,44 @@ export const columns: ColumnDef<ServerData>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "details",
+    header: ({ column }) => {
+      const { user, session } = useSession();
+
+      return (
+        <>
+          {user?.role === "admin" && session && (
+            <TableColumnHeader column={column} title="Details" />
+          )}
+        </>
+      );
+    },
+    cell: ({ row }) => {
+      const { user, session } = useSession();
+      const type = useSearchParams().get("type") as ServerType;
+
+      return (
+        <>
+          {user?.role === "admin" && session && (
+            <Link
+              href={`/dashboard/server/${type}/${row.getValue("vmid")}`}
+              className="group flex items-center text-muted-foreground hover:text-text"
+            >
+              Details
+              <ArrowRightIcon className="ml-1 h-4 w-4 transition-all group-hover:ml-2" />
+            </Link>
+          )}
+        </>
+      );
+    },
+    enableHiding: false,
+  },
+  {
     id: "actions",
     cell: function Cell({ row }) {
       const { user, session } = useSession();
       const server = row.original;
-
-      const searchParams = useSearchParams();
-      const type = searchParams.get("type") as ServerType;
+      const type = useSearchParams().get("type") as ServerType;
 
       return (
         <>

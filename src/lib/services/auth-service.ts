@@ -100,16 +100,15 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
   if (!user) {
     return {
       success: false,
-      message: "Account not found",
+      message: "No account with that email found.",
     };
   }
 
   const isValidPassword = await compare(values.password, user.password);
-
   if (!isValidPassword) {
     return {
       success: false,
-      message: "Invalid password.",
+      message: "Invalid password",
     };
   }
 
@@ -126,7 +125,9 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
 
     return {
       success: true,
-      message: "Signed in successfully",
+      data: {
+        userTheme: user.theme,
+      },
     };
   } catch (error: any) {
     return {
@@ -160,14 +161,16 @@ export const signOut = async ({ userId }: { userId?: string } = {}) => {
 
     if (!session) {
       return {
-        error: "Session not found",
+        success: false,
+        message: "Session not found",
       };
     }
 
     await lucia.invalidateSession(session.id);
 
     return {
-      success: "Signed out successfully",
+      success: true,
+      message: "Signed out successfully",
     };
   } catch (error: any) {
     return {
@@ -191,11 +194,16 @@ export const createUserSession = async (userId: string) => {
   );
 
   return {
-    success: "Signed in successfully",
+    success: true,
+    message: "Signed in successfully",
   };
 };
 
-export const invalidateAllUserSessions = async (userId: string) => {
+export const invalidateAllUserSessions = async ({
+  userId,
+}: {
+  userId: string;
+}) => {
   try {
     let session;
 
@@ -219,7 +227,8 @@ export const invalidateAllUserSessions = async (userId: string) => {
 
     if (!session) {
       return {
-        error: "No user sessions not found",
+        success: false,
+        message: "No user sessions not found",
       };
     }
 
@@ -228,7 +237,8 @@ export const invalidateAllUserSessions = async (userId: string) => {
     revalidatePath("/admin");
 
     return {
-      success: "User sessions cleared successfully!",
+      sendEmail: true,
+      message: "User sessions cleared successfully!",
     };
   } catch (error: any) {
     return {
