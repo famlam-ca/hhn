@@ -8,7 +8,10 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { validateSession } from "@/lib/lucia";
 import { createUserSession } from "@/lib/services/auth-service";
-import { sendPasswordWasResetEmail } from "@/lib/services/email-service";
+import {
+  sendNewVerificationEmail,
+  sendPasswordWasResetEmail,
+} from "@/lib/services/email-service";
 import {
   EditAccountSchema,
   ResetPasswordSchemaStep2,
@@ -99,7 +102,6 @@ export const updateUser = async (values: Partial<user>) => {
   }
 
   let hashedPassword: string;
-
   hashedPassword = user.password;
 
   const validData = {
@@ -107,6 +109,7 @@ export const updateUser = async (values: Partial<user>) => {
     first_name: values.first_name,
     last_name: values.last_name,
     email: values.email,
+    isEmailVerified: values.isEmailVerified,
     password: hashedPassword,
     image: values.image,
     role: values.role,
@@ -124,6 +127,10 @@ export const updateUser = async (values: Partial<user>) => {
       message: "There was an error updating the user.",
       description: "Please try again later.",
     };
+  }
+
+  if (values.isEmailVerified === false && values.email !== user.email) {
+    await sendNewVerificationEmail(dbUser.email);
   }
 
   revalidatePath(`/u/${dbUser.username}`);

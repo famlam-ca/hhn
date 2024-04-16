@@ -185,14 +185,13 @@ export const sendNewVerificationEmail = async (email: string) => {
       },
     });
 
+    const code = Math.random().toString().substring(2, 8);
+
     const existingCode = await db.emailVerification.findFirst({
       where: {
         userId: user.id,
       },
     });
-
-    const code = Math.random().toString().substring(2, 8);
-
     if (!existingCode) {
       try {
         await db.emailVerification.create({
@@ -255,10 +254,6 @@ export const sendNewVerificationEmail = async (email: string) => {
       subject: "Verify Email",
       template: "VerifyEmail",
       data: data,
-    });
-
-    await db.session.deleteMany({
-      where: { userId: user.id },
     });
 
     return {

@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <>
       <MaxWidthWrapper className="mb-12 mt-28 flex flex-col items-center justify-center text-center sm:mt-40">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-border bg-foreground px-7 py-2 shadow-md backdrop-blur transition-all hover:border-border/80 hover:bg-text-foreground/50">
+        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-border bg-foreground px-7 py-2 shadow-md backdrop-blur transition-all hover:border-border/80 hover:bg-secondary/80">
           <p className="text-sm font-semibold text-text">
             Welcome, enjoy your stay!
           </p>

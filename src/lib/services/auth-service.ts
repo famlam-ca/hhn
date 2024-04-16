@@ -213,16 +213,7 @@ export const invalidateAllUserSessions = async ({
       });
     } else if (!userId) {
       const res = await validateSession();
-
       session = res.session;
-
-      const sessionCookie = lucia.createBlankSessionCookie();
-
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes,
-      );
     }
 
     if (!session) {

@@ -54,7 +54,8 @@ export function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 sm:flex"
+            size="none"
+            className="hidden h-8 w-8 sm:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
@@ -63,7 +64,8 @@ export function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
           </Button>
           <Button
             variant="outline"
-            className="h-8 w-8 p-0"
+            size="none"
+            className="h-8 w-8"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -72,7 +74,8 @@ export function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
           </Button>
           <Button
             variant="outline"
-            className="h-8 w-8 p-0"
+            size="none"
+            className="h-8 w-8"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
@@ -81,7 +84,8 @@ export function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
           </Button>
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 sm:flex"
+            size="none"
+            className="hidden h-8 w-8 sm:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >

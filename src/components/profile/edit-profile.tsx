@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BadgeCheck, Loader2 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ElementRef, useRef, useTransition } from "react";
+import { ElementRef, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -29,9 +29,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
-import { signOut } from "@/lib/services/auth-service";
 import { sendNewVerificationEmail } from "@/lib/services/email-service";
-import { getSelf, updateUser } from "@/lib/services/user-service";
+import { updateUser } from "@/lib/services/user-service";
 import { CustomUser } from "@/types";
 import { EditProfileSchema } from "@/types/user-schema";
 
@@ -46,7 +45,8 @@ export const EditProfile = ({ user }: ProfileProps) => {
   const closeRef = useRef<ElementRef<"button">>(null);
 
   const [isPending, startTransition] = useTransition();
-  const isEmailVerified = user.isEmailVerified;
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  let isEmailVerified = user.isEmailVerified;
 
   const defaultValues = {
     display_name: user.display_name,
@@ -77,16 +77,18 @@ export const EditProfile = ({ user }: ProfileProps) => {
       updateUser({
         id: user.id,
         email: values.email,
+        isEmailVerified: values.email ? false : true,
         display_name: values.display_name,
         bio: values.bio,
         image: values.image,
       })
-        .then(() => {
+        .then(async () => {
           const updatedFields = [];
           if (values.display_name !== user.display_name) {
             updatedFields.push("Display name");
           }
           if (values.email !== user.email) {
+            isEmailVerified = false;
             updatedFields.push("Email");
           }
           if (values.bio !== user.bio) {
@@ -118,12 +120,12 @@ export const EditProfile = ({ user }: ProfileProps) => {
   };
 
   const onClick = async () => {
-    // TODO: invalidate all user session and create a new one.
     const res = await sendNewVerificationEmail(user.email);
     toast({
       title: res.message,
       variant: res.success ? "default" : "destructive",
     });
+    setIsDisabled(true);
   };
 
   return (
@@ -153,7 +155,11 @@ export const EditProfile = ({ user }: ProfileProps) => {
                     <FormItem>
                       <FormLabel>Display Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Display Name" {...field} />
+                        <Input
+                          disabled={isPending}
+                          placeholder="Display Name"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -168,7 +174,11 @@ export const EditProfile = ({ user }: ProfileProps) => {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Input placeholder="Email" {...field} />
+                          <Input
+                            disabled={isPending}
+                            placeholder="Email"
+                            {...field}
+                          />
                           {isEmailVerified === true && (
                             <Hint label="Verified" side="left" asChild>
                               <BadgeCheck className="absolute right-2 top-1/4 h-5 w-5 text-primary" />
@@ -183,8 +193,10 @@ export const EditProfile = ({ user }: ProfileProps) => {
                             <Button
                               type="button"
                               variant="link"
+                              size="none"
+                              disabled={isDisabled}
                               onClick={() => onClick()}
-                              className="h-4 p-0 text-sm"
+                              className="h-4 text-sm"
                             >
                               Send new verification email
                             </Button>

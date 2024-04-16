@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 
 import { db } from "@/lib/db";
 import { lucia } from "@/lib/lucia";
+import { invalidateAllUserSessions } from "@/lib/services/auth-service";
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -44,6 +45,13 @@ export const GET = async (req: NextRequest) => {
         isEmailVerified: true,
       },
     });
+
+    const userSession = await db.session.findFirst({
+      where: { userId: decoded.userId },
+    });
+    if (userSession) {
+      await invalidateAllUserSessions({ userId: decoded.userId });
+    }
 
     const session = await lucia.createSession(decoded.userId, {
       expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),

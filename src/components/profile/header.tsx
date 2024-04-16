@@ -6,13 +6,18 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { UserAvatar, UserAvatarSkeleton } from "@/components/user-avatar";
 
 interface HeaderProps {
+  username: string;
   display_name: string;
-  email: string;
   image: string;
   role: string;
 }
 
-export const Header = ({ display_name, email, image, role }: HeaderProps) => {
+export const Header = ({
+  username,
+  display_name,
+  image,
+  role,
+}: HeaderProps) => {
   const matches = useMediaQuery("(max-width: 1024px)");
 
   return (
@@ -30,7 +35,7 @@ export const Header = ({ display_name, email, image, role }: HeaderProps) => {
             </h2>
           </div>
           <p className="text-xs font-semibold text-muted-foreground lg:text-sm">
-            {email}
+            {username}
           </p>
           <p className="text-xs font-semibold capitalize text-muted-foreground lg:text-sm">
             {role}

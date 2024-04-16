@@ -22,8 +22,8 @@ export const Profile = ({ user }: { user: CustomUser }) => {
       <MaxWidthWrapper className="hidden-scrollbar col-span-1 space-y-4 pb-10 lg:col-span-2 lg:overflow-y-auto xl:col-span-2 2xl:col-span-5">
         <div className="flex items-center">
           <Header
+            username={user.username}
             display_name={user.display_name}
-            email={user.email}
             image={user.image}
             role={user.role}
           />
