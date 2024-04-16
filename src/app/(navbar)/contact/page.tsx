@@ -73,7 +73,7 @@ const ContactPage = () => {
                 <Link href="/slickyeet">@SlickYeet</Link>
               </Button>
               <Button variant="link" size="none" asChild>
-                <Link href="/slickyeet">
+                <Link href="/about">
                   Read more
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
