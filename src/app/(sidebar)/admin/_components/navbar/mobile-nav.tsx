@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Users } from "lucide-react";
+import { LifeBuoy, Menu, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -23,6 +23,11 @@ export const MobileNav = ({ username }: MobileNavProps) => {
   }, [pathname]);
 
   const routes = [
+    {
+      label: "Support Tickets",
+      icon: LifeBuoy,
+      href: "/admin/support",
+    },
     {
       label: "Edit current users",
       icon: Users,

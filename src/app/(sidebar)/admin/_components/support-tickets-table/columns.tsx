@@ -6,20 +6,22 @@ import { format } from "date-fns";
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { AdminUserActions } from "./admin-user-actions";
+import { SupportTicketActions } from "./admin-support-ticket-actions";
 
-export type Users = {
+export type SupportTicket = {
   id: string;
-  username: string;
-  first_name: string | null;
-  last_name: string | null;
-  email: string;
-  role: "user" | "superuser" | "admin";
+  senderUsername: string;
+  senderName: string;
+  senderEmail: string;
+  subject: string;
+  message: string;
+  status: "open" | "closed" | "pending";
   createdAt: Date;
   updatedAt: Date;
+  sentAt: Date;
 };
 
-export const columns: ColumnDef<Users>[] = [
+export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -43,63 +45,68 @@ export const columns: ColumnDef<Users>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "display_name",
+    accessorKey: "status",
     header: ({ column }) => (
-      <TableColumnHeader column={column} title="Display Name" />
+      <TableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("display_name")}</div>;
+      const textColor =
+        row.getValue("status") === "open"
+          ? "alert"
+          : row.getValue("status") === "closed"
+            ? "success"
+            : "warning";
+
+      return (
+        <div className={`font-medium capitalize text-${textColor}`}>
+          {row.getValue("status")}
+        </div>
+      );
     },
   },
   {
-    accessorKey: "username",
+    accessorKey: "subject",
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Subject" />
+    ),
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("subject")}</div>;
+    },
+  },
+  {
+    accessorKey: "message",
+    header: ({ column }) => (
+      <TableColumnHeader column={column} title="Message" />
+    ),
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("message")}</div>;
+    },
+  },
+  {
+    accessorKey: "senderEmail",
+    header: ({ column }) => <TableColumnHeader column={column} title="Email" />,
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("senderEmail")}</div>;
+    },
+  },
+  {
+    accessorKey: "senderUsername",
     header: ({ column }) => (
       <TableColumnHeader column={column} title="Username" />
     ),
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("username")}</div>;
+      return (
+        <div className="font-medium">{row.getValue("senderUsername")}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "senderName",
+    header: ({ column }) => <TableColumnHeader column={column} title="Name" />,
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("senderName")}</div>;
     },
     enableHiding: false,
-  },
-  {
-    accessorKey: "first_name",
-    header: ({ column }) => (
-      <TableColumnHeader column={column} title="First Name" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="font-medium capitalize">
-          {row.getValue("first_name")}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "last_name",
-    header: ({ column }) => (
-      <TableColumnHeader column={column} title="Last Name" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="font-medium capitalize">
-          {row.getValue("last_name")}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => <TableColumnHeader column={column} title="Email" />,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "role",
-    header: ({ column }) => <TableColumnHeader column={column} title="Role" />,
-    cell: ({ row }) => {
-      return (
-        <div className="font-medium capitalize">{row.getValue("role")}</div>
-      );
-    },
   },
   {
     accessorKey: "createdAt",
@@ -125,22 +132,22 @@ export const columns: ColumnDef<Users>[] = [
       return <div className="font-medium">{formattedDate}</div>;
     },
   },
-  // TODO: Render user sessions
   {
-    accessorKey: "sessions",
+    accessorKey: "sentAt",
     header: ({ column }) => (
-      <TableColumnHeader column={column} title="Sessions" />
+      <TableColumnHeader column={column} title="Sent At" />
     ),
     cell: ({ row }) => {
-      const user = row.original;
+      const sentAt: Date = row.getValue("sentAt") as Date;
 
-      return <div className="font-medium">0</div>;
+      const formattedDate = format(sentAt, "dd/MM/yyyy");
+      return <div className="font-medium">{formattedDate}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      return <AdminUserActions row={row} />;
+      return <SupportTicketActions row={row} />;
     },
   },
 ];

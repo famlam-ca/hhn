@@ -1,6 +1,6 @@
 "use client";
 
-import { UserCog, Users } from "lucide-react";
+import { LifeBuoy, UserCog, Users } from "lucide-react";
 import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
@@ -15,6 +15,11 @@ interface NavbarProps {
 
 export const Navbar = ({ username }: NavbarProps) => {
   const routes = [
+    {
+      label: "Support Tickets",
+      icon: LifeBuoy,
+      href: "/admin/support",
+    },
     {
       label: "Edit current user",
       icon: Users,

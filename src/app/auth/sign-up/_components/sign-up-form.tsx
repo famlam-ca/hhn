@@ -211,7 +211,7 @@ export const SignUpForm = () => {
                         <FormControl>
                           <input
                             type="email"
-                            placeholder="Email..."
+                            placeholder="example@domain.ca"
                             {...field}
                             className={`${input_style}`}
                           />

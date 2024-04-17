@@ -9,11 +9,18 @@ interface EmailProps {
 
 export const TestEmail = ({ data: { url, username } }: EmailProps) => {
   return (
-    <Html lang="en">
+    <Html>
       <Text>Hello, {username}!</Text>
       <Button href={url}>Click me</Button>
     </Html>
   );
 };
+
+TestEmail.PreviewProps = {
+  data: {
+    url: "https://example.com",
+    username: "SlickYeet",
+  },
+} as EmailProps;
 
 export default TestEmail;

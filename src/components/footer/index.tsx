@@ -27,8 +27,8 @@ const Footer = () => {
       href: "/contact",
     },
     {
-      label: "Terms",
-      href: "/terms",
+      label: "Support",
+      href: "/support",
     },
   ];
 

@@ -120,7 +120,7 @@ export const UserNav = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href="/contact">
+            <Link href="/support">
               <LifeBuoy className="mr-2 h-5 w-5" />
               Support
             </Link>

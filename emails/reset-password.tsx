@@ -18,7 +18,6 @@ const baseUrl = process.env.NEXT_URL
   ? `${process.env.NEXT_URL}`
   : "http://localhost:3000";
 
-
 interface ResetPasswordEmailProps {
   data: {
     username?: string;
@@ -37,7 +36,6 @@ export const ResetPasswordEmail = ({
       <Preview>Reset your password</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Logo */}
           <Section style={logo} data-darkreader-inline-bgcolor="">
             <Img
               src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -46,7 +44,6 @@ export const ResetPasswordEmail = ({
             />
           </Section>
 
-          {/* Divider */}
           <Section style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Row>
               <Column style={sectionBorder} />
@@ -55,7 +52,6 @@ export const ResetPasswordEmail = ({
             </Row>
           </Section>
 
-          {/* Content */}
           <Section style={content} data-darkreader-inline-bgcolor="">
             <Heading data-darkreader-inline-color="">
               Reset Your Password
@@ -71,7 +67,6 @@ export const ResetPasswordEmail = ({
 
             <Section style={{ height: "30px" }}>&nbsp;</Section>
 
-            {/* Verify Button */}
             <Button
               href={url}
               style={{
@@ -102,7 +97,6 @@ export const ResetPasswordEmail = ({
               Or copy/paste this link into your browser:
             </Text>
 
-            {/* Verify plaint text link */}
             <Text style={link} data-darkreader-inline-color="">
               <Link href={url}>{url}</Link>
             </Text>
@@ -113,7 +107,7 @@ export const ResetPasswordEmail = ({
               If you received this email by mistake or did not authorize the
               request, please&nbsp;
               <Link
-                href={`${baseUrl}/contact`}
+                href={`${baseUrl}/support`}
                 style={link}
                 data-darkreader-inline-color=""
               >
@@ -124,13 +118,12 @@ export const ResetPasswordEmail = ({
             <Section style={{ height: "30px" }}>&nbsp;</Section>
 
             <Text data-darkreader-inline-color="">
-              Thanks!
+              Sincerely,
               <br />
               The HHN Team
             </Text>
           </Section>
 
-          {/* Divider */}
           <Section style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Row>
               <Column style={sectionBorder} />
@@ -139,9 +132,7 @@ export const ResetPasswordEmail = ({
             </Row>
           </Section>
 
-          {/* Footer */}
           <Section style={footer}>
-            {/* Logo */}
             <Section style={logo} data-darkreader-inline-bgcolor="">
               <Img
                 src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -149,74 +140,67 @@ export const ResetPasswordEmail = ({
                 alt="HHN"
               />
             </Section>
-            {/* Socials */}
-            <Section>
-              <Row>
-                <Column
-                  align="right"
-                  style={{ width: "50%", paddingRight: "8px" }}
-                >
-                  <Link href="https://www.famlam.ca">
-                    <Img
-                      src={`${baseUrl}/logo/logo512-dark-s.png`}
-                      alt="Website"
-                      width={25}
-                      height={25}
-                    />
-                  </Link>
-                </Column>
-                <Column
-                  align="left"
-                  style={{ width: "50%", paddingLeft: "8px" }}
-                >
-                  <Link href="https://github.com/SlickYeet/famlam">
-                    <Img
-                      src={`${baseUrl}/github/github-mark.svg`}
-                      alt="Github"
-                      width={25}
-                      height={25}
-                    />
-                  </Link>
-                </Column>
-              </Row>
-            </Section>
-            {/* Other links */}
+
+            <Row>
+              <Column
+                align="right"
+                style={{ width: "50%", paddingRight: "8px" }}
+              >
+                <Link href="https://www.famlam.ca">
+                  <Img
+                    src={`${baseUrl}/logo/logo512-dark-s.png`}
+                    alt="Website"
+                    width={25}
+                    height={25}
+                  />
+                </Link>
+              </Column>
+              <Column align="left" style={{ width: "50%", paddingLeft: "8px" }}>
+                <Link href="https://github.com/SlickYeet/famlam">
+                  <Img
+                    src={`${baseUrl}/github/github-mark.svg`}
+                    alt="Github"
+                    width={25}
+                    height={25}
+                  />
+                </Link>
+              </Column>
+            </Row>
+
             <Text style={footerLinksWrapper}>
-              <Link href="https://www.famlam.ca/" style={footerLinks}>
+              <Link href={`${baseUrl}/about`} style={footerLinks}>
                 About
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/projects/" style={footerLinks}>
+              <Link href={`${baseUrl}/projects`} style={footerLinks}>
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/docs/" style={footerLinks}>
+              <Link href={`${baseUrl}/docs`} style={footerLinks}>
                 Docs
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/contact/" style={footerLinks}>
+              <Link href={`${baseUrl}/contact`} style={footerLinks}>
                 Contact
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/terms/" style={footerLinks}>
-                Terms
+              <Link href={`${baseUrl}/support`} style={footerLinks}>
+                Support
               </Link>
             </Text>
-            {/* © */}
-            <Section>
-              <Text
-                style={{
-                  textAlign: "center",
-                  color: "#363949",
-                  fontSize: "12px",
-                  lineHeight: "14px",
-                  paddingTop: "10px",
-                  paddingBottom: "30px",
-                }}
-              >
-                © {year} HHN™, All Rights Reserved <br />
-              </Text>
-            </Section>
+
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#363949",
+                fontSize: "12px",
+                lineHeight: "14px",
+                paddingTop: "10px",
+                paddingBottom: "30px",
+              }}
+            >
+              © {year} HHN™, All Rights Reserved <br />
+            </Text>
           </Section>
         </Container>
       </Body>
@@ -239,7 +223,7 @@ const main = {
   backgroundColor: "#fffff",
   color: "#363949",
   fontWeight: 500,
-    fontFamily,
+  fontFamily,
 };
 
 const container = {

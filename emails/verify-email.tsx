@@ -36,7 +36,6 @@ export const VerifyEmailEmail = ({
       <Preview>Verify Your Email Address</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Logo */}
           <Section style={logo} data-darkreader-inline-bgcolor="">
             <Img
               src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -45,14 +44,12 @@ export const VerifyEmailEmail = ({
             />
           </Section>
 
-          {/* Divider */}
           <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Column style={sectionBorder} />
             <Column style={sectionCenter} />
             <Column style={sectionBorder} />
           </Row>
 
-          {/* Content */}
           <Section style={content} data-darkreader-inline-bgcolor="">
             <Heading data-darkreader-inline-color="">
               Verify Your Email Address
@@ -67,7 +64,6 @@ export const VerifyEmailEmail = ({
 
             <Section style={{ height: "30px" }}>&nbsp;</Section>
 
-            {/* Verify Button */}
             <Section>
               <Button
                 href={url}
@@ -100,7 +96,6 @@ export const VerifyEmailEmail = ({
               Or copy/paste this link into your browser:
             </Text>
 
-            {/* Verify plaint text link */}
             <Text style={link} data-darkreader-inline-color="">
               <Link href={url}>{url}</Link>
             </Text>
@@ -111,7 +106,7 @@ export const VerifyEmailEmail = ({
               If you received this email by mistake or did not authorize the
               request, please&nbsp;
               <Link
-                href={`${baseUrl}/contact`}
+                href={`${baseUrl}/support`}
                 style={link}
                 data-darkreader-inline-color=""
               >
@@ -122,22 +117,19 @@ export const VerifyEmailEmail = ({
             <Section style={{ height: "30px" }}>&nbsp;</Section>
 
             <Text data-darkreader-inline-color="">
-              Thanks!
+              Sincerely,
               <br />
               The HHN Team
             </Text>
           </Section>
 
-          {/* Divider */}
           <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Column style={sectionBorder} />
             <Column style={sectionCenter} />
             <Column style={sectionBorder} />
           </Row>
 
-          {/* Footer */}
           <Section style={footer}>
-            {/* Logo */}
             <Section style={logo} data-darkreader-inline-bgcolor="">
               <Img
                 src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -145,7 +137,7 @@ export const VerifyEmailEmail = ({
                 alt="HHN"
               />
             </Section>
-            {/* Socials */}
+
             <Row>
               <Column
                 align="right"
@@ -172,30 +164,28 @@ export const VerifyEmailEmail = ({
               </Column>
             </Row>
 
-            {/* Other links */}
             <Text style={footerLinksWrapper}>
-              <Link href="https://www.famlam.ca/" style={footerLinks}>
+              <Link href={`${baseUrl}/about`} style={footerLinks}>
                 About
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/projects/" style={footerLinks}>
+              <Link href={`${baseUrl}/projects`} style={footerLinks}>
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/docs/" style={footerLinks}>
+              <Link href={`${baseUrl}/docs`} style={footerLinks}>
                 Docs
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/contact/" style={footerLinks}>
+              <Link href={`${baseUrl}/contact`} style={footerLinks}>
                 Contact
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/terms/" style={footerLinks}>
-                Terms
+              <Link href={`${baseUrl}/support`} style={footerLinks}>
+                Support
               </Link>
             </Text>
 
-            {/* © */}
             <Text
               style={{
                 textAlign: "center",

@@ -1,19 +1,22 @@
 "use server";
 
+import { render } from "@react-email/components";
+import levenshtein from "fast-levenshtein";
 import jwt from "jsonwebtoken";
 import { generateId } from "lucia";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { db } from "@/lib/db";
 import { transporter } from "@/lib/email-transporter";
 import { getUser } from "@/lib/services/user-service";
 import { EmailTemplates } from "@/types";
+import { SupportFormSchema } from "@/types/support-form-schema";
 import { ResetPasswordSchemaStep1 } from "@/types/user-schema";
-
-import { render } from "@react-email/components";
 
 import { PasswordWasResetEmail } from "../../../emails/password-was-reset";
 import { ResetPasswordEmail } from "../../../emails/reset-password";
+import { SupportTicketEmail } from "../../../emails/support-ticket";
 import { TestEmail } from "../../../emails/test-email";
 import { VerifyEmailEmail } from "../../../emails/verify-email";
 
@@ -33,6 +36,7 @@ export const sendEmail = async ({
     VerifyEmail: VerifyEmailEmail,
     ResetPassword: ResetPasswordEmail,
     PasswordWasReset: PasswordWasResetEmail,
+    SupportTicket: SupportTicketEmail,
   };
 
   if (template && emailComponents[template]) {
@@ -41,7 +45,7 @@ export const sendEmail = async ({
 
     transporter.sendMail({
       from: `"Humble Home Network" <${process.env.EMAIL_USER}>`,
-      to,
+      to: to ? to : "fglp.cm@gmail.com",
       subject,
       html: body,
     });
@@ -99,7 +103,8 @@ export const resendVerificationEmail = async (email: string) => {
 
     if (!existingCode) {
       return {
-        error: "Verification code not found",
+        success: false,
+        message: "Verification code not found",
       };
     }
 
@@ -211,10 +216,10 @@ export const sendNewVerificationEmail = async (email: string) => {
     } else if (existingCode) {
       const sentAt = new Date(existingCode.sentAt);
       const isOneMinutePassed = new Date().getTime() - sentAt.getTime() > 60000; // 1 minute
-
       if (!isOneMinutePassed) {
         return {
-          error:
+          success: false,
+          message:
             "Please wait " +
             (60 -
               Math.floor((new Date().getTime() - sentAt.getTime()) / 1000)) +
@@ -360,4 +365,119 @@ export const sendPasswordWasResetEmail = async (email: string) => {
     template: "PasswordWasReset",
     data: data,
   });
+};
+
+export const sendSupportTicketEmail = async (
+  values: z.infer<typeof SupportFormSchema>,
+) => {
+  try {
+    try {
+      SupportFormSchema.parse(values);
+    } catch (error) {
+      return {
+        success: false,
+        message: "Invalid form data",
+      };
+    }
+
+    const { user } = await getUser({ email: values.email });
+    if (!user) {
+      return {
+        success: false,
+        message: "Please use the email associated with your account",
+      };
+    }
+
+    const existingTickets = await db.supportTicket.findMany({
+      where: {
+        senderEmail: values.email,
+      },
+    });
+    if (Array.isArray(existingTickets) && existingTickets.length > 0) {
+      const sentAt = new Date(existingTickets[0].sentAt);
+      if (!isNaN(sentAt.getTime())) {
+        const isTenMinutesPassed =
+          new Date().getTime() - sentAt.getTime() > 600000; // 10 minutes
+        if (!isTenMinutesPassed) {
+          return {
+            success: false,
+            message:
+              "Please wait " +
+              (10 -
+                Math.floor((new Date().getTime() - sentAt.getTime()) / 60000)) +
+              " minute(s) before sending another email.",
+          };
+        }
+      }
+    }
+    for (let ticket of existingTickets) {
+      const subjectDistance = levenshtein.get(ticket.subject, values.subject);
+      const messageDistance = levenshtein.get(ticket.message, values.message);
+      const subjectThreshold = 50;
+      const messageThreshold = 100;
+
+      if (
+        subjectDistance < subjectThreshold &&
+        messageDistance < messageThreshold
+      ) {
+        return {
+          success: false,
+          message: "Support ticket already sent",
+        };
+      }
+    }
+
+    try {
+      await db.supportTicket.create({
+        data: {
+          id: generateId(15),
+          senderUsername: user.username,
+          senderName: values.name,
+          senderEmail: values.email,
+          subject: values.subject,
+          message: values.message,
+          sentAt: new Date(),
+        },
+      });
+
+      await sendEmail({
+        to: "fglp.cm@gmail.com",
+        subject: values.subject,
+        data: {
+          username: values.username,
+          email: values.email,
+          message: values.message,
+        },
+      });
+      await sendEmail({
+        to: values.email,
+        subject: values.subject,
+        template: "SupportTicket",
+        data: {
+          username: values.username,
+          subject: values.subject,
+          email: values.email,
+          message: values.message,
+        },
+      });
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+
+    revalidatePath("/support");
+
+    return {
+      success: true,
+      message: "Support ticket sent!",
+      description: "We will get back to you as soon as possible.",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      messge: error.message,
+    };
+  }
 };

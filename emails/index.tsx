@@ -31,7 +31,6 @@ export const Email = ({ data: { username } }: EmailProps) => {
       <Preview>Verify Your Email Address</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Logo */}
           <Section style={logo} data-darkreader-inline-bgcolor="">
             <Img
               src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -40,14 +39,12 @@ export const Email = ({ data: { username } }: EmailProps) => {
             />
           </Section>
 
-          {/* Divider */}
           <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Column style={sectionBorder} />
             <Column style={sectionCenter} />
             <Column style={sectionBorder} />
           </Row>
 
-          {/* Content */}
           <Section style={content} data-darkreader-inline-bgcolor="">
             <Text data-darkreader-inline-color="">
               Hi, {username}!
@@ -56,16 +53,13 @@ export const Email = ({ data: { username } }: EmailProps) => {
             </Text>
           </Section>
 
-          {/* Divider */}
           <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
             <Column style={sectionBorder} />
             <Column style={sectionCenter} />
             <Column style={sectionBorder} />
           </Row>
 
-          {/* Footer */}
           <Section style={footer}>
-            {/* Logo */}
             <Section style={logo} data-darkreader-inline-bgcolor="">
               <Img
                 src={`${baseUrl}/logo/full/logo-full-dark-blue-s.png`}
@@ -73,7 +67,7 @@ export const Email = ({ data: { username } }: EmailProps) => {
                 alt="HHN"
               />
             </Section>
-            {/* Socials */}
+
             <Row>
               <Column
                 align="right"
@@ -100,30 +94,28 @@ export const Email = ({ data: { username } }: EmailProps) => {
               </Column>
             </Row>
 
-            {/* Other links */}
             <Text style={footerLinksWrapper}>
-              <Link href="https://www.famlam.ca/" style={footerLinks}>
+              <Link href={`${baseUrl}/about`} style={footerLinks}>
                 About
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/projects/" style={footerLinks}>
+              <Link href={`${baseUrl}/projects`} style={footerLinks}>
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/docs/" style={footerLinks}>
+              <Link href={`${baseUrl}/docs`} style={footerLinks}>
                 Docs
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/contact/" style={footerLinks}>
+              <Link href={`${baseUrl}/contact`} style={footerLinks}>
                 Contact
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href="https://www.famlam.ca/terms/" style={footerLinks}>
-                Terms
+              <Link href={`${baseUrl}/support`} style={footerLinks}>
+                Support
               </Link>
             </Text>
 
-            {/* © */}
             <Text
               style={{
                 textAlign: "center",

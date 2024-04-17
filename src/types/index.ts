@@ -55,4 +55,5 @@ export type EmailTemplates =
   | "TestEmail"
   | "VerifyEmail"
   | "ResetPassword"
-  | "PasswordWasReset";
+  | "PasswordWasReset"
+  | "SupportTicket";

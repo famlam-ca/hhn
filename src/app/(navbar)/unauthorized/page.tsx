@@ -52,7 +52,7 @@ const Unauthorized = () => {
                 </Link>
                 <p className="text-muted">|</p>
                 <Link
-                  href="/contact"
+                  href="/support"
                   className={buttonVariants({
                     variant: "secondary",
                   })}

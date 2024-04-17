@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getAllUsers } from "@/lib/services/user-service";
 
 import { Admin } from "./_components/admin";
-import { Users } from "./_components/columns";
+import { Users } from "./_components/user-table/columns";
 
 async function getData(): Promise<Users[]> {
   const userData = await getAllUsers();

@@ -94,7 +94,7 @@ const ErrorPage = ({
             Looks like something went wrong. If this error persists please
             contact{" "}
             <Link
-              href="/contact"
+              href="/support"
               className="underline underline-offset-2 hover:text-primary"
             >
               support

@@ -1,8 +1,9 @@
 import {
   Body,
-  Container,
   Column,
+  Container,
   Head,
+  Heading,
   Html,
   Img,
   Link,
@@ -12,30 +13,27 @@ import {
   Text,
 } from "@react-email/components";
 
-interface PasswordWasResetProps {
-  data: {
-    username?: string;
-    updatedDate?: Date;
-  };
-}
-
 const baseUrl = process.env.NEXT_URL
   ? `${process.env.NEXT_URL}`
   : "http://localhost:3000";
 
-export const PasswordWasResetEmail = ({
-  data: { username, updatedDate },
-}: PasswordWasResetProps) => {
+interface SupportTicketEmailProps {
+  data: {
+    username?: string;
+    subject?: string;
+    message?: string;
+  };
+}
+
+export const SupportTicketEmail = ({
+  data: { username, subject, message },
+}: SupportTicketEmailProps) => {
   const year = new Date().getFullYear();
-  const formattedDate = new Intl.DateTimeFormat("en", {
-    dateStyle: "medium",
-    timeStyle: "medium",
-  }).format(updatedDate);
 
   return (
     <Html>
       <Head />
-      <Preview>You updated the password for your account</Preview>
+      <Preview>Support Ticket</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={logo} data-darkreader-inline-bgcolor="">
@@ -46,47 +44,57 @@ export const PasswordWasResetEmail = ({
             />
           </Section>
 
-          <Section style={sectionsBorders} data-darkreader-inline-bgcolor="">
-            <Row>
-              <Column style={sectionBorder} />
-              <Column style={sectionCenter} />
-              <Column style={sectionBorder} />
-            </Row>
-          </Section>
+          <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
+            <Column style={sectionBorder} />
+            <Column style={sectionCenter} />
+            <Column style={sectionBorder} />
+          </Row>
 
           <Section style={content} data-darkreader-inline-bgcolor="">
             <Text data-darkreader-inline-color="">Hi {username},</Text>
 
             <Text data-darkreader-inline-color="">
-              You updated the password for your account on {formattedDate}. If
-              this was you, then no further action is required.
+              We are truly sorry to hear that you are experiencing difficulties.
+              We understand how frustrating this can be and we want to assure
+              you that your issue is our top priority.
             </Text>
 
             <Text data-darkreader-inline-color="">
-              However if you did NOT perform this password change, please{" "}
-              <Link href={`${baseUrl}/u/${username}/account`} style={link}>
-                reset your password
+              Our team is working diligently to resolve your problem. We
+              appreciate your patience and understanding during this time.
+            </Text>
+
+            <Text data-darkreader-inline-color="">
+              In the meantime, if you have any additional information that you
+              think might help us solve your issue faster, please don't hesitate
+              to{" "}
+              <Link href={`${baseUrl}/contact`} style={link}>
+                contact
               </Link>{" "}
-              immediately.
+              us. This could include any error messages, screenshots, or steps
+              you've already taken to try to resolve the issue, as it will
+              assist us in providing you with a more effective solution.
             </Text>
 
             <Text data-darkreader-inline-color="">
-              Remember to use a password that is both strong and unique to your
-              account. To learn more about how to create a strong and unique
-              password,{" "}
-              <Link
-                href="https://support.google.com/googleone/answer/12262531?hl=en"
-                style={link}
-              >
-                click here.
-              </Link>
+              We value your support and are committed to providing you with the
+              best service possible.
             </Text>
 
             <Text data-darkreader-inline-color="">
-              Still have questions? Please contact{" "}
-              <Link href={`${baseUrl}/support`} style={link}>
-                Support
-              </Link>
+              We have included the details of your support ticket below:
+            </Text>
+            <Text data-darkreader-inline-color="">
+              {subject}
+              <br />
+              {message}
+            </Text>
+
+            <Section style={{ height: "30px" }}>&nbsp;</Section>
+
+            <Text data-darkreader-inline-color="">
+              Thank you for being a part of HHN. We appreciate your patience and
+              look forward to resolving this issue for you.
             </Text>
 
             <Text data-darkreader-inline-color="">
@@ -96,13 +104,11 @@ export const PasswordWasResetEmail = ({
             </Text>
           </Section>
 
-          <Section style={sectionsBorders} data-darkreader-inline-bgcolor="">
-            <Row>
-              <Column style={sectionBorder} />
-              <Column style={sectionCenter} />
-              <Column style={sectionBorder} />
-            </Row>
-          </Section>
+          <Row style={sectionsBorders} data-darkreader-inline-bgcolor="">
+            <Column style={sectionBorder} />
+            <Column style={sectionCenter} />
+            <Column style={sectionBorder} />
+          </Row>
 
           <Section style={footer}>
             <Section style={logo} data-darkreader-inline-bgcolor="">
@@ -118,7 +124,7 @@ export const PasswordWasResetEmail = ({
                 align="right"
                 style={{ width: "50%", paddingRight: "8px" }}
               >
-                <Link href="https://www.famlam.ca">
+                <Link href={`${baseUrl}`}>
                   <Img
                     src={`${baseUrl}/logo/logo512-dark-s.png`}
                     alt="Website"
@@ -170,7 +176,6 @@ export const PasswordWasResetEmail = ({
                 paddingTop: "10px",
                 paddingBottom: "30px",
               }}
-              data-darkreader-inline-color=""
             >
               © {year} HHN™, All Rights Reserved <br />
             </Text>
@@ -181,14 +186,15 @@ export const PasswordWasResetEmail = ({
   );
 };
 
-PasswordWasResetEmail.PreviewProps = {
+SupportTicketEmail.PreviewProps = {
   data: {
     username: "SlickYeet",
-    updatedDate: new Date("June 23, 2022 4:06:00 pm UTC"),
+    subject: "Support Ticket",
+    message: "Hello, I have a problem with my account.",
   },
-} as PasswordWasResetProps;
+} as SupportTicketEmailProps;
 
-export default PasswordWasResetEmail;
+export default SupportTicketEmail;
 
 const fontFamily = "Inter,Inter,Arial,sans-serif";
 

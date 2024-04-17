@@ -36,10 +36,6 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
 
   const [isPending, startTransition] = useTransition();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const [showResendVerificationEmail, setShowResendVerificationEmail] =
     useState<boolean>(false);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
@@ -47,6 +43,10 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
       countStart: 60,
       intervalMs: 1000,
     });
+
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   useEffect(() => {
     if (count === 0) {
