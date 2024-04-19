@@ -4,9 +4,13 @@ import { Image, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useSession } from "@/providers/session-provider";
+
 import { MobileNavItem } from "./mobile-nav-item";
 
 export const MobileNav = () => {
+  const { user } = useSession();
+
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -18,11 +22,18 @@ export const MobileNav = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  const closeOnCurrent = (href: string) => {
+    if (pathname === href) {
+      toggleOpen();
+    }
+  };
+
   const routes = [
     {
-      label: "placeholder",
+      label: "Bulk Actions",
       icon: Image,
       href: "/dashboard",
+      isNotAdmin: user?.role !== "admin",
       isLast: true,
     },
   ];
@@ -44,6 +55,7 @@ export const MobileNav = () => {
                 href={route.href}
                 icon={route.icon}
                 isLast={route.isLast}
+                onClick={() => closeOnCurrent(route.href)}
               />
             ))}
           </ul>

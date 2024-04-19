@@ -74,7 +74,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
     }
 
     startTransition(async () => {
-      updateUser({
+      await updateUser({
         id: user.id,
         email: values.email,
         isEmailVerified: values.email ? false : true,
@@ -82,7 +82,7 @@ export const EditProfile = ({ user }: ProfileProps) => {
         bio: values.bio,
         image: values.image,
       })
-        .then(async () => {
+        .then(() => {
           const updatedFields = [];
           if (values.display_name !== user.display_name) {
             updatedFields.push("Display name");

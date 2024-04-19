@@ -1,13 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-interface PageProps {
-  params: {
-    username: string;
-  };
-}
-
-const AdminUsernamePage = ({ params }: PageProps) => {
+const AdminUsernamePage = ({ params }: { params: { username: string } }) => {
   return (
     <div className="h-[calc(100vh-3rem)]">
       <div className="flex h-full flex-col items-center justify-center space-y-4">

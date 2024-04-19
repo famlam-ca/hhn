@@ -52,20 +52,20 @@ const Navbar = () => {
             </h2>
           </Link>
 
-          <MobileNav username={user?.username} isAuth={!!user} />
+          <div className="flex items-center gap-x-4">
+            <MobileNav isAuth={!!user} />
 
-          <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
-            {routes.map((route) => (
-              <NavItem
-                key={route.href}
-                label={route.label}
-                href={route.href}
-                target={route.target}
-              />
-            ))}
+            <ul className="hidden items-center space-x-4 text-xs font-semibold sm:flex">
+              {routes.map((route) => (
+                <NavItem
+                  key={route.href}
+                  label={route.label}
+                  href={route.href}
+                  target={route.target}
+                />
+              ))}
 
-            {!user ? (
-              <>
+              {!!user && (
                 <Link
                   href={`/auth/sign-in?callbackUrl=${pathname}`}
                   className={buttonVariants({
@@ -75,11 +75,10 @@ const Navbar = () => {
                   Sign In
                   <LogIn className="ml-1 h-5 w-5" />
                 </Link>
-              </>
-            ) : (
-              <UserNav user={user} pathname={pathname} />
-            )}
-          </ul>
+              )}
+            </ul>
+            {!!user && <UserNav user={user} pathname={pathname} />}
+          </div>
         </div>
       </MaxWidthWrapper>
     </nav>

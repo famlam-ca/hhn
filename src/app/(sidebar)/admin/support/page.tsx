@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
-import { SupportTicketsTable } from "../_components/support-tickets-table";
-import { supportTicketColumns } from "../_components/support-tickets-table/columns";
+import { SupportTicket } from "@/types";
+
+import { SupportTicketsTable } from "./_components/support-tickets-table";
+import { supportTicketColumns } from "./_components/support-tickets-table/columns";
 
 const AdminSupport = async () => {
-  const data = (await db.supportTicket.findMany()) as [];
+  const data = (await db.supportTicket.findMany()) as SupportTicket[];
 
   return <SupportTicketsTable columns={supportTicketColumns} data={data} />;
 };

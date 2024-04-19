@@ -33,7 +33,7 @@ const ContactPage = () => {
 
   return (
     <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] w-full items-center justify-center">
-      <Wrapper className="flex items-center justify-center gap-6">
+      <Wrapper className="flex flex-col items-center justify-center gap-6 max-sm:space-y-6 sm:flex-row">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
             Get in contact with me!
@@ -67,14 +67,21 @@ const ContactPage = () => {
               </button>
             </div>
 
-            <p className="font-bold">More about me and what I do here:</p>
+            <p className="font-bold">More about me and what I do:</p>
+
             <div className="flex items-center gap-x-4">
               <Button variant="link" size="none" asChild>
                 <Link href="/slickyeet">@SlickYeet</Link>
               </Button>
               <Button variant="link" size="none" asChild>
                 <Link href="/about">
-                  Read more
+                  Learn more
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="link" size="none" asChild>
+                <Link href="/projects">
+                  Projects
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
@@ -83,7 +90,7 @@ const ContactPage = () => {
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          <Avatar className="aspect-square h-80 w-80 outline outline-offset-8 outline-border">
+          <Avatar className="aspect-square h-52 w-52 outline outline-offset-8 outline-border sm:h-80 sm:w-80">
             <AvatarImage
               src="https://github.com/SlickYeet.png"
               alt="SlickYeet.png"

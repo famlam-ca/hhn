@@ -22,6 +22,12 @@ export const MobileNav = ({ username }: MobileNavProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  const closeOnCurrent = (href: string) => {
+    if (pathname === href) {
+      toggleOpen();
+    }
+  };
+
   const routes = [
     {
       label: "Support Tickets",
@@ -53,6 +59,7 @@ export const MobileNav = ({ username }: MobileNavProps) => {
                 href={route.href}
                 icon={route.icon}
                 isLast={route.isLast}
+                onClick={() => closeOnCurrent(route.href)}
               />
             ))}
           </ul>

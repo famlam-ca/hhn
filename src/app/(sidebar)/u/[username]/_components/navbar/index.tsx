@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
+import { UserNav } from "@/components/user-nav";
 import { CustomUser } from "@/types";
 
 import { MobileNav } from "./mobile-nav";
@@ -46,18 +47,23 @@ export const Navbar = ({ user }: NavbarProps) => {
             </h2>
           </Link>
 
-          <MobileNav username={user.username} />
+          <div className="flex items-center gap-x-4">
+            <MobileNav username={user.username} />
 
-          <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground sm:flex">
-            {routes.map((route) => (
-              <NavItem
-                key={route.href}
-                label={route.label}
-                icon={route.icon}
-                href={route.href}
-              />
-            ))}
-          </ul>
+            <div className="hidden gap-4 sm:flex">
+              <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground sm:flex">
+                {routes.map((route) => (
+                  <NavItem
+                    key={route.href}
+                    label={route.label}
+                    icon={route.icon}
+                    href={route.href}
+                  />
+                ))}
+              </ul>
+            </div>
+            {!!user && <UserNav user={user} pathname={`/${user.username}`} />}
+          </div>
         </div>
       </MaxWidthWrapper>
     </nav>

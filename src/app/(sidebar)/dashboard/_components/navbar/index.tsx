@@ -31,24 +31,26 @@ export const Navbar = async () => {
             </h2>
           </Link>
 
-          <MobileNav />
+          <div className="flex items-center gap-x-4">
+            <MobileNav />
 
-          {user && (
-            <div className="hidden gap-4 sm:flex">
-              <ul className="flex items-center space-x-4 font-semibold text-muted-foreground">
-                {routes.map((route) => (
-                  <NavItem
-                    key={route.href}
-                    label={route.label}
-                    icon={route.icon}
-                    href={route.href}
-                    isNotAdmin={route.isNotAdmin}
-                  />
-                ))}
-              </ul>
-              <UserNav user={user} pathname="/dashboard" />
-            </div>
-          )}
+            {user && (
+              <div className="hidden gap-4 sm:flex">
+                <ul className="flex items-center space-x-4 font-semibold text-muted-foreground">
+                  {routes.map((route) => (
+                    <NavItem
+                      key={route.href}
+                      label={route.label}
+                      icon={route.icon}
+                      href={route.href}
+                      isNotAdmin={route.isNotAdmin}
+                    />
+                  ))}
+                </ul>
+              </div>
+            )}
+            {!!user && <UserNav user={user} pathname="/dashboard" />}
+          </div>
         </div>
       </MaxWidthWrapper>
     </nav>

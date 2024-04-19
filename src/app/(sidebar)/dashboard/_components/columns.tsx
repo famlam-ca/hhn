@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 import { TableColumnHeader } from "@/components/column-header";
@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 import { useSession } from "@/providers/session-provider";
 import { ServerData, ServerType } from "@/types";
 
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ServerActions } from "./server-actions";
 
@@ -234,10 +233,10 @@ export const columns: ColumnDef<ServerData>[] = [
           {user?.role === "admin" && session && (
             <Link
               href={`/dashboard/server/${type}/${row.getValue("vmid")}`}
-              className="group flex items-center text-muted-foreground hover:text-text"
+              className="flex items-center text-muted-foreground hover:text-text"
             >
               Details
-              <ArrowRightIcon className="ml-1 h-4 w-4 transition-all group-hover:ml-2" />
+              <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
           )}
         </>
@@ -260,5 +259,7 @@ export const columns: ColumnDef<ServerData>[] = [
         </>
       );
     },
+    enableSorting: false,
+    enableHiding: false,
   },
 ];

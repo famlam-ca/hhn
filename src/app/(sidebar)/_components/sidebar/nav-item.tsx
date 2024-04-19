@@ -50,12 +50,12 @@ export const NavItem = ({
             )}
           />
           {!collapsed && (
-            <>
-              <span>{label}</span>
+            <span className="hidden sm:block">
+              <p>{label}</p>
               {target && (
                 <ArrowUpRight className="relative -top-1 right-4 h-3 w-3" />
               )}
-            </>
+            </span>
           )}
         </div>
       </Link>

@@ -7,11 +7,10 @@ import { useEffect, useState } from "react";
 import { MobileNavItem } from "./mobile-nav-item";
 
 interface MobileNavProps {
-  username?: string;
   isAuth: boolean;
 }
 
-export const MobileNav = ({ username, isAuth }: MobileNavProps) => {
+export const MobileNav = ({ isAuth }: MobileNavProps) => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -72,22 +71,11 @@ export const MobileNav = ({ username, isAuth }: MobileNavProps) => {
                   label={route.label}
                   href={route.href}
                   icon={route.icon}
+                  onClick={() => closeOnCurrent(route.href)}
                 />
                 <div className="h-px w-full bg-accent" />
               </>
             ))}
-
-            {isAuth && (
-              <>
-                <MobileNavItem
-                  label="Profile"
-                  href={`/u/${username}`}
-                  className="items-center gap-2"
-                  IconClassName="w-4 h-4"
-                />
-                <div className="h-px w-full bg-accent" />
-              </>
-            )}
 
             <MobileNavItem
               label={isAuth ? "Sign Out" : "Sign In"}

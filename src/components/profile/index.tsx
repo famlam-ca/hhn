@@ -1,7 +1,6 @@
 "use client";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { useUserToken } from "@/hooks/use-user-token";
 import { CustomUser } from "@/types";
 
 import { Banner, BannerSkeleton } from "./banner";
@@ -9,12 +8,6 @@ import { Bio, BioSkeleton } from "./bio";
 import { Header, HeaderSkeleton } from "./header";
 
 export const Profile = ({ user }: { user: CustomUser }) => {
-  const { identity } = useUserToken(user.id);
-
-  if (!identity) {
-    return <ProfileSkeleton />;
-  }
-
   return (
     <div>
       <Banner display_name={user.display_name} />

@@ -28,15 +28,16 @@ export const EditProfileSchema = z.object({
     ),
   bio: z
     .string()
-    .refine((v) =>
-      /^.{0,200}$/.test("Bio must be at most 200 characters long."),
+    .refine(
+      (v) => /^.{0,200}$/.test(v),
+      "Bio must be at most 200 characters long.",
     ),
   image: z
     .string()
     .url()
     .refine(
       (v) =>
-        /^https:\/\/(utfs.io\/f\/[^\/]+\.png|www.famlam.ca\/logo\/[^\/]+\.png)$/.test(
+        /^https:\/\/(utfs.io\/f\/[^\/]+\.png|www.famlam.ca\/logo\/[^\/]+\.png|github.com\/[^\/]+\.png)$/.test(
           v,
         ),
       "Invalid image URL.",

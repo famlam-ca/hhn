@@ -120,7 +120,7 @@ export const Navigation = () => {
               icon={session ? LogOut : LogIn}
               href={
                 session
-                  ? `/auth/sign-out?callbackUrl=${pathname}`
+                  ? `/auth/sign-out?callbackUrl=${pathname === `/u/${user?.username}` ? `/${user?.username}` : pathname}`
                   : `/auth/sign-in?callbackUrl=${pathname}`
               }
             />

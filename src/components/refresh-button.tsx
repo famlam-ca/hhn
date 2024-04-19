@@ -5,17 +5,12 @@ import { useEffect } from "react";
 
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
 import { useRefresh } from "@/hooks/use-refresh";
 
 export const RefreshButton = ({ interval = 30000 }) => {
   const { isDisabled, refresh } = useRefresh(interval);
 
   const handleClick = () => {
-    toast({
-      title: "Refreshed data...",
-      duration: 2000,
-    });
     refresh();
   };
 

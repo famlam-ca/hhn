@@ -5,12 +5,12 @@ import { sendTestEmail } from "@/lib/services/email-service";
 import { EmailTemplates } from "@/types";
 
 export const SendTestEmail = ({
-  email,
+  to,
   subject,
   template,
   data,
 }: {
-  email: string;
+  to: string;
   subject: string;
   template?: EmailTemplates;
   data: {};
@@ -18,10 +18,10 @@ export const SendTestEmail = ({
   return (
     <Button
       onClick={async () => {
-        await sendTestEmail({ email, subject, template, data });
+        await sendTestEmail({ to, subject, template, data });
       }}
     >
-      Send Email
+      Send Test Email
     </Button>
   );
 };

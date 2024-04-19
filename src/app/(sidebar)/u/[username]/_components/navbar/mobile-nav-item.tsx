@@ -10,6 +10,7 @@ interface MobileNavItemProps {
   href: string;
   icon: LucideIcon;
   isLast?: boolean;
+  onClick?: () => void;
 }
 
 export const MobileNavItem = ({
@@ -17,11 +18,12 @@ export const MobileNavItem = ({
   href,
   icon: Icon,
   isLast,
+  onClick,
 }: MobileNavItemProps) => {
   return (
     <>
       <li>
-        <Button variant="ghost" asChild>
+        <Button variant="ghost" onClick={onClick} asChild>
           <Link href={href} className="w-full">
             <span className="flex w-full">
               <Icon className="mr-2 h-5 w-5" />

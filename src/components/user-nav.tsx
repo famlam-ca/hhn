@@ -42,7 +42,7 @@ export const UserNav = ({
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button
           variant="ghost"
-          className="aspect-square h-8 w-8 rounded-full bg-transparent ring-2 ring-primary ring-offset-2"
+          className="z-10 aspect-square h-8 w-8 rounded-full bg-transparent ring-2 ring-primary ring-offset-2"
         >
           <Avatar className="relative h-8 w-8">
             {user.image ? (

@@ -44,7 +44,6 @@ export const getUser = async (
           }
         : undefined,
   });
-
   if (!dbUser) {
     return {
       success: false,
@@ -53,6 +52,7 @@ export const getUser = async (
   }
 
   return {
+    success: true,
     user: dbUser,
   };
 };
@@ -357,7 +357,7 @@ export const isEmailVerified = async (email: string) => {
   }
 };
 
-// Error required for user identify
+// Modify error handling
 export const getSelf = async ({ username }: { username?: string }) => {
   const { user } = await validateSession();
   const self = user;

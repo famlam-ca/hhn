@@ -1,14 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { CloudCog } from "lucide-react";
+import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { UserNav } from "@/components/user-nav";
+import { useSession } from "@/providers/session-provider";
 
-import { NavItem } from "./nav-item";
 import { MobileNav } from "./mobile-nav";
+import { NavItem } from "./nav-item";
 
 export const Navbar = () => {
+  const { user } = useSession();
+
   const routes = [
     {
       label: "API",
@@ -27,18 +31,23 @@ export const Navbar = () => {
             </h2>
           </Link>
 
-          <MobileNav />
+          <div className="flex items-center gap-x-4">
+            <MobileNav />
 
-          <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground lg:flex">
-            {routes.map((route) => (
-              <NavItem
-                key={route.href}
-                label={route.label}
-                icon={route.icon}
-                href={route.href}
-              />
-            ))}
-          </ul>
+            <div className="hidden gap-4 sm:flex">
+              <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground lg:flex">
+                {routes.map((route) => (
+                  <NavItem
+                    key={route.href}
+                    label={route.label}
+                    icon={route.icon}
+                    href={route.href}
+                  />
+                ))}
+              </ul>
+            </div>
+            {!!user && <UserNav user={user} pathname="/docs" />}
+          </div>
         </div>
       </MaxWidthWrapper>
     </nav>

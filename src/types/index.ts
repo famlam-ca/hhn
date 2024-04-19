@@ -57,3 +57,18 @@ export type EmailTemplates =
   | "ResetPassword"
   | "PasswordWasReset"
   | "SupportTicket";
+
+export type TicketStatus = "open" | "closed" | "pending" | "resolved";
+
+export type SupportTicket = {
+  id: string;
+  senderUsername: string | null;
+  senderName: string | null;
+  senderEmail: string;
+  subject: string;
+  message: string;
+  status: TicketStatus;
+  createdAt: Date;
+  updatedAt: Date;
+  sentAt: Date;
+};

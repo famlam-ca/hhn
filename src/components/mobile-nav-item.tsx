@@ -11,6 +11,7 @@ interface MobileNavItemProps {
   icon?: LucideIcon;
   className?: string;
   IconClassName?: string;
+  onClick?: () => void;
 }
 
 const style = "w-full";
@@ -22,10 +23,11 @@ export const MobileNavItem = ({
   icon: Icon,
   className,
   IconClassName,
+  onClick,
 }: MobileNavItemProps) => {
   return (
     <li>
-      <Button variant="ghost" asChild>
+      <Button variant="ghost" onClick={onClick} asChild>
         <Link href={href} target={target} className={style}>
           <span className={cn("flex w-full text-left", className)}>
             {label}

@@ -5,15 +5,15 @@ import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
+import { UserNav } from "@/components/user-nav";
+import { useSession } from "@/providers/session-provider";
 
 import { MobileNav } from "./mobile-nav";
 import { NavItem, NavItemSkeleton } from "./nav-item";
 
-interface NavbarProps {
-  username: string;
-}
+export const Navbar = ({ username }: { username: string }) => {
+  const { user } = useSession();
 
-export const Navbar = ({ username }: NavbarProps) => {
   const routes = [
     {
       label: "Support Tickets",
@@ -38,18 +38,23 @@ export const Navbar = ({ username }: NavbarProps) => {
             </h2>
           </Link>
 
-          <MobileNav username={username} />
+          <div className="flex items-center gap-x-4">
+            <MobileNav username={username} />
 
-          <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground sm:flex">
-            {routes.map((route) => (
-              <NavItem
-                key={route.href}
-                label={route.label}
-                icon={route.icon}
-                href={route.href}
-              />
-            ))}
-          </ul>
+            <div className="hidden gap-4 sm:flex">
+              <ul className="hidden items-center space-x-4 font-semibold text-muted-foreground sm:flex">
+                {routes.map((route) => (
+                  <NavItem
+                    key={route.href}
+                    label={route.label}
+                    icon={route.icon}
+                    href={route.href}
+                  />
+                ))}
+              </ul>
+            </div>
+            {!!user && <UserNav user={user} pathname="/dashboard" />}
+          </div>
         </div>
       </MaxWidthWrapper>
     </nav>

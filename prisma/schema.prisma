@@ -77,6 +77,13 @@ model resetPassword {
   sentAt    DateTime @db.Timestamp(0)
 }
 
+enum SupportTicketStatus {
+  open
+  closed
+  pending
+  resolved
+}
+
 model supportTicket {
   id String @id
 
@@ -87,7 +94,8 @@ model supportTicket {
   subject String @db.Text
   message String @db.Text
 
-  status String @default("open")
+  status        SupportTicketStatus @default(open)
+  statusMessage String?
 
   user user @relation(fields: [senderEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
 

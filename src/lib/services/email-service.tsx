@@ -14,13 +14,47 @@ import { EmailTemplates } from "@/types";
 import { SupportFormSchema } from "@/types/support-form-schema";
 import { ResetPasswordSchemaStep1 } from "@/types/user-schema";
 
-import { PasswordWasResetEmail } from "../../../emails/password-was-reset";
-import { ResetPasswordEmail } from "../../../emails/reset-password";
-import { SupportTicketEmail } from "../../../emails/support-ticket";
-import { TestEmail } from "../../../emails/test-email";
-import { VerifyEmailEmail } from "../../../emails/verify-email";
+import TestEmail from "../../../emails/test-email";
+import VerifyEmailEmail from "../../../emails/verify-email";
+import ResetPasswordEmail from "../../../emails/reset-password";
+import PasswordWasResetEmail from "../../../emails/password-was-reset";
+import SupportTicketEmail from "../../../emails/support-ticket";
+import { emailRenderer } from "@/components/email-renderer";
+
+type SendEmailType = {
+  to: string;
+  subject: string;
+  template?: EmailTemplates;
+  data: {};
+};
 
 export const sendEmail = async ({
+  to,
+  subject,
+  template,
+  data,
+}: SendEmailType) => {
+  const body = await emailRenderer({ template, data });
+  if (!body) {
+    return {
+      success: false,
+      message: "Invalid email template",
+    };
+  }
+
+  transporter.sendMail({
+    from: `"Humble Home Network" <${process.env.EMAIL_USER}>`,
+    to: to ? to : "fglp.cm@gmail.com",
+    subject,
+    html: body,
+  });
+
+  return {
+    success: true,
+  };
+};
+
+export const sendTestEmail = async ({
   to,
   subject,
   template,
@@ -31,49 +65,8 @@ export const sendEmail = async ({
   template?: EmailTemplates;
   data: {};
 }) => {
-  const emailComponents = {
-    TestEmail: TestEmail,
-    VerifyEmail: VerifyEmailEmail,
-    ResetPassword: ResetPasswordEmail,
-    PasswordWasReset: PasswordWasResetEmail,
-    SupportTicket: SupportTicketEmail,
-  };
-
-  if (template && emailComponents[template]) {
-    const EmailComponents = emailComponents[template];
-    const body = render(<EmailComponents data={data} />);
-
-    transporter.sendMail({
-      from: `"Humble Home Network" <${process.env.EMAIL_USER}>`,
-      to: to ? to : "fglp.cm@gmail.com",
-      subject,
-      html: body,
-    });
-
-    return {
-      success: true,
-    };
-  } else {
-    return {
-      success: false,
-      message: "Template not found",
-    };
-  }
-};
-
-export const sendTestEmail = async ({
-  email,
-  subject,
-  template,
-  data,
-}: {
-  email: string;
-  subject: string;
-  template?: EmailTemplates;
-  data: {};
-}) => {
   await sendEmail({
-    to: email,
+    to: to,
     subject: subject,
     template: template,
     data: data,

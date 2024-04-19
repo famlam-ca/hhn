@@ -2,24 +2,14 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 import { TableColumnHeader } from "@/components/column-header";
 import { Checkbox } from "@/components/ui/checkbox";
+import { SupportTicket } from "@/types";
 
 import { SupportTicketActions } from "./admin-support-ticket-actions";
-
-export type SupportTicket = {
-  id: string;
-  senderUsername: string;
-  senderName: string;
-  senderEmail: string;
-  subject: string;
-  message: string;
-  status: "open" | "closed" | "pending";
-  createdAt: Date;
-  updatedAt: Date;
-  sentAt: Date;
-};
 
 export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
   {
@@ -53,9 +43,11 @@ export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
       const textColor =
         row.getValue("status") === "open"
           ? "alert"
-          : row.getValue("status") === "closed"
+          : row.getValue("status") === "resolved"
             ? "success"
-            : "warning";
+            : row.getValue("status") === "pending"
+              ? "warning"
+              : "muted-foreground";
 
       return (
         <div className={`font-medium capitalize text-${textColor}`}>
@@ -63,6 +55,7 @@ export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
         </div>
       );
     },
+    enableHiding: false,
   },
   {
     accessorKey: "subject",
@@ -70,8 +63,13 @@ export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
       <TableColumnHeader column={column} title="Subject" />
     ),
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("subject")}</div>;
+      return (
+        <div className="line-clamp-1 font-medium">
+          {row.getValue("subject")}
+        </div>
+      );
     },
+    enableSorting: false,
   },
   {
     accessorKey: "message",
@@ -79,8 +77,13 @@ export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
       <TableColumnHeader column={column} title="Message" />
     ),
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("message")}</div>;
+      return (
+        <div className="line-clamp-1 font-medium">
+          {row.getValue("message")}
+        </div>
+      );
     },
+    enableSorting: false,
   },
   {
     accessorKey: "senderEmail",
@@ -143,6 +146,34 @@ export const supportTicketColumns: ColumnDef<SupportTicket>[] = [
       const formattedDate = format(sentAt, "dd/MM/yyyy");
       return <div className="font-medium">{formattedDate}</div>;
     },
+  },
+  {
+    accessorKey: "id",
+    header: ({ column }) => <TableColumnHeader column={column} title="Id" />,
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("id")}</div>;
+    },
+    enableHiding: false,
+    enableSorting: false,
+  },
+  {
+    accessorKey: "details",
+    header: ({ column }) => {
+      return <TableColumnHeader column={column} title="Details" />;
+    },
+    cell: ({ row }) => {
+      return (
+        <Link
+          href={`/admin/support/${row.getValue("id")}`}
+          className="flex items-center text-muted-foreground hover:text-text"
+        >
+          Details
+          <ArrowRight className="ml-1 h-4 w-4" />
+        </Link>
+      );
+    },
+    enableHiding: false,
+    enableSorting: false,
   },
   {
     id: "actions",
