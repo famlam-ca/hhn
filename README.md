@@ -18,7 +18,7 @@ A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") fo
 
 - [ ] Page Transitions using [Framer Motion](https://www.framer.com/motion/ "Framer Motion")
 - [ ] Emails via [SendGrid](https://login.sendgrid.com/ "SendGrid") and [Nodemailer](https://www.nodemailer.com/ "Nodemailer")
-  - [ ] send/receive 
+  - [ ] send/receive
   - [x] send verification email to user
 - [x] Proxmox API integration
   - [x] fetch guest system info
@@ -41,7 +41,6 @@ A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") fo
 - [React.js](https://react.dev "React JS")
 - [TypeScript](https://www.typescriptlang.org/ "TypeScript")
 - [Lucia-auth](https://lucia-auth.com/ "Lucia-auth")
-- ~~[NextAuth.js](https://next-auth.js.org "NextAuth JS")~~
 - [Axios](https://axios-http.com/ "Axios")
 - [Prisma](https://prisma.io "Prisma")
 - [MySQL](https://www.mysql.com/ "MySQL")

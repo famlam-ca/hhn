@@ -65,7 +65,7 @@ const Navbar = () => {
                 />
               ))}
 
-              {!!user && (
+              {!user && (
                 <Link
                   href={`/auth/sign-in?callbackUrl=${pathname}`}
                   className={buttonVariants({
