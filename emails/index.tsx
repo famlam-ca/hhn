@@ -99,7 +99,7 @@ export const Email = ({ data: { username } }: EmailProps) => {
                 About
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/projects`} style={footerLinks}>
+              <Link href={`${baseUrl}/about/projects`} style={footerLinks}>
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -111,7 +111,7 @@ export const Email = ({ data: { username } }: EmailProps) => {
                 Contact
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/support`} style={footerLinks}>
+              <Link href={`${baseUrl}/contact/support`} style={footerLinks}>
                 Support
               </Link>
             </Text>

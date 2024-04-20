@@ -91,7 +91,7 @@ export const UserNav = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href={`/u/${user.username}/profile`}>
+            <Link href={`/u/${user.username}`}>
               <UserCircle className="mr-2 h-5 w-5" />
               Profile
             </Link>
@@ -120,7 +120,7 @@ export const UserNav = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href="/support">
+            <Link href="/contact/support">
               <LifeBuoy className="mr-2 h-5 w-5" />
               Support
             </Link>

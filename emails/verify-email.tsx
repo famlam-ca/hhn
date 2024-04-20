@@ -106,7 +106,7 @@ export const VerifyEmailEmail = ({
               If you received this email by mistake or did not authorize the
               request, please&nbsp;
               <Link
-                href={`${baseUrl}/support`}
+                href={`${baseUrl}/contact/support`}
                 style={link}
                 data-darkreader-inline-color=""
               >
@@ -169,7 +169,7 @@ export const VerifyEmailEmail = ({
                 About
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/projects`} style={footerLinks}>
+              <Link href={`${baseUrl}/about/projects`} style={footerLinks}>
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -181,7 +181,7 @@ export const VerifyEmailEmail = ({
                 Contact
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/support`} style={footerLinks}>
+              <Link href={`${baseUrl}/contact/support`} style={footerLinks}>
                 Support
               </Link>
             </Text>

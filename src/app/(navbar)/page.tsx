@@ -116,7 +116,7 @@ const HomePage = () => {
                 to.
               </span>
               <Link
-                href="/projects"
+                href="/about/projects"
                 className="group/hover flex items-center font-semibold text-primary"
               >
                 Projects

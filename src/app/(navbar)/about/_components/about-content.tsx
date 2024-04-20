@@ -17,15 +17,29 @@ import { Wrapper } from "@/components/wrapper";
 const AboutContent = () => {
   return (
     <>
-      <div className="mt-8 h-64 bg-aboutBanner">
+      <div className="mt-8 h-48 bg-aboutBanner">
         <div className="flex h-full flex-col items-center justify-center text-center font-bold tracking-widest backdrop-blur-sm">
           <h1 className="text-6xl text-white sm:text-8xl">About</h1>
-          <h2 className="text-primary">A Humble Home Network</h2>
+          <h2>
+            A HUMBLE<span className="text-primary"> HOME NETWORK</span>
+          </h2>
         </div>
       </div>
 
       <MaxWidthWrapper className="my-8">
         <Wrapper className="space-y-6">
+          <div className="flex min-w-full justify-end pb-8">
+            <Link href="/about/me">
+              <Button variant="outline" asChild>
+                <span>
+                  <p className="mr-1">Next up:</p>
+                  About me
+                  <ArrowRight className="ml-0.5 h-5 w-5" />
+                </span>
+              </Button>
+            </Link>
+          </div>
+
           <section>
             <h2 className="font-bold text-muted-foreground">
               From Minecraft Servers to a Unified Web Interface: Tracing My

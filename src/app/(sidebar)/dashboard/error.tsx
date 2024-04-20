@@ -27,7 +27,7 @@ const DashboardErrorPage = ({
         <p className="text-lg text-muted-foreground">
           Looks like something went wrong. If this error persists please contact{" "}
           <Link
-            href="/support"
+            href="/contact/support"
             className="underline underline-offset-2 hover:text-primary"
           >
             support

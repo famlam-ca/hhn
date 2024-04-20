@@ -16,7 +16,7 @@ const Footer = () => {
     },
     {
       label: "Projects",
-      href: "/projects",
+      href: "/about/projects",
     },
     {
       label: "Docs",
@@ -28,7 +28,7 @@ const Footer = () => {
     },
     {
       label: "Support",
-      href: "/support",
+      href: "/contact/support",
     },
   ];
 

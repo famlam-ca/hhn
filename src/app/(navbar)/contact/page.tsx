@@ -80,7 +80,7 @@ const ContactPage = () => {
                 </Link>
               </Button>
               <Button variant="link" size="none" asChild>
-                <Link href="/projects">
+                <Link href="/about/projects">
                   Projects
                   <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>

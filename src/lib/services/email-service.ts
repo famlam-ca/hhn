@@ -1,6 +1,5 @@
 "use server";
 
-import { render } from "@react-email/components";
 import levenshtein from "fast-levenshtein";
 import jwt from "jsonwebtoken";
 import { generateId } from "lucia";
@@ -13,12 +12,6 @@ import { getUser } from "@/lib/services/user-service";
 import { EmailTemplates } from "@/types";
 import { SupportFormSchema } from "@/types/support-form-schema";
 import { ResetPasswordSchemaStep1 } from "@/types/user-schema";
-
-import TestEmail from "../../../emails/test-email";
-import VerifyEmailEmail from "../../../emails/verify-email";
-import ResetPasswordEmail from "../../../emails/reset-password";
-import PasswordWasResetEmail from "../../../emails/password-was-reset";
-import SupportTicketEmail from "../../../emails/support-ticket";
 import { emailRenderer } from "@/components/email-renderer";
 
 type SendEmailType = {
@@ -460,7 +453,7 @@ export const sendSupportTicketEmail = async (
       };
     }
 
-    revalidatePath("/support");
+    revalidatePath("/contact/support");
 
     return {
       success: true,

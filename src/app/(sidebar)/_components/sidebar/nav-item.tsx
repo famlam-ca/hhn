@@ -41,7 +41,7 @@ export const NavItem = ({
       asChild
     >
       <Link href={href} target={target}>
-        <div className="flex items-center gap-x-4">
+        <div className="flex gap-x-4">
           <Icon
             className={cn(
               "h-5 w-5",
@@ -50,8 +50,8 @@ export const NavItem = ({
             )}
           />
           {!collapsed && (
-            <span className="hidden sm:block">
-              <p>{label}</p>
+            <span className="hidden items-center gap-x-4 sm:flex">
+              {label}
               {target && (
                 <ArrowUpRight className="relative -top-1 right-4 h-3 w-3" />
               )}
