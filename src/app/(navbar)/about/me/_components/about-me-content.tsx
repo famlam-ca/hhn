@@ -92,10 +92,10 @@ export const AboutMeContent = () => {
                   a quest to carve out my place in the realm of IT. With a keen
                   eye for detail and a knack for problem-solving, I approach
                   every challenge as an opportunity for growth and learning.
-                  Whether it's delving into the intricacies of server management
-                  or diving headfirst into the world of web development, I am
-                  constantly seeking to expand my knowledge and refine my
-                  skills.
+                  Whether it&apos;s delving into the intricacies of server
+                  management or diving headfirst into the world of web
+                  development, I am constantly seeking to expand my knowledge
+                  and refine my skills.
                 </p>
                 <br />
                 <p>
@@ -108,15 +108,15 @@ export const AboutMeContent = () => {
                 </p>
                 <br />
                 <p>
-                  Thanks for dropping by! Whether you're here to explore my
-                  projects or interested in collaboration, I'm all ears. Feel
-                  free to reach out to me{" "}
+                  Thanks for dropping by! Whether you&apos;re here to explore my
+                  projects or interested in collaboration, I&apos;m all ears.
+                  Feel free to reach out to me{" "}
                   <Button variant="link" size="none" asChild>
                     <Link href="/contact">here</Link>
                   </Button>
                   , for inquiries or just to chat about anything tech-related,
-                  from web development to the latest trends in IT. Let's connect
-                  and embark on this journey together!
+                  from web development to the latest trends in IT. Let&apos;s
+                  connect and embark on this journey together!
                 </p>
               </article>
 

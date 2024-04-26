@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 import { validateSession } from "@/lib/lucia";
 import { cn } from "@/lib/utils";
-import Providers from "@/providers/providers";
+import { Providers } from "@/providers";
 import { SessionProvider } from "@/providers/session-provider";
 
 import "./globals.css";

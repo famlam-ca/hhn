@@ -4,7 +4,7 @@ import { CloudCog } from "lucide-react";
 import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { UserNav } from "@/components/user-nav";
+import { UserMenu } from "@/components/user-menu";
 import { useSession } from "@/providers/session-provider";
 
 import { MobileNav } from "./mobile-nav";
@@ -46,7 +46,7 @@ export const Navbar = () => {
                 ))}
               </ul>
             </div>
-            {!!user && <UserNav user={user} pathname="/docs" />}
+            {!!user && <UserMenu user={user} pathname="/docs" />}
           </div>
         </div>
       </MaxWidthWrapper>

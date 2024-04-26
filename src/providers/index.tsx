@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./toast-provider";
 
-const Providers = ({ children }: PropsWithChildren) => {
+export const Providers = ({ children }: PropsWithChildren) => {
   return (
     <ThemeProvider>
       {children}
@@ -11,5 +11,3 @@ const Providers = ({ children }: PropsWithChildren) => {
     </ThemeProvider>
   );
 };
-
-export default Providers;

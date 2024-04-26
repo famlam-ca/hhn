@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CustomUser } from "@/types";
 
-export const UserNav = ({
+export const UserMenu = ({
   user,
   pathname,
 }: {

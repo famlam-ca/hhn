@@ -11,8 +11,8 @@ export const FirstStepSchema = z.object({
   display_name: z
     .string()
     .refine(
-      (v) => /.{8,}/.test(v),
-      "Display name must be at least 8 characters long",
+      (v) => /.{3,}/.test(v),
+      "Display name must be at least 3 characters long",
     )
     .refine(
       (v) => /^[a-zA-Z0-9_.]+$/i.test(v),

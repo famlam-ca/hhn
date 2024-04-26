@@ -1,5 +1,9 @@
 A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends and family.
 
+## Screenshots
+
+![App Screenshot](/public/HHN.png)
+
 ## 🔗 Links
 
 #### Live Sites:
@@ -10,9 +14,8 @@ A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") fo
 
 #### Repositories:
 
-- [famlam](https://github.com/SlickYeet/famlam "famlam Github Repo")
-- ~~[play](https://github.com/SlickYeet/play "play.famlam.ca Github Repo")~~ -- merged
-- [old](https://github.com/SlickYeet/old "old.famlam.ca Github Repo")
+- [HHN](https://github.com/famlam-ca/HHN "HHN Github Repo")
+- [HHN Prototype](https://github.com/famlam-ca/HHN-Prototype "old.famlam.ca Github Repo")
 
 ## Roadmap
 
@@ -33,6 +36,8 @@ A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") fo
   - [x] can change password
   - [x] can change avatar
   - [x] user specific settings (WIP)
+- [ ] TrueNAS integration
+
 - More to come...
 
 ## Tech Stack
@@ -57,6 +62,6 @@ For support email me at lasse@famlam.ca
 - [@SlicKYeet](https://www.github.com/SlickYeet)
 - [@famlam-ca](https://www.github.com/famlam-ca)
 
-## Notes
+## License
 
-**💡** TrueNAS integration may be added.
+[MIT](https://github.com/famlam-ca/HHN/blob/master/LICENSE.md)

@@ -1,7 +1,8 @@
 {
   "name": "famlam",
-  "version": "1.0.4",
+  "version": "1.0.10",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "dev2": "email dev",
@@ -13,16 +14,15 @@
     "db:gen": "prisma generate",
     "db:studio": "prisma studio",
     "db:seed": "prisma db seed",
-    "lines": "git ls-files | grep '.ts' | xargs wc -l"
+    "shadcn": "bunx shadcn-ui@latest"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
-    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@lucia-auth/adapter-prisma": "^4.0.1",
-    "@prisma/client": "^5.12.1",
+    "@prisma/client": "^5.13.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -36,21 +36,21 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@react-email/components": "0.0.16",
-    "@tanstack/react-query": "^5.29.2",
+    "@tanstack/react-query": "^5.32.0",
     "@tanstack/react-table": "^8.16.0",
-    "@tremor/react": "^3.16.0",
-    "@uploadthing/react": "^6.4.4",
+    "@tremor/react": "^3.16.1",
+    "@uploadthing/react": "^6.5.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "fast-levenshtein": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
-    "lucia": "^3.1.1",
-    "lucide-react": "^0.368.0",
-    "next": "14.2.1",
+    "lucia": "^3.2.0",
+    "lucide-react": "^0.373.0",
+    "next": "14.2.3",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.9.13",
     "qs": "^6.12.1",
@@ -59,12 +59,12 @@
     "react-email": "2.1.1",
     "react-hook-form": "^7.51.3",
     "sharp": "^0.33.3",
-    "tailwind-merge": "^2.2.2",
+    "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.9.0",
+    "uploadthing": "^6.10.0",
     "usehooks-ts": "^3.1.0",
     "uuid": "^9.0.1",
-    "zod": "^3.22.4",
+    "zod": "^3.23.4",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -80,15 +80,15 @@
     "@types/uuid": "^9.0.8",
     "autoprefixer": "^10.4.19",
     "eslint": "^9",
-    "eslint-config-next": "14.2.1",
+    "eslint-config-next": "14.2.3",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "prisma": "^5.12.1",
+    "prisma": "^5.13.0",
     "tailwindcss": "^3.4.3",
     "tailwindcss-animated": "^1.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@8.15.7+sha256.50783dd0fa303852de2dd1557cd4b9f07cb5b018154a6e76d0f40635d6cee019"
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

@@ -1,7 +1,7 @@
+import type { Session, User } from "lucia";
 import { Lucia } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
-import type { Session, User } from "lucia";
 
 import { adapter } from "@/lib/db/adapter";
 import { CustomUser } from "@/types";
@@ -48,7 +48,7 @@ export const validateSession = cache(
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
       if (!result.session) {
@@ -56,12 +56,13 @@ export const validateSession = cache(
         cookies().set(
           sessionCookie.name,
           sessionCookie.value,
-          sessionCookie.attributes
+          sessionCookie.attributes,
         );
       }
     } catch {
       // next.js throws when you attempt to set cookie when rendering page
     }
+
     return result;
-  }
+  },
 );

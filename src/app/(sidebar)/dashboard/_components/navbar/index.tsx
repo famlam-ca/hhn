@@ -2,7 +2,7 @@ import { Image, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { UserNav } from "@/components/user-nav";
+import { UserMenu } from "@/components/user-menu";
 import { validateSession } from "@/lib/lucia";
 
 import { MobileNav } from "./mobile-nav";
@@ -49,7 +49,7 @@ export const Navbar = async () => {
                 </ul>
               </div>
             )}
-            {!!user && <UserNav user={user} pathname="/dashboard" />}
+            {!!user && <UserMenu user={user} pathname="/dashboard" />}
           </div>
         </div>
       </MaxWidthWrapper>

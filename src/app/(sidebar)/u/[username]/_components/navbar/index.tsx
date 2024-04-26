@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserNav } from "@/components/user-nav";
+import { UserMenu } from "@/components/user-menu";
 import { CustomUser } from "@/types";
 
 import { MobileNav } from "./mobile-nav";
@@ -62,7 +62,7 @@ export const Navbar = ({ user }: NavbarProps) => {
                 ))}
               </ul>
             </div>
-            {!!user && <UserNav user={user} pathname={`/${user.username}`} />}
+            {!!user && <UserMenu user={user} pathname={`/${user.username}`} />}
           </div>
         </div>
       </MaxWidthWrapper>

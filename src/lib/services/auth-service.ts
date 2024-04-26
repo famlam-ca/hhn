@@ -100,7 +100,7 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
   if (!user) {
     return {
       success: false,
-      message: "No account with that email found.",
+      message: "No account with that email found",
     };
   }
 
@@ -158,7 +158,6 @@ export const signOut = async ({ userId }: { userId?: string } = {}) => {
         where: { userId },
       });
     }
-
     if (!session) {
       return {
         success: false,
@@ -186,7 +185,6 @@ export const createUserSession = async (userId: string) => {
   });
 
   const sessionCookie = lucia.createSessionCookie(session.id);
-
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
@@ -195,7 +193,7 @@ export const createUserSession = async (userId: string) => {
 
   return {
     success: true,
-    message: "Signed in successfully",
+    message: "Signed in successfully!",
   };
 };
 

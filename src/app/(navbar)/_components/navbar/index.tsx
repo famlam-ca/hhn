@@ -8,7 +8,7 @@ import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { MobileNav } from "@/components/mobile-nav";
 import { buttonVariants } from "@/components/ui/button";
-import { UserNav } from "@/components/user-nav";
+import { UserMenu } from "@/components/user-menu";
 import { useSession } from "@/providers/session-provider";
 
 import { NavItem } from "./nav-item";
@@ -77,7 +77,7 @@ const Navbar = () => {
                 </Link>
               )}
             </ul>
-            {!!user && <UserNav user={user} pathname={pathname} />}
+            {!!user && <UserMenu user={user} pathname={pathname} />}
           </div>
         </div>
       </MaxWidthWrapper>
