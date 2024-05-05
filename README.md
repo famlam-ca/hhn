@@ -1,7 +1,5 @@
 A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends and family.
 
-## Screenshots
-
 ![App Screenshot](/public/HHN.png)
 
 ## 🔗 Links
