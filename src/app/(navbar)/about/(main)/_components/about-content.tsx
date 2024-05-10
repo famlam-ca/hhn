@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight } from "lucide-react"
+import Link from "next/link"
 
-import { Hint } from "@/components/hint";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Hint } from "@/components/hint"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Wrapper } from "@/components/wrapper";
+} from "@/components/ui/hover-card"
+import { Wrapper } from "@/components/wrapper"
 
 const AboutContent = () => {
   return (
@@ -48,7 +48,7 @@ const AboutContent = () => {
 
             <div className="my-8 h-px self-center rounded bg-border" />
 
-            <article>
+            <article className="prose lg:prose-lg max-w-full text-text">
               <p>
                 Back in 2015, my journey into building Minecraft servers for
                 myself and my friends sparked the inception of my Homelab.
@@ -57,7 +57,6 @@ const AboutContent = () => {
                 evolved significantly, even though the hardware remains
                 repurposed old PCs, now substantially more robust.
               </p>
-              <br />
               <p>
                 Over the years, upgrades have empowered me to host an expanding
                 array of services and broaden my network. Amidst these
@@ -67,7 +66,6 @@ const AboutContent = () => {
                 culminating in the development of a website designed to
                 streamline management across my network.
               </p>
-              <br />
               <p>
                 The journey to crafting this interface began with basic{" "}
                 <HoverCard>
@@ -80,8 +78,7 @@ const AboutContent = () => {
                   </Hint>
                   <Link
                     target="_blank"
-                    href="https://en.wikipedia.org/wiki/HTML5"
-                  >
+                    href="https://en.wikipedia.org/wiki/HTML5">
                     <HoverCardContent className="group/hoverContent w-80">
                       <div className="flex justify-between space-x-4">
                         <Avatar>
@@ -112,8 +109,7 @@ const AboutContent = () => {
                   </Hint>
                   <Link
                     target="_blank"
-                    href="https://en.wikipedia.org/wiki/CSS"
-                  >
+                    href="https://en.wikipedia.org/wiki/CSS">
                     <HoverCardContent className="group/hoverContent w-80">
                       <div className="flex justify-between space-x-4">
                         <Avatar>
@@ -167,7 +163,6 @@ const AboutContent = () => {
                 </HoverCard>
                 .
               </p>
-              <br />
               <p>
                 Throughout this iterative process, I found myself creating
                 additional pages partly as a diversion from the dashboard's
@@ -188,7 +183,7 @@ const AboutContent = () => {
 
             <div className="my-8 h-px self-center rounded bg-border" />
 
-            <article>
+            <article className="prose lg:prose-lg max-w-full text-text">
               <p>
                 Amidst the dynamic evolution of this project, my expectations
                 soar high. While some might perceive this as a challenge, I
@@ -197,7 +192,6 @@ const AboutContent = () => {
                 learning and experimentation, offering insights into alternative
                 features and practices.
               </p>
-              <br />
               <p>
                 Just as my journey from Minecraft servers to a unified web
                 interface began with humble origins, the future of this project
@@ -205,7 +199,6 @@ const AboutContent = () => {
                 marked by curiosity, fueled by a relentless desire to explore
                 the possibilities that lie ahead.
               </p>
-              <br />
               <p>
                 As I gaze into the horizon of this project, I see a landscape
                 ripe with opportunities for innovation and discovery. Much like
@@ -213,7 +206,6 @@ const AboutContent = () => {
                 first server, the road ahead is paved with potential, waiting to
                 be unlocked through ingenuity and perseverance.
               </p>
-              <br />
               <p>
                 My vision for this project extends beyond mere functionality;
                 it's about building a platform that not only simplifies
@@ -223,7 +215,6 @@ const AboutContent = () => {
                 I'm committed to continuously refining and enhancing the user
                 experience, one iteration at a time.
               </p>
-              <br />
               <p>
                 And just as the journey thus far has been marked by
                 experimentation and learning, so too will the future be
@@ -232,7 +223,6 @@ const AboutContent = () => {
                 expand my skill set and deepen my understanding of the
                 ever-evolving landscape of technology.
               </p>
-              <br />
               <p>
                 In essence, the future of this project is not just about
                 building a better interface or adding new features; it's about
@@ -259,7 +249,7 @@ const AboutContent = () => {
         </Wrapper>
       </MaxWidthWrapper>
     </>
-  );
-};
+  )
+}
 
-export default AboutContent;
+export default AboutContent

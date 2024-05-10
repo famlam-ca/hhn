@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   CloudCog,
@@ -10,13 +10,13 @@ import {
   User,
   UserCircle,
   UserCog,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+} from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
-import { Icons } from "@/components/icons";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,25 +25,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { CustomUser } from "@/types";
+} from "@/components/ui/dropdown-menu"
+import { CustomUser } from "@/types"
 
 export const UserMenu = ({
   user,
   pathname,
 }: {
-  user: CustomUser;
-  pathname: string | "/";
+  user: CustomUser
+  pathname: string | "/"
 }) => {
-  const full_name = `${user.first_name} ${user.last_name}`;
+  const full_name = `${user.first_name} ${user.last_name}`
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button
           variant="ghost"
-          className="z-10 aspect-square h-8 w-8 rounded-full bg-transparent ring-2 ring-primary ring-offset-2"
-        >
+          className="z-10 aspect-square h-8 w-8 rounded-full bg-transparent ring-2 ring-primary ring-offset-2">
           <Avatar className="relative h-8 w-8">
             {user.image ? (
               <div className="relative aspect-square h-full w-full">
@@ -185,5 +184,5 @@ export const UserMenu = ({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}

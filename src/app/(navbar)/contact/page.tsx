@@ -7,28 +7,13 @@ import { Hint } from "@/components/hint";
 import { MaxWidthWrapper } from "@/components/max-width-wrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
 import { Wrapper } from "@/components/wrapper";
-import { useCopyToClipboard } from "usehooks-ts";
 
 const ContactPage = () => {
-  const [copiedText, copyToClipboard] = useCopyToClipboard();
   const text = "lasse@famlam.ca";
 
   const onClick = () => {
-    copyToClipboard(text);
-    if (!copiedText) {
-      toast({
-        title: "Oops!",
-        description: "Something went wrong, please try again.",
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Email copied to clipboard!",
-        description: `${text}`,
-      });
-    }
+    window.location.href = `mailto:${text}`;
   };
 
   return (
@@ -60,8 +45,8 @@ const ContactPage = () => {
                   <Linkedin className="h-6 w-6" />
                 </Hint>
               </Link>
-              <button onClick={() => onClick()}>
-                <Hint label="Email" side="bottom" asChild>
+              <button onClick={onClick}>
+                <Hint label={text} side="bottom" asChild>
                   <Mail className="h-6 w-6" />
                 </Hint>
               </button>

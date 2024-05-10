@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react"
+import Link from "next/link"
 
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Wrapper } from "@/components/wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { Wrapper } from "@/components/wrapper"
 
-import { CertShowcase } from "./cert-showcase";
+import { CertShowcase } from "./cert-showcase"
 
 export const AboutMeContent = () => {
   const certs = [
@@ -24,7 +24,7 @@ export const AboutMeContent = () => {
       src: "/certs/aws-academy-cloud-architechting.png",
       alt: "aws-academy-cloud-architechting",
     },
-  ];
+  ]
 
   return (
     <>
@@ -68,15 +68,14 @@ export const AboutMeContent = () => {
 
               <div className="my-8 h-px self-center rounded bg-border" />
 
-              <article>
+              <article className="prose lg:prose-lg max-w-full text-text">
                 <p>
                   As a full-time student at BCIT pursuing my studies in Computer
                   Information Systems Administration{" "}
                   <Button variant="link" size="none" asChild>
                     <Link
                       href="https://www.bcit.ca/programs/computer-information-systems-administration-diploma-full-time-1930dipma/"
-                      target="_blank"
-                    >
+                      target="_blank">
                       (CISA)
                     </Link>
                   </Button>
@@ -85,7 +84,6 @@ export const AboutMeContent = () => {
                   development, a flame that continues to burn brightly as I
                   navigate the complexities of this ever-evolving field.
                 </p>
-                <br />
                 <p>
                   Driven by a relentless curiosity and a desire to master the
                   intricacies of systems administration and integration, I am on
@@ -97,7 +95,6 @@ export const AboutMeContent = () => {
                   development, I am constantly seeking to expand my knowledge
                   and refine my skills.
                 </p>
-                <br />
                 <p>
                   Through dedication, perseverance, and a genuine love for what
                   I do, I am charting a course towards my dream of becoming a
@@ -106,7 +103,6 @@ export const AboutMeContent = () => {
                   the ever-expanding tapestry of innovation and progress in the
                   world of technology.
                 </p>
-                <br />
                 <p>
                   Thanks for dropping by! Whether you&apos;re here to explore my
                   projects or interested in collaboration, I&apos;m all ears.
@@ -135,8 +131,7 @@ export const AboutMeContent = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="cursor-default font-extrabold hover:bg-transparent"
-              >
+                className="cursor-default font-extrabold hover:bg-transparent">
                 Hi, I&apos;m Lasse!
               </Button>
             </div>
@@ -171,5 +166,5 @@ export const AboutMeContent = () => {
         </Wrapper>
       </MaxWidthWrapper>
     </>
-  );
-};
+  )
+}

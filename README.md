@@ -1,7 +1,5 @@
 A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") for friends and family.
 
-## Screenshots
-
 ![App Screenshot](/public/HHN.png)
 
 ## 🔗 Links
@@ -59,8 +57,8 @@ For support email me at lasse@famlam.ca
 
 #### Authors:
 
-- [@SlicKYeet](https://www.github.com/SlickYeet)
-- [@famlam-ca](https://www.github.com/famlam-ca)
+- [@SlicKYeet](https://github.com/SlickYeet)
+- [@famlam-ca](https://github.com/famlam-ca)
 
 ## License
 

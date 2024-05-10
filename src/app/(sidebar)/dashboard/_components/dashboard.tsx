@@ -1,55 +1,55 @@
-"use client";
+"use client"
 
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
-import { LoadingSkeletong } from "@/components/loading-skeleton";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { getNodeData, getServerData } from "@/lib/services/proxmox-service";
-import { NodeData, ServerData, ServerType } from "@/types";
+import { LoadingSkeletong } from "@/components/loading-skeleton"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { getNodeData, getServerData } from "@/lib/services/proxmox-service"
+import { NodeData, ServerData, ServerType } from "@/types"
 
-import { columns } from "./columns";
-import { ServerCards } from "./server-card";
-import { ServerTable } from "./server-table";
+import { columns } from "./columns"
+import { ServerCards } from "./server-card"
+import { ServerTable } from "./server-table"
 
 export const Dashboard = () => {
-  const params = useSearchParams();
-  const type = params.get("type");
+  const params = useSearchParams()
+  const type = params.get("type")
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
-  const [serverData, setServerData] = useState<ServerData[]>([]);
-  const [nodeData, setNodeData] = useState<NodeData[]>([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
+  const [serverData, setServerData] = useState<ServerData[]>([])
+  const [nodeData, setNodeData] = useState<NodeData[]>([])
 
   useEffect(() => {
     const getData = async () => {
-      if (isFirstLoad) setIsLoading(true);
+      if (isFirstLoad) setIsLoading(true)
 
       const serverTypeMap: { [key: string]: ServerType } = {
         lxc: "lxc",
         qemu: "qemu",
-      };
-      const serverType = type ? serverTypeMap[type] : undefined;
+      }
+      const serverType = type ? serverTypeMap[type] : undefined
 
-      const serverData = await getServerData(serverType);
-      const nodeData = await getNodeData();
+      const serverData = await getServerData(serverType)
+      const nodeData = await getNodeData()
 
-      setServerData(serverData);
-      setNodeData(nodeData);
+      setServerData(serverData)
+      setNodeData(nodeData)
 
       if (isFirstLoad) {
-        setIsLoading(false);
-        setIsFirstLoad(false);
+        setIsLoading(false)
+        setIsFirstLoad(false)
       }
-    };
-    getData();
+    }
+    getData()
 
-    const interval = setInterval(getData, 30000);
-    return () => clearInterval(interval);
-  }, [type, isFirstLoad]);
+    const interval = setInterval(getData, 30000)
+    return () => clearInterval(interval)
+  }, [type, isFirstLoad])
 
   if (isLoading) {
-    return <LoadingSkeletong />;
+    return <LoadingSkeletong />
   }
 
   return (
@@ -64,5 +64,5 @@ export const Dashboard = () => {
         <ServerTable columns={columns} data={serverData} />
       </div>
     </MaxWidthWrapper>
-  );
-};
+  )
+}

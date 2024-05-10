@@ -1,8 +1,8 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react"
 
-import Footer from "@/components/footer";
+import Footer from "@/components/footer"
 
-import Navbar from "./_components/navbar";
+import Navbar from "./_components/navbar"
 
 const NavbarLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -13,8 +13,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56"
-          >
+            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56">
             <div
               style={{
                 clipPath:
@@ -26,8 +25,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56"
-          >
+            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56">
             <div
               style={{
                 clipPath:
@@ -42,8 +40,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]">
             <div
               style={{
                 clipPath:
@@ -55,8 +52,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]">
             <div
               style={{
                 clipPath:
@@ -78,8 +74,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-[50rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[55rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -top-[50rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[55rem]">
             <div
               style={{
                 clipPath:
@@ -91,8 +86,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-[50rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[55rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -top-[50rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[55rem]">
             <div
               style={{
                 clipPath:
@@ -107,8 +101,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-[25rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[50rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -top-[25rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[50rem]">
             <div
               style={{
                 clipPath:
@@ -120,8 +113,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-[25rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[50rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -top-[25rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[50rem]">
             <div
               style={{
                 clipPath:
@@ -133,7 +125,7 @@ const NavbarLayout = ({ children }: PropsWithChildren) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default NavbarLayout;
+export default NavbarLayout

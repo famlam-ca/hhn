@@ -1,15 +1,16 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState, useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { Icons } from "@/components/icons";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -18,35 +19,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { Wrapper } from "@/components/wrapper";
-import { signUp } from "@/lib/services/auth-service";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
+import { Wrapper } from "@/components/wrapper"
+import { signUp } from "@/lib/services/auth-service"
 
-import { FirstStepSchema, SecondStepSchema } from "@/types/auth-schema";
-import { ChevronLeft, Eye, EyeOff, Loader2 } from "lucide-react";
+import { FirstStepSchema, SecondStepSchema } from "@/types/auth-schema"
 
 export const SignUpForm = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [step, setStep] = useState<number>(1); // change to 1 for prod
+  const [step, setStep] = useState<number>(1) // change to 1 for prod
   const [firstStepValues, setFirstStepValues] = useState<
     Partial<z.infer<typeof FirstStepSchema>>
-  >({});
-  const [isPending, startTransition] = useTransition();
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfPassword, setShowConfPassword] = useState<boolean>(false);
+  >({})
+  const [isPending, startTransition] = useTransition()
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showConfPassword, setShowConfPassword] = useState<boolean>(false)
 
   const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
+    setShowPassword((prev) => !prev)
+  }
   const toggleConfPassword = () => {
-    setShowConfPassword((prev) => !prev);
-  };
+    setShowConfPassword((prev) => !prev)
+  }
 
   type FormValues = z.infer<typeof FirstStepSchema> &
-    z.infer<typeof SecondStepSchema>;
+    z.infer<typeof SecondStepSchema>
 
   const form = useForm<FormValues>({
     resolver: zodResolver(step === 1 ? FirstStepSchema : SecondStepSchema),
@@ -59,35 +59,35 @@ export const SignUpForm = () => {
       password: "",
       passwordConfirm: "",
     },
-  });
+  })
 
-  const username = form.watch("display_name").toLowerCase();
+  const username = form.watch("display_name").toLowerCase()
 
   const onSubmit = (values: FormValues) => {
     startTransition(async () => {
       if (step === 1) {
-        values.username = values.display_name.toLowerCase();
+        values.username = values.display_name.toLowerCase()
 
-        setFirstStepValues(values);
-        setStep(2);
+        setFirstStepValues(values)
+        setStep(2)
       } else {
-        const allValues = { ...firstStepValues, ...values };
+        const allValues = { ...firstStepValues, ...values }
 
-        const res = await signUp(allValues);
+        const res = await signUp(allValues)
         toast({
           title: res.message,
           description: res.description,
           variant: res.success ? "default" : "destructive",
-        });
+        })
         if (res.success) {
-          router.push("/auth/verify-email?email=" + values.email);
+          router.push("/auth/verify-email?email=" + values.email)
         }
       }
-    });
-  };
+    })
+  }
 
   const input_style =
-    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6";
+    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
 
   return (
     <MaxWidthWrapper className="flex min-h-screen w-full items-center justify-center">
@@ -158,8 +158,7 @@ export const SignUpForm = () => {
                     <Button
                       onClick={() => setStep(1)}
                       variant="ghost"
-                      className="absolute left-10 top-10 text-muted-foreground"
-                    >
+                      className="absolute left-10 top-10 text-muted-foreground">
                       <ChevronLeft className="-ml-2 h-5 w-5" />
                       Back
                     </Button>
@@ -240,8 +239,7 @@ export const SignUpForm = () => {
                                 onClick={togglePassword}
                                 type="button"
                                 tabIndex={-1}
-                                className="absolute right-2 top-[25%]"
-                              >
+                                className="absolute right-2 top-[25%]">
                                 {showPassword ? (
                                   <EyeOff className="h-5 w-5" />
                                 ) : (
@@ -272,8 +270,7 @@ export const SignUpForm = () => {
                                 onClick={toggleConfPassword}
                                 type="button"
                                 tabIndex={-1}
-                                className="absolute right-2 top-[25%]"
-                              >
+                                className="absolute right-2 top-[25%]">
                                 {showConfPassword ? (
                                   <EyeOff className="h-5 w-5" />
                                 ) : (
@@ -293,8 +290,7 @@ export const SignUpForm = () => {
               <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full uppercase shadow-md"
-              >
+                className="w-full uppercase shadow-md">
                 {isPending ? (
                   <div className="flex">
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -311,16 +307,15 @@ export const SignUpForm = () => {
             Already have an account?{" "}
             <Link
               href="/auth/sign-in"
-              className="font-semibold leading-6 text-primary underline-offset-2 hover:underline"
-            >
+              className="font-semibold leading-6 text-primary underline-offset-2 hover:underline">
               Sign In!
             </Link>
           </p>
         </div>
       </Wrapper>
     </MaxWidthWrapper>
-  );
-};
+  )
+}
 
 export const SignUpSkeleton = () => {
   return (
@@ -332,5 +327,5 @@ export const SignUpSkeleton = () => {
       </div>
       <p className="text-4xl">Loading... Please wait!</p>
     </div>
-  );
-};
+  )
+}

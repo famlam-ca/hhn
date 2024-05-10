@@ -30,7 +30,7 @@ export default async function RootLayout({
           inter.className,
         )}
       >
-        <SessionProvider value={sessionData}>
+        <SessionProvider sessionData={sessionData}>
           <Providers>{children}</Providers>
         </SessionProvider>
       </body>

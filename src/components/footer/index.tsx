@@ -1,13 +1,13 @@
-import Link from "next/link";
-import { Github, Globe } from "lucide-react";
+import Link from "next/link"
+import { Github, Globe } from "lucide-react"
 
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 
-import { NavItem } from "./nav-item";
-import { SocialItem } from "./social-item";
+import { NavItem } from "./nav-item"
+import { SocialItem } from "./social-item"
 
 const Footer = () => {
-  const year = new Date().getFullYear();
+  const year = new Date().getFullYear()
 
   const routes = [
     {
@@ -30,7 +30,7 @@ const Footer = () => {
       label: "Support",
       href: "/contact/support",
     },
-  ];
+  ]
 
   const socials = [
     {
@@ -43,20 +43,20 @@ const Footer = () => {
       href: "https://www.famlam.ca",
       icon: Globe,
     },
-  ];
+  ]
 
   return (
     <footer className="relative bottom-0 w-full border-t-2 border-border bg-background/80">
       <MaxWidthWrapper className="h-20 items-center justify-between text-sm sm:flex">
         <div className="flex items-center sm:text-center">
-          <span>© {year}&nbsp;</span>
+          <span>&copy; {year}&nbsp;</span>
           <Link
-            href="/"
-            className="text-primary underline-offset-2 hover:underline"
-          >
+            target="_blank"
+            href="https://github.com/famlam-ca/HHN/blob/master/LICENSE.md"
+            className="text-primary underline-offset-2 hover:underline">
             HHN
           </Link>
-          <span>™, All rights reserved.</span>
+          <span>, All rights reserved.</span>
         </div>
 
         <div className="mt-3 flex items-center space-x-4 sm:mt-0">
@@ -81,7 +81,7 @@ const Footer = () => {
         </div>
       </MaxWidthWrapper>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
