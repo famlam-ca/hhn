@@ -1,32 +1,32 @@
-"use client";
+"use client"
 
-import { ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ArrowUpRight, LogIn, LogOut, Menu } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 
-import { MobileNavItem } from "./mobile-nav-item";
+import { MobileNavItem } from "./mobile-nav-item"
 
 interface MobileNavProps {
-  isAuth: boolean;
+  isAuth: boolean
 }
 
 export const MobileNav = ({ isAuth }: MobileNavProps) => {
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(false)
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const toggleOpen = () => setOpen((prev) => !prev)
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   useEffect(() => {
-    if (isOpen) toggleOpen();
+    if (isOpen) toggleOpen()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  }, [pathname])
 
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {
-      toggleOpen();
+      toggleOpen()
     }
-  };
+  }
 
   const routes = [
     {
@@ -53,9 +53,11 @@ export const MobileNav = ({ isAuth }: MobileNavProps) => {
     },
     {
       label: "Docs",
-      href: "/docs",
+      href: "https://docs.famlam.ca",
+      target: "_blank",
+      icon: ArrowUpRight,
     },
-  ];
+  ]
 
   return (
     <div className="sm:hidden">
@@ -92,5 +94,5 @@ export const MobileNav = ({ isAuth }: MobileNavProps) => {
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}

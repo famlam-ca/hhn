@@ -11,24 +11,24 @@ import {
   Row,
   Section,
   Text,
-} from "@react-email/components";
+} from "@react-email/components"
 
 const baseUrl = process.env.NEXT_URL
   ? `${process.env.NEXT_URL}`
-  : "http://localhost:3000";
+  : "http://localhost:3000"
 
 interface SupportTicketEmailProps {
   data: {
-    username?: string;
-    subject?: string;
-    message?: string;
-  };
+    username?: string
+    subject?: string
+    message?: string
+  }
 }
 
 export const SupportTicketEmail = ({
   data: { username, subject, message },
 }: SupportTicketEmailProps) => {
-  const year = new Date().getFullYear();
+  const year = new Date().getFullYear()
 
   return (
     <Html>
@@ -122,8 +122,7 @@ export const SupportTicketEmail = ({
             <Row>
               <Column
                 align="right"
-                style={{ width: "50%", paddingRight: "8px" }}
-              >
+                style={{ width: "50%", paddingRight: "8px" }}>
                 <Link href={`${baseUrl}`}>
                   <Img
                     src={`${baseUrl}/logo/logo512-dark-s.png`}
@@ -154,7 +153,7 @@ export const SupportTicketEmail = ({
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/docs`} style={footerLinks}>
+              <Link href="https://docs.famlam.ca" style={footerLinks}>
                 Docs
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -175,16 +174,15 @@ export const SupportTicketEmail = ({
                 lineHeight: "14px",
                 paddingTop: "10px",
                 paddingBottom: "30px",
-              }}
-            >
+              }}>
               © {year} HHN™, All Rights Reserved <br />
             </Text>
           </Section>
         </Container>
       </Body>
     </Html>
-  );
-};
+  )
+}
 
 SupportTicketEmail.PreviewProps = {
   data: {
@@ -192,24 +190,24 @@ SupportTicketEmail.PreviewProps = {
     subject: "Support Ticket",
     message: "Hello, I have a problem with my account.",
   },
-} as SupportTicketEmailProps;
+} as SupportTicketEmailProps
 
-export default SupportTicketEmail;
+export default SupportTicketEmail
 
-const fontFamily = "Inter,Inter,Arial,sans-serif";
+const fontFamily = "Inter,Inter,Arial,sans-serif"
 
 const main = {
   backgroundColor: "#fffff",
   color: "#363949",
   fontWeight: 500,
   fontFamily,
-};
+}
 
 const container = {
   marginLeft: "auto",
   marginRight: "auto",
   maxWidth: "500px",
-};
+}
 
 const logo = {
   display: "flex",
@@ -218,47 +216,47 @@ const logo = {
   padding: "15px 30px",
   marginBottom: "10px",
   backgroundColor: "#f6f6f9",
-};
+}
 
 const content = {
   padding: 30,
   marginBottom: 10,
   backgroundColor: "#f6f6f9",
   fontSize: 16,
-};
+}
 
 const footer = {
   backgroundColor: "#f6f6f9",
   maxWidth: "580px",
   margin: "0 auto",
-};
+}
 
 const footerLinksWrapper = {
   margin: "8px 0 0 0",
   textAlign: "center" as const,
   fontSize: "12px",
-};
+}
 
 const footerLinks = {
   color: "#363949",
-};
+}
 
 const link = {
   textDecoration: "underline",
   color: "#81c3fd",
-};
+}
 
 const sectionsBorders = {
   width: "100%",
   display: "flex",
-};
+}
 
 const sectionBorder = {
   borderBottom: "1px solid rgb(228, 228, 231)",
   width: "249px",
-};
+}
 
 const sectionCenter = {
   borderBottom: "1px solid rgb(129, 195, 253)",
   width: "102px",
-};
+}

@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { LogIn } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { LogIn } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { Icons } from "@/components/icons";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { MobileNav } from "@/components/mobile-nav";
-import { buttonVariants } from "@/components/ui/button";
-import { UserMenu } from "@/components/user-menu";
-import { useSession } from "@/providers/session-provider";
+import { Icons } from "@/components/icons"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { MobileNav } from "@/components/mobile-nav"
+import { buttonVariants } from "@/components/ui/button"
+import { UserMenu } from "@/components/user-menu"
+import { useSession } from "@/providers/session-provider"
 
-import { NavItem } from "./nav-item";
+import { NavItem } from "./nav-item"
 
 const Navbar = () => {
-  const pathname = usePathname();
-  const { user } = useSession();
+  const { user } = useSession()
+  const pathname = usePathname()
 
   const routes = [
     {
@@ -37,9 +37,10 @@ const Navbar = () => {
     },
     {
       label: "Docs",
-      href: "/docs",
+      href: "https://docs.famlam.ca",
+      target: "_blank",
     },
-  ];
+  ]
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 h-14 w-full border-b border-border bg-background/75 backdrop-blur-lg transition-all">
@@ -70,19 +71,18 @@ const Navbar = () => {
                   href={`/auth/sign-in?callbackUrl=${pathname}`}
                   className={buttonVariants({
                     variant: "secondary",
-                  })}
-                >
+                  })}>
                   Sign In
                   <LogIn className="ml-1 h-5 w-5" />
                 </Link>
               )}
             </ul>
-            {!!user && <UserMenu user={user} pathname={pathname} />}
+            {!!user && <UserMenu user={user} pathname={pathname!} />}
           </div>
         </div>
       </MaxWidthWrapper>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

@@ -148,7 +148,7 @@ export const PasswordWasResetEmail = ({
                 Projects
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;
-              <Link href={`${baseUrl}/docs`} style={footerLinks}>
+              <Link href="https://docs.famlam.ca" style={footerLinks}>
                 Docs
               </Link>
               &nbsp;&nbsp;|&nbsp;&nbsp;

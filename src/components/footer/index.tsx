@@ -20,7 +20,8 @@ const Footer = () => {
     },
     {
       label: "Docs",
-      href: "/docs",
+      href: "https://docs.famlam.ca",
+      target: "_blank",
     },
     {
       label: "Contact",
@@ -62,7 +63,12 @@ const Footer = () => {
         <div className="mt-3 flex items-center space-x-4 sm:mt-0">
           <ul className="flex flex-wrap space-x-2">
             {routes.map((route) => (
-              <NavItem key={route.href} label={route.label} href={route.href} />
+              <NavItem
+                key={route.href}
+                label={route.label}
+                href={route.href}
+                target={route.target}
+              />
             ))}
           </ul>
 

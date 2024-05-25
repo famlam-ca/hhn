@@ -9,11 +9,13 @@ A home lab hobby web project using [Next.js 14](https://nextjs.org "Next JS") fo
 - [www.famlam.ca](https://www.famlam.ca "www.famlam.ca Homepage")
 - [play.famlam.ca](https://play.famlam.ca "play.famlam.ca Homepage") -- will be moved to www.famlam.ca/games
 - [old.famlam.ca](https://old.famlam.ca "old.famlam.ca Homepage")
+- [docs.famlam.ca](https://docs.famlam.ca "docs.famlam.ca Homepage")
 
 #### Repositories:
 
 - [HHN](https://github.com/famlam-ca/HHN "HHN Github Repo")
 - [HHN Prototype](https://github.com/famlam-ca/HHN-Prototype "old.famlam.ca Github Repo")
+- [HHN Documentation](https://github.com/famlam-ca/hhn-documentation "old.famlam.ca Github Repo")
 
 ## Roadmap
 

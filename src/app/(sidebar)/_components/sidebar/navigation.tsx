@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   File,
@@ -11,31 +11,31 @@ import {
   Server,
   User,
   UserCog,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
+} from "lucide-react"
+import { usePathname } from "next/navigation"
 
-import { getFakeUser } from "@/lib/services/user-service";
-import { useSession } from "@/providers/session-provider";
+import { getFakeUser } from "@/lib/services/user-service"
+import { useSession } from "@/providers/session-provider"
 
-import { useEffect, useState } from "react";
-import { NavItem, NavItemSkeleton } from "./nav-item";
-import { FakeUser } from "@/types";
+import { useEffect, useState } from "react"
+import { NavItem, NavItemSkeleton } from "./nav-item"
+import { FakeUser } from "@/types"
 
 export const Navigation = () => {
-  const { user, session } = useSession();
-  const pathname = usePathname();
+  const { user, session } = useSession()
+  const pathname = usePathname()
 
-  const [fakeUser, setFakeUser] = useState(null as FakeUser | null);
+  const [fakeUser, setFakeUser] = useState(null as FakeUser | null)
 
   if (!user) {
     useEffect(() => {
       const fetchFakeUser = async () => {
-        const fakeUser = await getFakeUser();
-        setFakeUser(fakeUser);
-      };
+        const fakeUser = await getFakeUser()
+        setFakeUser(fakeUser)
+      }
 
-      fetchFakeUser();
-    }, []);
+      fetchFakeUser()
+    }, [])
   }
 
   const routes = [
@@ -67,7 +67,8 @@ export const Navigation = () => {
     },
     {
       label: "Docs",
-      href: "/docs",
+      href: "https://docs.famlam.ca",
+      target: "_blank",
       icon: File,
     },
     {
@@ -82,7 +83,7 @@ export const Navigation = () => {
       icon: UserCog,
       isNotAdmin: user?.role !== "admin",
     },
-  ];
+  ]
 
   return (
     <>
@@ -107,7 +108,7 @@ export const Navigation = () => {
                 isActive={
                   route.href === "/"
                     ? pathname === route.href
-                    : pathname.startsWith(route.href)
+                    : pathname?.startsWith(route.href)
                 }
               />
             ))}
@@ -128,5 +129,5 @@ export const Navigation = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}

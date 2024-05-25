@@ -141,14 +141,14 @@ export const UserMenu = ({
           </DropdownMenuLabel>
 
           <DropdownMenuItem asChild>
-            <Link href="/docs">
+            <Link href="https://docs.famlam.ca">
               <Newspaper className="mr-2 h-5 w-5" />
               Docs
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem disabled={user.role !== "admin"} asChild>
-            <Link href="/docs/api">
+            <Link href="https://docs.famlam.ca/api">
               <CloudCog className="mr-2 h-5 w-5" />
               API
             </Link>
