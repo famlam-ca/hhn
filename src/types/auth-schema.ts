@@ -1,11 +1,11 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const SignInSchema = z.object({
   email: z.string().min(2).max(50),
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
-});
+})
 
 export const FirstStepSchema = z.object({
   display_name: z
@@ -27,7 +27,7 @@ export const FirstStepSchema = z.object({
       "Display name cannot contain consecutive, leadning or trailing underscores or periods",
     ),
   username: z.string(),
-});
+})
 
 export const SecondStepSchema = z
   .object({
@@ -78,4 +78,4 @@ export const SecondStepSchema = z
   .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords do not match.",
     path: ["passwordConfirm"],
-  });
+  })

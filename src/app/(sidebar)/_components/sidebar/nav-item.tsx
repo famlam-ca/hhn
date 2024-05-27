@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { ArrowUpRight, LucideIcon } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpRight, LucideIcon } from "lucide-react"
+import Link from "next/link"
 
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useSidebar } from "@/hooks/use-sidebar";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useSidebar } from "@/hooks/use-sidebar"
+import { cn } from "@/lib/utils"
 
 interface NavItemProps {
-  icon: LucideIcon;
-  label: string;
-  href: string;
-  target?: string;
-  isNotAdmin?: boolean;
-  isFakeUser?: boolean;
-  isActive?: boolean;
+  icon: LucideIcon
+  label: string
+  href: string
+  target?: string
+  isNotAdmin?: boolean
+  isFakeUser?: boolean
+  isActive?: boolean
 }
 
 export const NavItem = ({
@@ -27,7 +27,7 @@ export const NavItem = ({
   isFakeUser,
   isActive,
 }: NavItemProps) => {
-  const { collapsed } = useSidebar();
+  const { collapsed } = useSidebar()
 
   return (
     <Button
@@ -38,8 +38,7 @@ export const NavItem = ({
         isActive && "bg-accent text-text",
         (isNotAdmin || isFakeUser) && "hidden",
       )}
-      asChild
-    >
+      asChild>
       <Link href={href} target={target}>
         <div className="flex gap-x-4">
           <Icon
@@ -50,7 +49,7 @@ export const NavItem = ({
             )}
           />
           {!collapsed && (
-            <span className="hidden items-center gap-x-4 sm:flex">
+            <span className="hidden items-center gap-x-4 lg:flex">
               {label}
               {target && (
                 <ArrowUpRight className="relative -top-1 right-4 h-3 w-3" />
@@ -60,8 +59,8 @@ export const NavItem = ({
         </div>
       </Link>
     </Button>
-  );
-};
+  )
+}
 
 export const NavItemSkeleton = () => {
   return (
@@ -71,5 +70,5 @@ export const NavItemSkeleton = () => {
         <Skeleton className="h-6" />
       </div>
     </li>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import { Navigation } from "./navigation";
-import { Toggle } from "./toggle";
-import { Wrapper } from "./wrapper";
+import { Navigation } from "./navigation"
+import { Toggle } from "./toggle"
+import { Wrapper } from "./wrapper"
 
 export const Sidebar = () => {
   return (
@@ -8,5 +8,5 @@ export const Sidebar = () => {
       <Toggle />
       <Navigation />
     </Wrapper>
-  );
-};
+  )
+}

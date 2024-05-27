@@ -1,26 +1,26 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
 
-import { validateSession } from "@/lib/lucia";
-import { cn } from "@/lib/utils";
-import { Providers } from "@/providers";
-import { SessionProvider } from "@/providers/session-provider";
+import { validateSession } from "@/lib/lucia"
+import { cn } from "@/lib/utils"
+import { Providers } from "@/providers"
+import { SessionProvider } from "@/providers/session-provider"
 
-import "./globals.css";
+import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Humble Home Network",
   description: "A home for friends and family, make yourself confortable.",
-};
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const sessionData = await validateSession();
+  const sessionData = await validateSession()
 
   return (
     <html lang="en" className="dark">
@@ -28,12 +28,13 @@ export default async function RootLayout({
         className={cn(
           "min-h-screen font-sans text-text antialiased",
           inter.className,
-        )}
-      >
+        )}>
         <SessionProvider sessionData={sessionData}>
-          <Providers>{children}</Providers>
+          <Providers>
+            <main className="h-full">{children}</main>
+          </Providers>
         </SessionProvider>
       </body>
     </html>
-  );
+  )
 }

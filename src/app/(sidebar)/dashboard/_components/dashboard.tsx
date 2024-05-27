@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
-import { LoadingSkeletong } from "@/components/loading-skeleton"
+import { LoadingSkeleton } from "@/components/loading-skeleton"
 import { MaxWidthWrapper } from "@/components/max-width-wrapper"
 import { getNodeData, getServerData } from "@/lib/services/proxmox-service"
 import { NodeData, ServerData, ServerType } from "@/types"
@@ -49,7 +49,7 @@ export const Dashboard = () => {
   }, [type, isFirstLoad])
 
   if (isLoading) {
-    return <LoadingSkeletong />
+    return <LoadingSkeleton />
   }
 
   return (

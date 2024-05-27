@@ -1,10 +1,10 @@
-import { ArrowRight, GraduationCap, PencilRuler, Server } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { ArrowRight, GraduationCap, PencilRuler, Server } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
 
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { buttonVariants } from "@/components/ui/button";
-import { Wrapper } from "@/components/wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { buttonVariants } from "@/components/ui/button"
+import { Wrapper } from "@/components/wrapper"
 
 const HomePage = () => {
   return (
@@ -27,8 +27,7 @@ const HomePage = () => {
             variant: "secondary",
             size: "lg",
             className: "mt-5",
-          })}
-        >
+          })}>
           Learn More
           <ArrowRight className="ml-2 h-5 w-5" />
         </Link>
@@ -74,8 +73,7 @@ const HomePage = () => {
               </span>
               <Link
                 href="/dashboard"
-                className="group/hover flex items-center font-semibold text-primary"
-              >
+                className="group/hover flex items-center font-semibold text-primary">
                 Explore
                 <ArrowRight className="ml-1 h-5 w-5 transition-all group-hover/hover:ml-2" />
               </Link>
@@ -95,8 +93,7 @@ const HomePage = () => {
               </span>
               <Link
                 href="/about"
-                className="group/hover flex items-center font-semibold text-primary"
-              >
+                className="group/hover flex items-center font-semibold text-primary">
                 Learn More
                 <ArrowRight className="ml-1 h-5 w-5 transition-all group-hover/hover:ml-2" />
               </Link>
@@ -117,8 +114,7 @@ const HomePage = () => {
               </span>
               <Link
                 href="/about/projects"
-                className="group/hover flex items-center font-semibold text-primary"
-              >
+                className="group/hover flex items-center font-semibold text-primary">
                 Projects
                 <ArrowRight className="ml-1 h-5 w-5 transition-all group-hover/hover:ml-2" />
               </Link>
@@ -139,7 +135,7 @@ const HomePage = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

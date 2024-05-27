@@ -1,7 +1,7 @@
-import { LoadingSkeletong } from "@/components/loading-skeleton";
+import { LoadingSkeleton } from "@/components/loading-skeleton"
 
 const DashboardLoading = () => {
-  return <LoadingSkeletong />;
-};
+  return <LoadingSkeleton />
+}
 
-export default DashboardLoading;
+export default DashboardLoading

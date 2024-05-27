@@ -1,27 +1,27 @@
-"use server";
+"use server"
 
-import { compare, hash } from "bcrypt";
-import jwt from "jsonwebtoken";
-import { generateId } from "lucia";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { z } from "zod";
+import { compare, hash } from "bcrypt"
+import jwt from "jsonwebtoken"
+import { generateId } from "lucia"
+import { revalidatePath } from "next/cache"
+import { cookies } from "next/headers"
+import { z } from "zod"
 
-import { db } from "@/lib/db";
-import { lucia, validateSession } from "@/lib/lucia";
-import { sendEmail } from "@/lib/services/email-service";
-import { getUser } from "@/lib/services/user-service";
+import { db } from "@/lib/db"
+import { lucia, validateSession } from "@/lib/lucia"
+import { sendEmail } from "@/lib/services/email-service"
+import { getUser } from "@/lib/services/user-service"
 import {
   FirstStepSchema,
   SecondStepSchema,
   SignInSchema,
-} from "@/types/auth-schema";
+} from "@/types/auth-schema"
 
 export const signUp = async (
   values: z.infer<typeof FirstStepSchema> & z.infer<typeof SecondStepSchema>,
 ) => {
-  const hashedPassword = await hash(values.password, 12);
-  const userId = generateId(15);
+  const hashedPassword = await hash(values.password, 12)
+  const userId = generateId(15)
 
   try {
     await db.user.create({
@@ -34,10 +34,10 @@ export const signUp = async (
         email: values.email,
         password: hashedPassword,
       },
-    });
+    })
 
     //  generate a random string 6 characters long
-    const code = Math.random().toString().substring(2, 8);
+    const code = Math.random().toString().substring(2, 8)
 
     await db.emailVerification.create({
       data: {
@@ -46,7 +46,7 @@ export const signUp = async (
         userId,
         sentAt: new Date(),
       },
-    });
+    })
 
     const token = jwt.sign(
       { email: values.email, userId, code },
@@ -54,21 +54,21 @@ export const signUp = async (
       {
         expiresIn: "5m",
       },
-    );
+    )
 
-    const url = `${process.env.NEXT_URL}/api/verify-email?token=${token}`;
+    const url = `${process.env.NEXT_URL}/api/verify-email?token=${token}`
 
     const data = {
       username: values.username,
       url,
-    };
+    }
 
     await sendEmail({
       to: values.email,
       subject: "Verify Email",
       template: "VerifyEmail",
       data: data,
-    });
+    })
 
     return {
       success: true,
@@ -77,39 +77,39 @@ export const signUp = async (
       data: {
         userId,
       },
-    };
+    }
   } catch (error: any) {
     return {
       success: false,
       message: error.message,
-    };
+    }
   }
-};
+}
 
 export const signIn = async (values: z.infer<typeof SignInSchema>) => {
   try {
-    SignInSchema.parse(values);
+    SignInSchema.parse(values)
   } catch (error: any) {
     return {
       success: false,
       message: "Invalid email or password",
-    };
+    }
   }
 
-  const { user } = await getUser({ email: values.email });
+  const { user } = await getUser({ email: values.email })
   if (!user) {
     return {
       success: false,
       message: "No account with that email found",
-    };
+    }
   }
 
-  const isValidPassword = await compare(values.password, user.password);
+  const isValidPassword = await compare(values.password, user.password)
   if (!isValidPassword) {
     return {
       success: false,
       message: "Invalid password",
-    };
+    }
   }
 
   if (user.isEmailVerified === false) {
@@ -117,122 +117,121 @@ export const signIn = async (values: z.infer<typeof SignInSchema>) => {
       success: false,
       message: "Email not verified",
       key: "email_not_verified",
-    };
+    }
   }
 
   try {
-    await createUserSession(user.id);
+    await createUserSession(user.id)
 
     return {
       success: true,
       data: {
         userTheme: user.theme,
       },
-    };
+    }
   } catch (error: any) {
     return {
       success: false,
       message: "Invalid email or password",
-    };
+    }
   }
-};
+}
 
 export const signOut = async ({ userId }: { userId?: string } = {}) => {
   try {
-    let session;
+    let session
 
     if (!userId) {
-      const res = await validateSession();
+      const res = await validateSession()
 
-      session = res.session;
+      session = res.session
 
-      const sessionCookie = lucia.createBlankSessionCookie();
-
+      const sessionCookie = lucia.createBlankSessionCookie()
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes,
-      );
+      )
     } else if (userId) {
       session = await db.session.findFirst({
         where: { userId },
-      });
+      })
     }
     if (!session) {
       return {
         success: false,
         message: "Session not found",
-      };
+      }
     }
 
-    await lucia.invalidateSession(session.id);
+    await lucia.invalidateSession(session.id)
 
     return {
       success: true,
       message: "Signed out successfully",
-    };
+    }
   } catch (error: any) {
     return {
       success: false,
       message: error.message,
-    };
+    }
   }
-};
+}
 
 export const createUserSession = async (userId: string) => {
   const session = await lucia.createSession(userId, {
     expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-  });
+  })
 
-  const sessionCookie = lucia.createSessionCookie(session.id);
+  const sessionCookie = lucia.createSessionCookie(session.id)
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
     sessionCookie.attributes,
-  );
+  )
 
   return {
     success: true,
     message: "Signed in successfully!",
-  };
-};
+  }
+}
 
 export const invalidateAllUserSessions = async ({
   userId,
 }: {
-  userId: string;
+  userId: string
 }) => {
   try {
-    let session;
+    let session
 
     if (userId) {
       session = await db.session.findFirst({
         where: { userId },
-      });
+      })
     } else if (!userId) {
-      const res = await validateSession();
-      session = res.session;
+      const res = await validateSession()
+      session = res.session
     }
 
     if (!session) {
       return {
         success: false,
         message: "No user sessions not found",
-      };
+      }
     }
 
-    await lucia.invalidateUserSessions(userId);
+    await lucia.invalidateUserSessions(userId)
 
-    revalidatePath("/admin");
+    revalidatePath("/admin")
 
     return {
       sendEmail: true,
       message: "User sessions cleared successfully!",
-    };
+    }
   } catch (error: any) {
     return {
       success: false,
       message: error.message,
-    };
+    }
   }
-};
+}

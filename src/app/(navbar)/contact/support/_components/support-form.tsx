@@ -1,35 +1,35 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { revalidatePath } from "next/cache";
-import Link from "next/link";
-import { useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
+import { revalidatePath } from "next/cache"
+import Link from "next/link"
+import { useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { Icons } from "@/components/icons";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
-import { Wrapper } from "@/components/wrapper";
-import { sendSupportTicketEmail } from "@/lib/services/email-service";
-import { useSession } from "@/providers/session-provider";
-import { SupportFormSchema } from "@/types/support-form-schema";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { toast } from "@/components/ui/use-toast"
+import { Wrapper } from "@/components/wrapper"
+import { sendSupportTicketEmail } from "@/lib/services/email-service"
+import { useSession } from "@/providers/session-provider"
+import { SupportFormSchema } from "@/types/support-form-schema"
 
 export const SupportForm = () => {
-  const { user } = useSession();
+  const { user } = useSession()
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof SupportFormSchema>>({
     resolver: zodResolver(SupportFormSchema),
@@ -40,7 +40,7 @@ export const SupportForm = () => {
       subject: "",
       message: "",
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof SupportFormSchema>) => {
     startTransition(async () => {
@@ -50,28 +50,28 @@ export const SupportForm = () => {
         email: values.email,
         subject: values.subject,
         message: values.message,
-      });
+      })
       if (!res.success) {
         toast({
           title: res.message,
           variant: "destructive",
-        });
+        })
       } else if (res.success) {
         toast({
           title: res.message,
           description: res.description,
-        });
+        })
 
-        form.reset();
+        form.reset()
       }
-    });
-  };
+    })
+  }
 
   const input_style =
-    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6";
+    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
 
   return (
-    <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] w-full items-center justify-center">
+    <MaxWidthWrapper className="flex h-full w-full items-center justify-center">
       <Wrapper>
         <div className="mx-auto mb-10 flex flex-col items-center justify-center space-y-4">
           <Link href="/" className="z-40 flex items-center gap-2">
@@ -201,8 +201,7 @@ export const SupportForm = () => {
               <Button
                 type="submit"
                 className="w-full uppercase shadow-md"
-                disabled={isPending}
-              >
+                disabled={isPending}>
                 {isPending ? (
                   <div className="flex">
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -217,5 +216,5 @@ export const SupportForm = () => {
         </div>
       </Wrapper>
     </MaxWidthWrapper>
-  );
-};
+  )
+}

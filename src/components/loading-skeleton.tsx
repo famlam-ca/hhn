@@ -1,6 +1,6 @@
-export const LoadingSkeletong = () => {
+export const LoadingSkeleton = () => {
   return (
-    <div className="flex h-[calc(100vh-3rem)] flex-col items-center justify-center space-y-4">
+    <div className="flex h-[calc(100vh-3.5rem)] flex-col items-center justify-center space-y-4">
       <div className="flex space-x-2">
         <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.3s]" />
         <div className="h-8 w-8 animate-bounce rounded-full bg-text [animation-delay:-0.15s]" />

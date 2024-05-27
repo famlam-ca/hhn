@@ -1,10 +1,10 @@
-import { TerminalIcon } from "lucide-react";
+import { TerminalIcon } from "lucide-react"
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ServerData } from "@/types";
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { ServerData } from "@/types"
 
 interface TerminalProps {
-  server: ServerData;
+  server: ServerData
 }
 
 export const Console = ({ server }: TerminalProps) => {
@@ -20,5 +20,5 @@ export const Console = ({ server }: TerminalProps) => {
         <div className="h-full border border-border">{/* <Terminal /> */}</div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}

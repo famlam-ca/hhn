@@ -14,7 +14,6 @@ const SessionContext = createContext<SessionProviderProps>(
 
 export const useSession = () => {
   const sessionContext = useContext(SessionContext)
-
   if (!sessionContext) {
     throw new Error("useSession must be used within a SessionProvider")
   }

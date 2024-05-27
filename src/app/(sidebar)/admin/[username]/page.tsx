@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 const AdminUsernamePage = ({ params }: { params: { username: string } }) => {
   return (
-    <div className="h-[calc(100vh-3rem)]">
+    <div className="h-full">
       <div className="flex h-full flex-col items-center justify-center space-y-4">
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
           OO<span className="text-primary">PS!</span>
@@ -19,7 +19,7 @@ const AdminUsernamePage = ({ params }: { params: { username: string } }) => {
         </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminUsernamePage;
+export default AdminUsernamePage

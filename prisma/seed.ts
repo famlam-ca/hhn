@@ -1,14 +1,13 @@
-import { PrismaClient } from "@prisma/client";
-import { hash } from "bcrypt";
-import { generateId } from "lucia";
+import { PrismaClient } from "@prisma/client"
+import { hash } from "bcrypt"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export const main = async () => {
-  const password = await hash("testUser1!", 12);
+  const password = await hash("testUser1!", 12)
   await prisma.user.create({
     data: {
-      id: generateId(15),
+      id: "999",
       display_name: "TestUser",
       username: "testuser",
       first_name: "Test",
@@ -17,13 +16,13 @@ export const main = async () => {
       isEmailVerified: true,
       password,
     },
-  });
-};
+  })
+}
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    await prisma.$disconnect()
+    process.exit(1)
+  })

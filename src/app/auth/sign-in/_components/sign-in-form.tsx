@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { useTheme } from "next-themes";
-import { revalidatePath } from "next/cache";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-import { useCountdown } from "usehooks-ts";
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { useTheme } from "next-themes"
+import { revalidatePath } from "next/cache"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState, useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { useCountdown } from "usehooks-ts"
+import { z } from "zod"
 
-import { Icons } from "@/components/icons";
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
+import { Icons } from "@/components/icons"
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -22,37 +22,37 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { Wrapper } from "@/components/wrapper";
-import { signIn } from "@/lib/services/auth-service";
-import { resendVerificationEmail } from "@/lib/services/email-service";
-import { SignInSchema } from "@/types/auth-schema";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
+import { Wrapper } from "@/components/wrapper"
+import { signIn } from "@/lib/services/auth-service"
+import { resendVerificationEmail } from "@/lib/services/email-service"
+import { SignInSchema } from "@/types/auth-schema"
 
 export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
-  const router = useRouter();
-  const { setTheme } = useTheme();
+  const router = useRouter()
+  const { setTheme } = useTheme()
 
-  const [isPending, startTransition] = useTransition();
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition()
+  const [showPassword, setShowPassword] = useState<boolean>(false)
   const [showResendVerificationEmail, setShowResendVerificationEmail] =
-    useState<boolean>(false);
+    useState<boolean>(false)
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({
       countStart: 60,
       intervalMs: 1000,
-    });
+    })
 
   const togglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
+    setShowPassword((prev) => !prev)
+  }
 
   useEffect(() => {
     if (count === 0) {
-      stopCountdown(), resetCountdown();
+      stopCountdown(), resetCountdown()
     }
-  }, [count]);
+  }, [count])
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -60,52 +60,52 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
       email: "",
       password: "",
     },
-  });
+  })
 
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(async () => {
-      const res = await signIn(values);
+      const res = await signIn(values)
       if (!res.success) {
         toast({
           title: res.message,
           variant: "destructive",
-        });
+        })
       } else if (res.success) {
-        revalidatePath(callbackUrl);
-        router.push(callbackUrl);
+        revalidatePath(callbackUrl)
+        router.push(callbackUrl)
       }
 
       if (res.data?.userTheme) {
-        setTheme(res.data.userTheme);
+        setTheme(res.data.userTheme)
       } else {
-        setTheme("system");
+        setTheme("system")
       }
 
       if (res?.key === "email_not_verified") {
-        setShowResendVerificationEmail(true);
+        setShowResendVerificationEmail(true)
       }
-    });
-  };
+    })
+  }
 
   const onResendVerificationEmail = () => {
     startTransition(async () => {
-      const res = await resendVerificationEmail(form.getValues("email"));
+      const res = await resendVerificationEmail(form.getValues("email"))
       toast({
         title: res.message,
         variant: res.success ? "default" : "destructive",
-      });
+      })
 
       if (res.success) {
-        startCountdown();
+        startCountdown()
       }
-    });
-  };
+    })
+  }
 
   const input_style =
-    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6";
+    "block w-full h-10 rounded-md border-0 bg-background/50 py-1.5 shadow-sm ring-1 ring-inset ring-ring placeholder:text-muted focus:bg-background focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
 
   return (
-    <MaxWidthWrapper className="flex min-h-screen w-full items-center justify-center">
+    <MaxWidthWrapper className="flex h-full w-full items-center justify-center">
       <Wrapper className="relative">
         <div className="mx-auto mb-10 flex flex-col items-center justify-center space-y-4">
           <Link href="/" className="z-40 flex items-center gap-2">
@@ -160,8 +160,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
                           onClick={togglePassword}
                           type="button"
                           tabIndex={-1}
-                          className="absolute right-2 top-[25%]"
-                        >
+                          className="absolute right-2 top-[25%]">
                           {showPassword ? (
                             <EyeOff className="h-5 w-5" />
                           ) : (
@@ -174,8 +173,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
                       Forgot your password?{" "}
                       <Link
                         href="/auth/reset-password/request"
-                        className="font-semibold leading-6 text-primary underline-offset-2 hover:underline"
-                      >
+                        className="font-semibold leading-6 text-primary underline-offset-2 hover:underline">
                         Reset password
                       </Link>
                     </FormDescription>
@@ -187,8 +185,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
               <Button
                 type="submit"
                 className="w-full uppercase shadow-md"
-                disabled={isPending}
-              >
+                disabled={isPending}>
                 {isPending ? (
                   <div className="flex">
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -205,8 +202,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
             Don&apos;t have an account yet?{" "}
             <Link
               href="/auth/sign-up"
-              className="font-semibold leading-6 text-primary underline-offset-2 hover:underline"
-            >
+              className="font-semibold leading-6 text-primary underline-offset-2 hover:underline">
               Sign Up!
             </Link>
           </p>
@@ -218,8 +214,7 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
                 disabled={count > 0 && count < 60}
                 onClick={onResendVerificationEmail}
                 variant="link"
-                className="px-0"
-              >
+                className="px-0">
                 Resend verification email{" "}
                 {count > 0 && count < 60 && `in ${count}s`}
               </Button>
@@ -228,8 +223,8 @@ export const SignInForm = ({ callbackUrl }: { callbackUrl: string }) => {
         </div>
       </Wrapper>
     </MaxWidthWrapper>
-  );
-};
+  )
+}
 
 export const SignInSkeleton = () => {
   return (
@@ -241,5 +236,5 @@ export const SignInSkeleton = () => {
       </div>
       <p className="text-4xl">Loading... Please wait!</p>
     </div>
-  );
-};
+  )
+}

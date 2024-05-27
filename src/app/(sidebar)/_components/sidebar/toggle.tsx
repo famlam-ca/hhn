@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
-import { Hint } from "@/components/hint";
-import { Icons } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { useSidebar } from "@/hooks/use-sidebar";
-import { cn } from "@/lib/utils";
+import { Hint } from "@/components/hint"
+import { Icons } from "@/components/icons"
+import { Button } from "@/components/ui/button"
+import { useSidebar } from "@/hooks/use-sidebar"
+import { cn } from "@/lib/utils"
 
 export const Toggle = () => {
-  const pathname = usePathname();
-  let path = pathname.split("/").filter(Boolean)[0];
+  const pathname = usePathname()
+  let path = pathname.split("/").filter(Boolean)[0]
 
   if (path === "u") {
-    path = "Profile";
+    path = "Profile"
   }
 
-  const { collapsed, onExpand, onCollapse } = useSidebar((state) => state);
+  const { collapsed, onExpand, onCollapse } = useSidebar((state) => state)
 
-  const label = collapsed ? "Expand" : "Collapse";
+  const label = collapsed ? "Expand" : "Collapse"
 
   return (
     <>
@@ -35,8 +35,7 @@ export const Toggle = () => {
             className={cn(
               "hidden items-center p-3 pl-6 pt-0 lg:flex",
               collapsed && "px-0 pb-3 pt-6",
-            )}
-          >
+            )}>
             <Hint label={label} side="right" asChild>
               <Button onClick={onExpand} variant="ghost" className="h-auto p-2">
                 <ArrowRightFromLine className="h-4 w-4" />
@@ -61,8 +60,7 @@ export const Toggle = () => {
               <Button
                 onClick={onCollapse}
                 variant="ghost"
-                className="ml-auto h-auto p-2"
-              >
+                className="ml-auto h-auto p-2">
                 <ArrowLeftFromLine className="h-4 w-4" />
               </Button>
             </Hint>
@@ -70,5 +68,5 @@ export const Toggle = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}

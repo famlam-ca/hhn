@@ -1,15 +1,15 @@
-import { Image, LayoutDashboard } from "lucide-react";
-import Link from "next/link";
+import { Image, LayoutDashboard } from "lucide-react"
+import Link from "next/link"
 
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { UserMenu } from "@/components/user-menu";
-import { validateSession } from "@/lib/lucia";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { UserMenu } from "@/components/user-menu"
+import { validateSession } from "@/lib/lucia"
 
 import { MobileNav } from "./mobile-nav";
 import { NavItem } from "./nav-item";
 
 export const Navbar = async () => {
-  const { user } = await validateSession();
+  const { user } = await validateSession()
 
   const routes = [
     {
@@ -18,7 +18,7 @@ export const Navbar = async () => {
       href: "/dashboard",
       isNotAdmin: user?.role !== "admin",
     },
-  ];
+  ]
 
   return (
     <nav className="sticky inset-x-0 top-0 z-30 h-12 w-full border-b border-accent bg-background/75 backdrop-blur-lg transition-all">
@@ -54,5 +54,5 @@ export const Navbar = async () => {
         </div>
       </MaxWidthWrapper>
     </nav>
-  );
-};
+  )
+}

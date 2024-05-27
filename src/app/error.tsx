@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { RefreshCw } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { RefreshCw } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
-import { MaxWidthWrapper } from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
-import { Wrapper } from "@/components/wrapper";
+import { MaxWidthWrapper } from "@/components/max-width-wrapper"
+import { Button } from "@/components/ui/button"
+import { Wrapper } from "@/components/wrapper"
 
 const ErrorPage = ({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
@@ -25,8 +25,7 @@ const ErrorPage = ({
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56"
-          >
+            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56">
             <div
               style={{
                 clipPath:
@@ -38,8 +37,7 @@ const ErrorPage = ({
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56"
-          >
+            className="pointer-events-none absolute inset-x-0 top-10 -z-10 transform-gpu overflow-hidden blur-3xl sm:top-56">
             <div
               style={{
                 clipPath:
@@ -54,8 +52,7 @@ const ErrorPage = ({
         <div>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]">
             <div
               style={{
                 clipPath:
@@ -67,8 +64,7 @@ const ErrorPage = ({
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]"
-          >
+            className="pointer-events-none absolute inset-x-0 -bottom-48 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-[30rem]">
             <div
               style={{
                 clipPath:
@@ -80,7 +76,7 @@ const ErrorPage = ({
         </div>
       </div>
 
-      <MaxWidthWrapper className="flex min-h-[calc(100vh-3.5rem)] w-full items-center justify-center">
+      <MaxWidthWrapper className="flex h-full w-full items-center justify-center">
         <Wrapper className="space-y-4 text-center">
           <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
             OO<span className="text-primary">PS!</span> :(
@@ -95,8 +91,7 @@ const ErrorPage = ({
             contact{" "}
             <Link
               href="/contact/support"
-              className="underline underline-offset-2 hover:text-primary"
-            >
+              className="underline underline-offset-2 hover:text-primary">
               support
             </Link>
             .
@@ -110,8 +105,7 @@ const ErrorPage = ({
                 // Attempt to recover by trying to re-render the segment
                 () => reset()
               }
-              variant="secondary"
-            >
+              variant="secondary">
               <RefreshCw className="mr-2 h-5 w-5" />
               Try again
             </Button>
@@ -119,7 +113,7 @@ const ErrorPage = ({
         </Wrapper>
       </MaxWidthWrapper>
     </>
-  );
-};
+  )
+}
 
-export default ErrorPage;
+export default ErrorPage

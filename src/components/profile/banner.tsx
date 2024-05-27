@@ -1,12 +1,12 @@
-"use client";
+"use client"
 
-import Image from "next/image";
+import Image from "next/image"
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 
 interface BannerProps {
-  display_name: string;
+  display_name: string
 }
 
 export const Banner = ({ display_name }: BannerProps) => {
@@ -17,7 +17,7 @@ export const Banner = ({ display_name }: BannerProps) => {
           src="/profile-banner.png"
           alt="Profile banner"
           fill
-          objectFit="cover"
+          className="object-cover"
         />
       </div>
       <div className="absolute left-[50%] right-[50%] top-0 flex h-full flex-col items-center justify-center text-center font-bold tracking-widest">
@@ -26,9 +26,9 @@ export const Banner = ({ display_name }: BannerProps) => {
         </h1>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export const BannerSkeleton = () => {
-  return <Skeleton className="-mb-6 h-40 lg:-mb-10 lg:h-60" />;
-};
+  return <Skeleton className="-mb-6 h-40 lg:-mb-10 lg:h-60" />
+}

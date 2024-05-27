@@ -29,7 +29,7 @@ export const PROJECTS = [
     label: "Enterprise Network Projects 2024",
     image: "https://placehold.co/600x400?text=Hello+World",
     description:
-      "These projects are currently on going. More information will be available soon.",
+      "These projects have been completed. More information will be available soon.",
     href: "/projects/EnterpriseNetworkProjects.pdf",
   },
 ]
