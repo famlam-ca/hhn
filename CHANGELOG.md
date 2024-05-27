@@ -1,14 +1,12 @@
-# Changelog
+# 1.0.12 Changelog
 
-## 1.0.12 Changelog
-
-### Untracked:
+**Untracked**
 
 - `CHAINGLOG.md`
 - About layout
 - CERTS constant
 
-### Modified:
+**Modified**
 
 - Wrapped root layout children in `<main>` tag
 - Centered text inside `not-found.tsx`
@@ -17,15 +15,15 @@
 - Moved `cert-showcase.tsx`
 - `PROJECTS` Enterprise Network Projects 2024 constant
 
-### Deleted:
+**Deleted**
 
 - About banner from all about pages
 
 **Full Changelog**: [1.0.11...1.0.12](https://github.com/famlam-ca/hhn/compare/1.0.11...1.0.12)
 
-## 1.0.11
+# 1.0.11
 
-### Untracked
+**Untracked**
 
 - Added `.prettierrc`
 - Added EnergyConnections project PDF and PNG
@@ -35,7 +33,7 @@
 - Added `PROJECTS` constant
 - Updated packages
 
-### Modified
+**Modified**
 
 - Updated MIT License copyright holder
 - Updated `README.md`
@@ -45,21 +43,21 @@
 - Updated footer copyright icon
 - Updated `db/index.ts`
 
-### Deleted
+**Deleted**
 
 - Removed `prettier.config.js`
 - Removed `useCopyToClipboard` in contact `onClick`
 
 **Full Changelog**: [1.0.10...1.0.11](https://github.com/famlam-ca/hhn/compare/1.0.10...1.0.11)
 
-## 1.0.10
+# 1.0.10
 
-### Untracked
+**Untracked**
 
 - Added MIT License
 - Added `HHN.png`
 
-### Modified
+**Modified**
 
 - Updated `package.json` project version
 - Replaced `'` with `&apos;`
@@ -70,22 +68,22 @@
 - Updated `user-menu.tsx`
 - Username is no longer required to be 8 characters long
 
-### Deleted
+**Deleted**
 
 - Removed `@lucia-auth/adapter-drizzle ^1.0.7`
 
 **Full Changelog**: [1.0.9...1.0.10](https://github.com/famlam-ca/HHN/compare/1.0.9...1.0.10)
 
-## 1.0.9
+# 1.0.9
 
-### Untracked
+**Untracked**
 
 - Added certs
 - Added `Cert-showcase.tsx`
 - Added projects page
 - Added `projects-content.tsx` (WIP)
 
-### Modified
+**Modified**
 
 - `<UserNav />` profile route now pushes to `/u/username`
 - Renamed `email-service.tsx` to `email-service.ts`
@@ -93,31 +91,31 @@
 - Next up buttons on about pages now show at the top and bottom of the screen
 - Filled out about me content
 
-### Deleted
+**Deleted**
 
 - Removed unnecessary import in `email-service.ts`
 
-### Bug Fixes
+**Bug Fixes**
 
 - Sidebar target arrow alignment fixed
 
 **Full Changelog**: [1.0.8.1...1.0.9](https://github.com/SlickYeet/famlam/compare/1.0.8.1...1.0.9)
 
-## 1.0.8.1
+# 1.0.8.1
 
-### Modified
+**Modified**
 
 - Updated `README.md`
 
-### Bug Fixes
+**Bug Fixes**
 
 - Fixed `<SignIn />` button showing when the user is signed in
 
 **Full Changelog**: [1.0.8...1.0.8.1](https://github.com/SlickYeet/famlam/compare/1.0.8...1.0.8.1)
 
-## 1.0.8
+# 1.0.8
 
-### Untracked
+**Untracked**
 
 - Added `SupportTicketStatus`
 - Added support ticket table, details page, and status actions
@@ -125,7 +123,7 @@
 - Added support ticket services
 - Added `SupportTicket` and `TicketStatus` types
 
-### Modified
+**Modified**
 
 - `supportTicket` now includes `status` and `statusMessage` (WIP)
 - `<UserNav />` is now visible on small devices on all navbars
@@ -138,12 +136,12 @@
 - Moved `sendEmail()` email renderer to its own function
 - Updated `EditProfileSchema` to allow GitHub URLs (WIP)
 
-### Deleted
+**Deleted**
 
 - Removed `use-user-token.ts`
 - Removed `token-service.ts`
 
-### Bug Fixes
+**Bug Fixes**
 
 - Sidebar label no longer shows on small devices on reload
 - Sidebar on `signOut` now redirects to `/username` from `/u/username` to prevent errors
@@ -151,9 +149,9 @@
 
 **Full Changelog**: [1.0.7...1.0.8](https://github.com/SlickYeet/famlam/compare/1.0.7...1.0.8)
 
-## 1.0.7
+# 1.0.7
 
-### Untracked
+**Untracked**
 
 - Added support page and form
 - Added support ticket email template
@@ -168,7 +166,7 @@
 - Added `@types/fast-levenshtein 0.0.4`
 - Added `@types/qs ^6.9.15`
 
-### Modified
+**Modified**
 
 - Updated URLs in email templates
 - Updated `text-email.tsx` to have preview props
@@ -179,29 +177,29 @@
 - Updated `<SignUpForm />` form field placeholders
 - Footer routes now include `/support`
 
-### Deleted
+**Deleted**
 
 - Removed `/terms` routes
 
 **Full Changelog**: [1.0.6...1.0.7](https://github.com/SlickYeet/famlam/compare/1.0.6...1.0.7)
 
-## 1.0.6
+# 1.0.6
 
-### Untracked
+**Untracked**
 
 - Added about page content
 - Added about me page (WIP)
 
 **Full Changelog**: [1.0.5...1.0.6](https://github.com/SlickYeet/famlam/compare/1.0.5...1.0.6)
 
-## 1.0.5
+# 1.0.5
 
-### Untracked
+**Untracked**
 
 - Added content to `/contact`
 - Added "none" size to `<Button />`
 
-### Modified
+**Modified**
 
 - Updated `/api/verify-email` to invalidate user session before creating a new one
 - Updated `edit-user-profile` `onSubmit()` and `onClick()`
@@ -210,22 +208,22 @@
 - `/profile` now displays username instead of email
 - Updated `updateUser()` to call `sendNewVerificationEmail()` when email is submitted
 
-### Deleted
+**Deleted**
 
 - Removed `createBlankSessionCookie()` from `invalidateAllUserSessions()`
 - Removed `db.session.deleteMany()` from `sendNewVerificationEmail()`
 
 **Full Changelog**: [1.0.4...1.0.5](https://github.com/SlickYeet/famlam/compare/1.0.4...1.0.5)
 
-## 1.0.4
+# 1.0.4
 
-### Untracked
+**Untracked**
 
 - Added `.env.example`
 - Added `bun.lockb`
 - Added sessions column to admin table (WIP)
 
-### Modified
+**Modified**
 
 - Updated `.gitignore` to include `deploy.sh`
 - Updated email templates to process the correct production URL
@@ -236,15 +234,15 @@
 - Sets user's preferred theme on sign in
 - Updated many `toast()` messages
 
-### Deleted
+**Deleted**
 
 - Removed `pnpm-lock.yaml`
 
 **Full Changelog**: [1.0.3...1.0.4](https://github.com/SlickYeet/famlam/compare/1.0.3...1.0.4)
 
-## 1.0.3
+# 1.0.3
 
-### Untracked
+**Untracked**
 
 - Added `dev2` script for email templating
 - Added `react-email 2.1.1`
@@ -257,7 +255,7 @@
 - Added `sendPasswordWasResetEmail()` to `resetPassword()`
 - Added `EmailTemplates` type for `sendEmail()`
 
-### Modified
+**Modified**
 
 - Moved `sendEmail()` into `email-service.ts`
 - Renamed `email.ts` to `email-transporter.ts`
@@ -270,7 +268,7 @@
 - Updated `EditProfile` component layout
 - Updated `Button` component to not render illegible text
 
-### Deleted
+**Deleted**
 
 - Removed `textVariant` from `tailwind.config.ts`
 - Removed unnecessary TODOs
