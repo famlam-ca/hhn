@@ -142,11 +142,6 @@ body,
   border-radius: 7px;
 }
 
-/* fake text-balance until added to tailwind */
-.text-balance {
-  text-wrap: balance;
-}
-
 /* fake text-shadow until added to tailwind */
 .text-shadow {
   text-shadow: #13131374 2px 5px;

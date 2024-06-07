@@ -1,4 +1,28 @@
-# 1.0.12 Changelog
+# 1.0.13
+
+Animated landing page
+
+**Untracked**
+
+- Added full text logos
+- HomePage `hero.tsx`
+- HomePage `content.tsx`
+- HomePage content `tab.tsx`
+- `scroll-area.tsx` _(Unused)_ for now
+- `TABS` constant
+
+**Modified**
+
+- HomePage
+- Portrait button now links to portfolio
+
+**Deleted**
+
+- `text-balance` custom class
+
+**Full Changelog**: [1.0.12...1.0.13](https://github.com/famlam-ca/hhn/compare/1.0.12...1.0.13)
+
+# 1.0.12
 
 **Untracked**
 

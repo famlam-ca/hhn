@@ -99,10 +99,13 @@ export const AboutMeContent = () => {
             <AvatarFallback>SlickYeet</AvatarFallback>
           </Avatar>
           <Button
+            asChild
             variant="outline"
             size="lg"
-            className="cursor-default font-extrabold hover:bg-transparent">
-            Hi, I&apos;m Lasse!
+            className="font-extrabold hover:bg-transparent">
+            <Link href="https://lasse.famlam.ca" target="_blank">
+              Hi, I&apos;m Lasse!
+            </Link>
           </Button>
         </div>
       </section>
