@@ -1,4 +1,4 @@
-# 1.0.13
+## 1.0.13
 
 Animated landing page
 
@@ -22,7 +22,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.12...1.0.13](https://github.com/famlam-ca/hhn/compare/1.0.12...1.0.13)
 
-# 1.0.12
+## 1.0.12
 
 **Untracked**
 
@@ -45,7 +45,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.11...1.0.12](https://github.com/famlam-ca/hhn/compare/1.0.11...1.0.12)
 
-# 1.0.11
+## 1.0.11
 
 **Untracked**
 
@@ -74,7 +74,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.10...1.0.11](https://github.com/famlam-ca/hhn/compare/1.0.10...1.0.11)
 
-# 1.0.10
+## 1.0.10
 
 **Untracked**
 
@@ -98,7 +98,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.9...1.0.10](https://github.com/famlam-ca/HHN/compare/1.0.9...1.0.10)
 
-# 1.0.9
+## 1.0.9
 
 **Untracked**
 
@@ -125,7 +125,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.8.1...1.0.9](https://github.com/SlickYeet/famlam/compare/1.0.8.1...1.0.9)
 
-# 1.0.8.1
+## 1.0.8.1
 
 **Modified**
 
@@ -137,7 +137,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.8...1.0.8.1](https://github.com/SlickYeet/famlam/compare/1.0.8...1.0.8.1)
 
-# 1.0.8
+## 1.0.8
 
 **Untracked**
 
@@ -173,7 +173,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.7...1.0.8](https://github.com/SlickYeet/famlam/compare/1.0.7...1.0.8)
 
-# 1.0.7
+## 1.0.7
 
 **Untracked**
 
@@ -207,7 +207,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.6...1.0.7](https://github.com/SlickYeet/famlam/compare/1.0.6...1.0.7)
 
-# 1.0.6
+## 1.0.6
 
 **Untracked**
 
@@ -239,7 +239,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.4...1.0.5](https://github.com/SlickYeet/famlam/compare/1.0.4...1.0.5)
 
-# 1.0.4
+## 1.0.4
 
 **Untracked**
 
@@ -264,7 +264,7 @@ Animated landing page
 
 **Full Changelog**: [1.0.3...1.0.4](https://github.com/SlickYeet/famlam/compare/1.0.3...1.0.4)
 
-# 1.0.3
+## 1.0.3
 
 **Untracked**
 
@@ -298,3 +298,70 @@ Animated landing page
 - Removed unnecessary TODOs
 
 **Full Changelog**: [1.0.2...1.0.3](https://github.com/SlickYeet/famlam/compare/1
+
+## 1.0.2 Changelog
+
+**Untracked:**
+
+- Database resetPassword
+- reset-password API endpoint
+- Send reset password email page/component
+- Reset password page/component, _Currently has the same name as Send reset password email page_
+- Tab on form fields no longer focuses show/hide password
+- `logoutFromOtherDevices` on password change/reset
+- Alert dialog, _(shadcn-ui)_
+- Checkbox, _(shadcn-ui)_
+- `sendTestEmail()` for testing _duh_
+- `createUserSession()` to create session and set cookies
+- email-service.ts
+- auth-schema.ts
+- user-schema.ts
+
+**Modified:**
+
+- Many toast notifications to return proper messages
+- Many `return` statements
+  - New syntax: `return { success: boolean, message: string }`
+- Database user model, _username was not marked properly as unique_
+- `getUser()` function to return an user object correctly
+- Error pages to `push("/")`
+- Sign out page to `push("/")`
+- Sign up schema names
+- Sign up password placeholders
+- Moved EditAccountSchema to separate file
+- Checkbox to handle `{children}`
+- Edit account page to handle `changePassword()`
+- Moved callbackUrl on sign in to `eles if` block
+  - It was redirecting on failure
+
+**Deleted:**
+
+- `--textVariant` variables from globals.css
+
+**Full Changelog**: [1.0.1...1.0.2](https://github.com/SlickYeet/famlam/compare/1.0.1...1.0.2)
+
+## 1.0.1 Changelog
+
+**Untracked:**
+
+- verify-email page
+- Import paths to use lucia instead of auth
+- signUp() to include first and last name fields
+
+**Modified:**
+
+- signIn() with callbackUrl calls
+- Dashboard table/nav no longer shows actions or select without permission or user/session
+
+**Deleted:**
+
+- SignOut and SignIn buttons
+- signOut() callbackUrl
+
+**Full Changelog**: [1.0.0...1.0.1](https://github.com/SlickYeet/famlam/compare/1.0.0...1.0.1)
+
+## 1.0.0 Changelog
+
+Migrate to lucia-auth from authjs
+
+**Full Changelog**: [1.0.0](https://github.com/SlickYeet/famlam/commits/1.0.0)
