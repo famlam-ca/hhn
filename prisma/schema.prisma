@@ -1,114 +1,114 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
 }
 
 enum Role {
-  user
-  superuser
-  admin
+    user
+    superuser
+    admin
 }
 
 enum Theme {
-  dark
-  light
+    dark
+    light
 }
 
-model user {
-  id              String  @id
-  display_name    String
-  username        String  @unique()
-  first_name      String?
-  last_name       String?
-  email           String  @unique()
-  isEmailVerified Boolean @default(false)
-  password        String
+model User {
+    id              String  @id
+    display_name    String
+    username        String  @unique()
+    first_name      String?
+    last_name       String?
+    email           String  @unique()
+    isEmailVerified Boolean @default(false)
+    password        String
 
-  image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
-  role  Role    @default(user)
-  bio   String? @db.Text
-  theme Theme   @default(dark)
+    image String  @default("https://www.famlam.ca/logo/logo512-blue-s.png")
+    role  Role    @default(user)
+    bio   String? @db.Text
+    theme Theme   @default(dark)
 
-  sessions          session[]
-  emailVerification emailVerification[]
-  resetPassword     resetPassword[]
-  supportTickets    supportTicket[]
+    sessions          Session[]
+    emailVerification EmailVerification[]
+    resetPassword     ResetPassword[]
+    supportTickets    SupportTicket[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-model session {
-  id String @id
+model Session {
+    id String @id
 
-  userId String
-  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  expiresAt DateTime @db.Timestamp(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    expiresAt DateTime @db.Timestamp(0)
 
-  @@index([userId])
+    @@index([userId])
 }
 
-model emailVerification {
-  id   String @id
-  code String
+model EmailVerification {
+    id   String @id
+    code String
 
-  userId String
-  user   user   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    userId String
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sentAt    DateTime @db.Timestamp(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    sentAt    DateTime @db.Timestamp(0)
 
-  @@index([userId])
+    @@index([userId])
 }
 
-model resetPassword {
-  id   String @id
-  code String
+model ResetPassword {
+    id   String @id
+    code String
 
-  userEmail String
-  user      user   @relation(fields: [userEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
+    userEmail String
+    user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sentAt    DateTime @db.Timestamp(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    sentAt    DateTime @db.Timestamp(0)
 
-  @@index([userEmail])
+    @@index([userEmail])
 }
 
 enum SupportTicketStatus {
-  open
-  closed
-  pending
-  resolved
+    open
+    closed
+    pending
+    resolved
 }
 
-model supportTicket {
-  id String @id
+model SupportTicket {
+    id String @id
 
-  senderUsername String?
-  senderName     String?
-  senderEmail    String
+    senderUsername String?
+    senderName     String?
+    senderEmail    String
 
-  subject String @db.Text
-  message String @db.Text
+    subject String @db.Text
+    message String @db.Text
 
-  status        SupportTicketStatus @default(open)
-  statusMessage String?
+    status        SupportTicketStatus @default(open)
+    statusMessage String?
 
-  user user @relation(fields: [senderEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
+    user User @relation(fields: [senderEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  sentAt    DateTime @db.Timestamp(0)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    sentAt    DateTime @db.Timestamp(0)
 
-  @@index([senderEmail])
+    @@index([senderEmail])
 }
